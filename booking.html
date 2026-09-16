@@ -656,6 +656,13 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .artist-role #artistCalendarGrid button.calItem{display:block;width:100%;border:0;text-align:left;font:inherit;font-size:.65rem;overflow-wrap:anywhere;cursor:pointer}
 .artist-role #artistCalendarGrid button.calItem:hover{filter:brightness(1.3)}
 .artist-role #artistCalendarGrid button.calItem:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.jobGlassOverlay{display:none;position:fixed;inset:0;z-index:90;padding:20px;background:#03070999;backdrop-filter:blur(12px);align-items:center;justify-content:center}
+.jobGlassOverlay.on{display:flex}
+.jobGlassModal{width:min(100%,1040px);max-height:92dvh;display:flex;flex-direction:column;min-height:0;border:1px solid #e7c86a55;border-radius:22px;background:linear-gradient(145deg,#172126e8,#0c1317ed);box-shadow:0 25px 100px #0009;overflow:hidden}
+.jobGlassHead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid #e7c86a25}
+#jobGlassBody{overflow:auto;min-height:0;overscroll-behavior:contain;padding:0 20px 20px}
+#jobGlassBody .workspace{margin:0;border:0;background:transparent;padding:18px 0;animation:none}
+@media(max-width:760px){.jobGlassOverlay{padding:8px}.jobGlassModal{max-height:96dvh;border-radius:18px}.jobGlassHead{padding:12px}#jobGlassBody{padding:0 12px 12px}}
 </style></head>
 <body>
 <div class="top">
@@ -1175,7 +1182,7 @@ function renderArtistPortal(){
  renderBookingSettings();
  $('artistOpenCount').textContent=open.length;$('artistConfirmedCount').textContent=confirmed.length;$('artistRequestCount').textContent=open.length;$('artistAttentionRequests').textContent=open.length?`${open.length} åpne forespørsler`:'Ingen åpne forespørsler';
  const upcoming=cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).filter(r=>r.date>='2026-09-16').slice(0,4);
- $('artistUpcoming').innerHTML=upcoming.length?upcoming.map(r=>{const d=fmtDate(r.date);return `<div class="artistEvent" role="button" tabindex="0" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><b>${esc(r.name)}</b><div class="meta">${esc(r.city)} · ${esc(r.organizer)}</div></div>${artistStageBadge(r)}</div>`}).join(''):'<div class="meta">Ingen kommende saker registrert.</div>';
+ $('artistUpcoming').innerHTML=upcoming.length?upcoming.map(r=>{const d=fmtDate(r.date);return `<div class="artistEvent" role="button" tabindex="0" onclick="openNextJob(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><b>${esc(r.name)}</b><div class="meta">${esc(r.city)} · ${esc(r.organizer)}</div></div>${artistStageBadge(r)}</div>`}).join(''):'<div class="meta">Ingen kommende saker registrert.</div>';
  $('artistRequestList').innerHTML=cases.length?cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(r=>{const d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee||0).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${artistStageBadge(r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen forespørsler eller jobber.</div></div>';
  let cal=['M','T','O','T','F','L','S'].map(x=>`<div class="dow">${x}</div>`).join(''),start=(new Date('2026-09-01T12:00:00').getDay()+6)%7;
  for(let i=0;i<start;i++)cal+='<div class="day"></div>';
@@ -1327,7 +1334,7 @@ function drawProfile(){
  $('profileEditorBody').innerHTML=html;
  if(type==='substitutes')$('profileEditorBody').insertAdjacentHTML('beforeend',memberOverview(profileArtist,'substitutes'));
 }
-function closeProfileEditor(e){if(e&&e.target!==$('profileGlassOverlay'))return;$('profileGlassOverlay').classList.remove('on');document.body.style.overflow='';profileDraft=null;activeProfileEditor=null;profileFocus?.focus()}
+function closeProfileEditor(e){if(e&&e.target!==$('profileGlassOverlay'))return;$('profileGlassOverlay').classList.remove('on');document.body.style.overflow=jobPopupState?'hidden':'';profileDraft=null;activeProfileEditor=null;profileFocus?.focus()}
 function saveProfileEditor(){
  if(activeProfileEditor==='privateCalendar')return savePrivateCalendarEntry();
  if(activeProfileEditor==='contract')return saveContractEditor();
@@ -1449,6 +1456,30 @@ function printContract(id){const r=state.requests.find(x=>x.id===id);if(r)printD
 
 function contractEditorFields(){const field=f=>profileField(contractDraft,f,'contract').replaceAll('data-field=','data-contract=');return contractFields.map(f=>f[0]==='soundcheck'?'':f[0]==='arrival'?'<div class="contract-time-pair">'+field(f)+field(contractFields.find(x=>x[0]==='soundcheck'))+'</div>':field(f)).join('')}
 
+let jobPopupState=null;
+function openNextJob(id){
+ if(jobPopupState)closeJobPopup();
+ const source=document.activeElement,scroll=window.scrollY;
+ let overlay=$('jobGlassOverlay');
+ if(!overlay){overlay=document.createElement('div');overlay.id='jobGlassOverlay';overlay.className='jobGlassOverlay';overlay.innerHTML='<section class="jobGlassModal" role="dialog" aria-modal="true" aria-label="Jobbdetaljer"><header class="jobGlassHead"><span class="eyebrow">Jobbdetaljer</span><button class="btn" id="closeJobGlass" onclick="closeJobPopup()">× Lukk</button></header><div id="jobGlassBody"></div></section>';overlay.addEventListener('click',e=>{if(e.target===overlay)closeJobPopup()});document.body.append(overlay)}
+ const nodes=['bookingWorkspace','eventWorkspace'].map(id=>{const node=$(id),marker=document.createComment(id);node.before(marker);$('jobGlassBody').append(node);return {node,marker}});
+ jobPopupState={source,scroll,nodes,overflow:document.body.style.overflow};
+ document.querySelector('.layout').inert=true;document.querySelector('.top').inert=true;
+ overlay.classList.add('on');document.body.style.overflow='hidden';currentRequestId=null;openRequest(id);$('jobGlassBody').scrollTop=0;$('closeJobGlass').focus();
+}
+function closeJobPopup(){
+ if(!jobPopupState)return;const previous=jobPopupState;jobPopupState=null;
+ previous.nodes.forEach(({node,marker})=>{node.classList.remove('on');marker.replaceWith(node)});
+ $('jobGlassOverlay').classList.remove('on');document.querySelector('.layout').inert=false;document.querySelector('.top').inert=false;document.body.style.overflow=previous.overflow;currentRequestId=null;currentEventId=null;
+ window.scrollTo({top:previous.scroll,behavior:'instant'});if(previous.source?.isConnected)previous.source.focus({preventScroll:true});
+}
+document.addEventListener('keydown',e=>{
+ if(!jobPopupState||activeProfileEditor||document.querySelector('.modalback.on'))return;
+ if(e.key==='Escape'){e.preventDefault();closeJobPopup();return}
+ if(e.key!=='Tab')return;const all=[...$('jobGlassOverlay').querySelectorAll('button,a[href],input,select,textarea,[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length),first=all[0],last=all.at(-1);
+ if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+});
+
 function renderAll(){
  const active=state.requests.filter(r=>r.stage!=='signed'),signed=state.requests.filter(r=>r.stage==='signed');
  $('requestCount').textContent=active.length;$('eventCount').textContent=signed.length;$('statRequests').textContent=active.length;$('statContracts').textContent=state.requests.filter(r=>r.stage==='contract').length;$('statEvents').textContent=signed.length;
@@ -1458,7 +1489,7 @@ function renderAll(){
 function stages(r){const order=['new','offer','contract','signed'],labels=['Forespørsel','Tilbud / forhandling','Kontrakt / signering','Bekreftet arrangement'];return labels.map((l,i)=>`<div class="stage ${order.indexOf(r.stage)>i?'done':order.indexOf(r.stage)===i?'current':''}">${order.indexOf(r.stage)>i?'✓ ':''}${l}</div>`).join('')}
 
 let expandedCaseElement=null;
-function collapseBookingWorkspace(){
+function collapseBookingWorkspace(){if(jobPopupState){closeJobPopup();return}
   const w=$('bookingWorkspace');
   if(!w)return;
   w.classList.add('collapsing');
@@ -1516,7 +1547,7 @@ function openRequest(id){
   <div class="signcard"><b>Arrangør · ${esc(r.organizer)}</b>${r.organizerSigned?'<span class="badge bg-green">✓ SIGNERT</span>':'<button class="btn primary" onclick="signOrganizer()">Simuler arrangørs signatur</button>'}</div>
  </div><div class="rolecard" style="margin-top:12px"><b>Regel</b><small><br>Arrangementet opprettes automatisk først når begge kontraktspartene har signert.</small></div>`:`<div class="rolecard"><b>Signering ikke tilgjengelig</b><small><br>Kontrakt må genereres først.</small></div>`;
 
- document.querySelectorAll('[data-btab]').forEach(x=>x.classList.remove('on'));document.querySelector('[data-btab="caseOverview"]').classList.add('on');['caseOverview','offer','contract','signing'].forEach(pid=>$(pid).classList.toggle('on',pid==='caseOverview'));$('bookingWorkspace').classList.add('on');$('eventWorkspace').classList.remove('on');setTimeout(()=>$('bookingWorkspace').scrollIntoView({behavior:'smooth',block:'start'}),50);
+ document.querySelectorAll('[data-btab]').forEach(x=>x.classList.remove('on'));document.querySelector('[data-btab="caseOverview"]').classList.add('on');['caseOverview','offer','contract','signing'].forEach(pid=>$(pid).classList.toggle('on',pid==='caseOverview'));$('bookingWorkspace').classList.add('on');$('eventWorkspace').classList.remove('on');setTimeout(()=>{if(!jobPopupState)$('bookingWorkspace').scrollIntoView({behavior:'smooth',block:'start'})},50);
 }
 document.querySelectorAll('[data-btab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-btab]').forEach(x=>x.classList.remove('on'));['caseOverview','offer','contract','signing'].forEach(id=>$(id).classList.remove('on'));b.classList.add('on');$(b.dataset.btab).classList.add('on')}));
 function moveToOffer(){let r=state.requests.find(x=>x.id===currentRequestId);r.stage='offer';save();renderAll();currentRequestId=null;openRequest(r.id);toast('Forespørselen er flyttet til tilbud / forhandling')}
@@ -1536,7 +1567,7 @@ function openEvent(id){currentEventId=id;const r=state.requests.find(x=>x.id===i
  $('tech').innerHTML='<button class="btn" onclick="showSavedRider(&quot;'+r.artistId+'&quot;)">Åpne teknisk rider / PDF</button><div class="member-card"><b>'+backlineLabel(r)+'</b></div>'+memberOverview(r.artistId,'technical',!!r.organizerBackline);
  $('travel').innerHTML=`<div class="rolegrid"><div class="rolecard"><b>Reise</b><small><br>Ikke registrert</small></div><div class="rolecard"><b>Hotell</b><small><br>Ikke registrert</small></div><div class="rolecard"><b>Lokal transport</b><small><br>Ikke registrert</small></div></div>`;
  $('travel').innerHTML+=memberOverview(r.artistId,'hospitality');
- document.querySelectorAll('[data-etab]').forEach(x=>x.classList.remove('on'));document.querySelector('[data-etab="eventOverview"]').classList.add('on');['eventOverview','people','schedule','tech','travel'].forEach(id=>$(id).classList.toggle('on',id==='eventOverview'));$('eventWorkspace').classList.add('on');$('bookingWorkspace').classList.remove('on');setTimeout(()=>$('eventWorkspace').scrollIntoView({behavior:'smooth',block:'start'}),50);
+ document.querySelectorAll('[data-etab]').forEach(x=>x.classList.remove('on'));document.querySelector('[data-etab="eventOverview"]').classList.add('on');['eventOverview','people','schedule','tech','travel'].forEach(id=>$(id).classList.toggle('on',id==='eventOverview'));$('eventWorkspace').classList.add('on');$('bookingWorkspace').classList.remove('on');setTimeout(()=>{if(!jobPopupState)$('eventWorkspace').scrollIntoView({behavior:'smooth',block:'start'})},50);
 }
 document.querySelectorAll('[data-etab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-etab]').forEach(x=>x.classList.remove('on'));['eventOverview','people','schedule','tech','travel'].forEach(id=>$(id).classList.remove('on'));b.classList.add('on');$(b.dataset.etab).classList.add('on')}));
 
