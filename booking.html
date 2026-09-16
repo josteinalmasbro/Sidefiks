@@ -795,7 +795,7 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 </section>
 
 <section id="calendar" class="view">
- <div><div class="eyebrow">Masterkalender</div><h1>Hold og bekreftet.</h1><div class="lead">Gul = forespørsel/HOLD. Oransje = kontrakt sendt. Grønn = signert og bekreftet arrangement.</div></div>
+ <div><div class="eyebrow">Masterkalender</div><h1>Reserverte og bekreftede datoer.</h1><div class="lead">Gul = foreløpig reservert. Oransje = kontrakt sendt. Grønn = signert og bekreftet arrangement.</div></div>
  <div class="card" style="margin-top:18px"><h2 style="margin-top:0">September 2026</h2><div id="calendarGrid" class="cal"></div></div>
 </section>
 
@@ -1554,7 +1554,7 @@ function openRequest(id){
   <div class="rolecard"><b>Booking håndteres av</b><small><br>${esc(owner)} · ${isDirect?'Direktebooking':'Bookingbyrå'}</small>${ownerBadge(r)}</div>
   <div class="rolecard"><b>Arrangør</b><small><br>${esc(r.organizer)} · ${esc(r.contact)}</small></div>
   <div class="rolecard"><b>Artist</b><small><br>${esc(a.name)}</small></div>
-  <div class="rolecard"><b>Ønsket dato</b><small><br>${esc(r.date)} · HOLD</small></div>
+  <div class="rolecard"><b>Ønsket dato</b><small><br>${esc(r.date)} · Foreløpig reservert</small></div>
   <div class="rolecard"><b>Type jobb</b><small><br>${esc(r.type)}</small></div>
   <div class="rolecard"><b>Venue</b><small><br>${esc(r.venue)} · ${esc(r.city)}</small></div>
   <div class="rolecard"><b>Honorarramme</b><small><br>${Number(r.fee).toLocaleString('nb-NO')} kr</small></div>
