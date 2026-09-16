@@ -43,21 +43,32 @@ function colors(css){
   return {accent:accent||[...counts].sort((a,b)=>b[1]-a[1])[0]?.[0]||null,primary:bg||null};
 }
 function rasterType(data){if(data.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))return 'image/png';if(data[0]===255&&data[1]===216&&data[2]===255)return 'image/jpeg';if(data.toString('ascii',0,4)==='RIFF'&&data.toString('ascii',8,12)==='WEBP')return 'image/webp';return null}
+function websiteTheme(css){
+  const body=[...css.matchAll(/(?:^|\})([^{}]*(?:\bbody\b|\bhtml\b|:root)[^{}]*)\{([^{}]*)\}/gi)].map(m=>m[2]).join(';');
+  const bg=hex(body.match(/(?:background(?:-color)?|--(?:background|bg)(?:-color)?)\s*:\s*(#[\da-f]{3,6})\b/i)?.[1])||(/background(?:-color)?\s*:\s*(?:black|#000)\b/i.test(body)?'#000000':'#ffffff');
+  const light=parseInt(bg.slice(1,3),16)+parseInt(bg.slice(3,5),16)+parseInt(bg.slice(5,7),16)>420;
+  const heading=css.match(/[^{}]*(?:section_heading|h1|heading-primary)[^{}]*\{([^{}]*)\}/i)?.[1]||'';
+  const serif=/font-family\s*:[^;}]*\b(?:Georgia|Times|Playfair|Baskerville|Garamond|serif)\b/i.test(heading)&&!/sans-serif/i.test(heading);
+  const round=[...css.matchAll(/[^{}]*(?:primary[_-](?:btn|button)|nav_btn|\.btn\b|\bbutton\b)[^{}]*\{([^{}]*)\}/gi)].some(m=>/border-radius\s*:\s*(?:[4-9]\d|\d{3,})px/i.test(m[1]));
+  return {background:bg,surface:light?'#ffffff':'#182127',text:light?'#191919':'#f5f5f5',muted:light?'#595959':'#b5bdc3',border:light?'#e8e2dd':'#445059',font:'sans',headingFont:serif?'serif':'sans',headingWeight:serif?500:800,buttonRadius:round?100:8,cardRadius:/border-radius\s*:\s*0px/i.test(css)?2:12,hero:/hero[_-](?:heading|content|wrapper)/i.test(css)};
+}
 async function extract(input) {
-  const budget={bytes:4500000,requests:10,until:Date.now()+21000};
+  const budget={bytes:4500000,requests:14,until:Date.now()+21000};
   const page=await readURL(siteURL(/^https?:\/\//i.test(input)?input:'https://'+input).href,budget);
   if(!['text/html','application/xhtml+xml'].includes(page.type))throw Error('Adressen må peke på en nettside.');
   const html=page.data.toString('utf8'),base=page.url;
   const links=[...html.matchAll(/<link\b[^>]*>/gi)].map(m=>attrs(m[0])).filter(a=>a.rel?.includes('stylesheet')&&a.href).map(a=>{try{return siteURL(a.href,base).href}catch{return null}}).filter(Boolean);
-  const cssLinks=[...new Set(links)].filter(u=>new URL(u).hostname===new URL(base).hostname).sort((a,b)=>Number(/post-6\.|global|custom|style\.css/i.test(b))-Number(/post-6\.|global|custom|style\.css/i.test(a))).slice(0,4);
+  const score=u=>/post-6\./i.test(u)?100:/global.*desktop|custom|main\.css/i.test(u)?90:/local.*desktop|post-49\./i.test(u)?75:/style\.css|theme/i.test(u)?60:0;
+  const cssLinks=[...new Set(links)].filter(u=>new URL(u).hostname===new URL(base).hostname&&!/mobile|tablet|widget-|plugins\//i.test(u)).sort((a,b)=>score(b)-score(a)).slice(0,6);
   let css=[...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map(m=>m[1]).join('\n');
   for(const url of cssLinks){try{const r=await readURL(url,budget);if(r.type==='text/css')css+='\n'+r.data.toString('utf8')}catch{}}
   const palette=colors(css),candidates=[];
-  for(const m of html.matchAll(/<img\b[^>]*>/gi)){const a=attrs(m[0]);const src=a['data-lazy-src']||a['data-src']||a.src;const identity=[a.class,a.alt,src?.split('/').pop()].join(' ');const siteName=new URL(base).hostname.replace(/^www\./,'').split('.')[0];if(src&&(/logo|brand/i.test(identity)||(Number(a.width)/Number(a.height)>=2.5&&identity.toLowerCase().includes(siteName))))candidates.push(src)}
+  for(const m of html.matchAll(/<img\b[^>]*>/gi)){const a=attrs(m[0]);const src=a['data-lazy-src']||a['data-src']||a.src;const identity=[a.class,a.alt,src?.split('/').pop()].join(' ');const siteName=new URL(base).hostname.replace(/^www\./,'').split('.')[0];if(src&&!/uten[-_ ]?logo|without[-_ ]?logo|no[-_ ]?logo/i.test(identity)&&(/logo|brand/i.test(identity)||(Number(a.width)/Number(a.height)>=2.5&&identity.toLowerCase().includes(siteName))))candidates.push(src)}
   for(const m of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)){try{const walk=(v,depth=0)=>{if(depth>12||!v||typeof v!=='object')return;if(v.logo){const l=typeof v.logo==='string'?v.logo:v.logo.url||v.logo.contentUrl;if(l)candidates.push(l)}for(const x of Object.values(v))walk(x,depth+1)};walk(JSON.parse(m[1]))}catch{}}
   const urls=[...new Set(candidates.map(v=>{try{return siteURL(v,base).href}catch{return null}}).filter(Boolean))].slice(0,3),logos=[];
-  for(const url of urls){try{const r=await readURL(url,budget),type=rasterType(r.data);if(type&&r.data.length<=800000)logos.push({data:'data:'+type+';base64,'+r.data.toString('base64'),label:/hvit|white/i.test(url)?'Lys logo':'Logo '+(logos.length+1)})}catch{}}
-  return {source:base,...palette,logos,note:'Forslag fra tilgjengelige farger og logofiler. Kontroller resultatet før du bruker det.'};
+  for(const url of urls){try{const r=await readURL(url,budget),type=rasterType(r.data);if(type&&r.data.length<=800000)logos.push({data:'data:'+type+';base64,'+r.data.toString('base64'),source:url,tone:/hvit|white/i.test(url)?'light':/dark|black|svart/i.test(url)?'dark':'auto',label:/hvit|white/i.test(url)?'Lys logo':'Logo '+(logos.length+1)})}catch{}}
+  const theme=websiteTheme(css);
+  return {source:base,...palette,primary:theme.background,theme,logos,note:'Samlet stil tolket fra nettsidens tilgjengelige design. Kontrollér forhåndsvisningen før lagring.'};
 }
 const rates=new Map();
 async function handler(req,res){
