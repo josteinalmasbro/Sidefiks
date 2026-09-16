@@ -1,0 +1,1 @@
+{"rewrites":[{"source":"/booking","destination":"/booking.html"},{"source":"/booking/","destination":"/booking.html"}]}
