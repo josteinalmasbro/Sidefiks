@@ -738,7 +738,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 
 .profileGlassOverlay:has(#agencyBrandName) .profileGlassClose{display:none}
 #brandWebsite{background:#0a1115;color:var(--text,#fff);border:1px solid #3b4b54;border-radius:9px;padding:10px;min-height:40px;box-sizing:border-box}
-</style><style>.demoNotice{font-size:11px;line-height:1.4;padding:8px 12px;margin-bottom:12px;border:1px solid var(--line);border-radius:8px;color:var(--muted)}.demoNote{border:1px solid #b99a45;border-left:4px solid #b99a45;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.5}.demoNote p{margin:5px 0}.demoNote a{color:inherit;text-decoration:underline}</style></head>
+</style><style>.demoNotice{font-size:11px;line-height:1.4;padding:8px 12px;margin-bottom:12px;border:1px solid var(--line);border-radius:8px;color:var(--muted)}.demoNote{border:1px solid #b99a45;border-left:4px solid #b99a45;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.5}.demoNote p{margin:5px 0}.demoNote a{color:inherit;text-decoration:underline}</style><style>.offerChoices{border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0;margin:0}.offerChoices legend{font-size:13px;padding:0 4px}.offerChoices>div{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px}.offerChoices label{display:flex;align-items:center;gap:6px}.offerChoices input[type=radio]{width:auto;min-height:0;accent-color:var(--gold)}.offerChoices input[hidden]{display:none}</style></head>
 <body>
 <div class="top">
  <div class="topin">
@@ -1017,8 +1017,8 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
     <div class="field full compactField"><label>Arrangement / anledning</label><input id="rqName" placeholder="F.eks. Firmafest 2027"></div>
     <div class="field compactField"><label>Dato</label><input id="rqDate" type="date" onchange="checkArtistAvailability()"></div>
     <div id="artistAvailability" class="availabilityBox hidden full"></div>
-    <div class="field compactField"><label>Type jobb</label><select id="rqType"><option>Firmafest</option><option>Event</option><option>Julebord</option><option>Festival</option><option>Bryllup</option><option>Konferanse</option><option>Utland</option><option>Annet</option></select></div>
-    <div class="field full compactField"><label>Foreslått honorar</label><input id="rqFee" inputmode="numeric" type="number" placeholder="45000"></div>
+    <div class="field compactField"><label>Type jobb</label><select id="rqType"><option value="" disabled selected>Velg type jobb</option><option>Firmafest</option><option>Event</option><option>Julebord</option><option>Festival</option><option>Bryllup</option><option>Konferanse</option><option>Utland</option><option>Annet</option></select></div>
+    <div class="field compactField"><label for="rqArtistFee">Artistens honorar</label><input id="rqArtistFee" inputmode="numeric" type="number" min="0" step="1" placeholder="Beløpet artisten får"></div><div class="field compactField"><label for="rqFee">Totalpris til arrangør</label><input id="rqFee" inputmode="numeric" type="number" min="0" step="1" placeholder="Inkludert bookingpåslag"></div>
     <div class="field compactField"><label>By</label><input id="rqCity" placeholder="Trondheim"></div>
     <div class="field compactField"><label>Venue</label><input id="rqVenue" placeholder="Hotell / venue"></div>
    </div>
@@ -1046,7 +1046,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 
 <div class="toast" id="toast"></div>
 
-<div id="profileGlassOverlay" class="profileGlassOverlay" onclick="closeProfileEditor(event)"><section class="profileGlassModal" role="dialog" aria-modal="true" aria-labelledby="profileEditorTitle"><div class="profileGlassHead"><div><div id="profileEditorEyebrow" class="eyebrow"></div><h2 id="profileEditorTitle"></h2></div><button class="profileGlassClose" aria-label="Lukk" onclick="closeProfileEditor()">×</button></div><form novalidate id="memberProfileForm" onsubmit="event.preventDefault();saveProfileEditor()"><div id="profileEditorBody" class="profileGlassBody"></div><div class="profileGlassFoot"><span id="profileSaveError" role="alert"></span><button type="button" class="btn" onclick="closeProfileEditor()">Avbryt</button><button class="btn primary" type="submit">Lagre</button></div></form></section></div><style>#memberProfileForm{display:flex;flex-direction:column;min-height:0;overflow:hidden}.profileGlassBody{overflow:auto}.profileGlassModal{max-height:92dvh}.member-card{padding:16px;margin:12px 0;border:1px solid #635638;border-radius:14px;background:#ffffff06}.member-card p{white-space:pre-wrap;overflow-wrap:anywhere}.glassField input,.glassField textarea,.glassField select{width:100%;box-sizing:border-box}.instrument-row{display:grid;gap:8px;margin:12px 0}.instrument-row select{width:100%;min-height:44px;background:#10191e;color:#fff;border:1px solid #425059;border-radius:10px;padding:10px}.member-instruments{margin:16px 0}.contract-time-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;grid-column:1/-1}.contract-time-pair input{min-width:0}.profile-missing-list{display:grid;gap:8px}.profile-missing-list .btn{text-align:left;white-space:normal;overflow-wrap:anywhere}.member-card summary{cursor:pointer;color:var(--gold);padding:12px 0}.profileGlassFoot{flex-wrap:wrap}#profileSaveError{color:#ffb5a5}</style><script>
+<div id="profileGlassOverlay" class="profileGlassOverlay" ><section class="profileGlassModal" role="dialog" aria-modal="true" aria-labelledby="profileEditorTitle"><div class="profileGlassHead"><div><div id="profileEditorEyebrow" class="eyebrow"></div><h2 id="profileEditorTitle"></h2></div><button class="profileGlassClose" aria-label="Lukk" onclick="closeProfileEditor()">×</button></div><form novalidate id="memberProfileForm" onsubmit="event.preventDefault();saveProfileEditor()"><div id="profileEditorBody" class="profileGlassBody"></div><div class="profileGlassFoot"><span id="profileSaveError" role="alert"></span><button type="button" class="btn" onclick="closeProfileEditor()">Avbryt</button><button class="btn primary" type="submit">Lagre</button></div></form></section></div><style>#memberProfileForm{display:flex;flex-direction:column;min-height:0;overflow:hidden}.profileGlassBody{overflow:auto}.profileGlassModal{max-height:92dvh}.member-card{padding:16px;margin:12px 0;border:1px solid #635638;border-radius:14px;background:#ffffff06}.member-card p{white-space:pre-wrap;overflow-wrap:anywhere}.glassField input,.glassField textarea,.glassField select{width:100%;box-sizing:border-box}.instrument-row{display:grid;gap:8px;margin:12px 0}.instrument-row select{width:100%;min-height:44px;background:#10191e;color:#fff;border:1px solid #425059;border-radius:10px;padding:10px}.member-instruments{margin:16px 0}.contract-time-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;grid-column:1/-1}.contract-time-pair input{min-width:0}.profile-missing-list{display:grid;gap:8px}.profile-missing-list .btn{text-align:left;white-space:normal;overflow-wrap:anywhere}.member-card summary{cursor:pointer;color:var(--gold);padding:12px 0}.profileGlassFoot{flex-wrap:wrap}#profileSaveError{color:#ffb5a5}</style><script>
 // Public names and roles only. All operational details are fictional demo data.
 const DEMO_VERSION='artist-catalog-2026-09-17-v1';
 const DEMO_NOTICE='DEMO · Alle jobber, honorarer, avtaler, signaturer, kontaktopplysninger og personlige behov er oppdiktet. Ingen reelle bookinger.';
@@ -1270,7 +1270,7 @@ function renderFilteredRequests(){
  if(currentRole==='agency')arr=arr.filter(r=>r.bookingOwner!=='artist'||getBookingPref(r.artistId).notifyAgency||getBookingPref(r.artistId).agencyManage);
  $('allRequests').innerHTML=arr.length?arr.map(r=>{
    const a=artistBy(r.artistId),d=fmtDate(r.date);
-   return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="artistTitle">${esc(a.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${stageBadge(r.stage,r)}</div>`;
+   return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="artistTitle">${esc(a.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(displayFee(r)).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${stageBadge(r.stage,r)}</div>`;
  }).join(''):'<div class="card"><div class="meta">Ingen saker i denne fasen.</div></div>';
 }
 
@@ -1278,7 +1278,7 @@ function renderCaseList(id,limit){
  let arr=state.requests.filter(r=>r.stage!=='signed');
  if(currentRole==='agency')arr=arr.filter(r=>r.bookingOwner!=='artist'||getBookingPref(r.artistId).notifyAgency||getBookingPref(r.artistId).agencyManage);
  if(limit)arr=arr.slice(0,limit);
- $(id).innerHTML=arr.length?arr.map(r=>{const a=artistBy(r.artistId),d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="artistTitle">${esc(a.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${stageBadge(r.stage,r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen aktive forespørsler.</div></div>';
+ $(id).innerHTML=arr.length?arr.map(r=>{const a=artistBy(r.artistId),d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="artistTitle">${esc(a.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(displayFee(r)).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${stageBadge(r.stage,r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen aktive forespørsler.</div></div>';
 }
 function renderEvents(){
  const arr=state.requests.filter(r=>r.stage==='signed');
@@ -1304,7 +1304,7 @@ function renderArtistPortal(){
  $('artistOpenCount').textContent=open.length;$('artistConfirmedCount').textContent=confirmed.length;$('artistRequestCount').textContent=open.length;$('artistAttentionRequests').textContent=open.length?`${open.length} åpne forespørsler`:'Ingen åpne forespørsler';
  const upcoming=cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).filter(r=>r.date>='2026-09-16').slice(0,4);
  $('artistUpcoming').innerHTML=upcoming.length?upcoming.map(r=>{const d=fmtDate(r.date);return `<div class="artistEvent" role="button" tabindex="0" onclick="openNextJob(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><b>${esc(r.name)}</b><div class="meta">${esc(r.city)} · ${esc(r.organizer)}</div></div>${artistStageBadge(r)}</div>`}).join(''):'<div class="meta">Ingen kommende saker registrert.</div>';
- $('artistRequestList').innerHTML=cases.length?cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(r=>{const d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee||0).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${artistStageBadge(r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen forespørsler eller jobber.</div></div>';
+ $('artistRequestList').innerHTML=cases.length?cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(r=>{const d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(displayFee(r)).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${artistStageBadge(r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen forespørsler eller jobber.</div></div>';
  renderMonthCalendar('artist');renderArtistCaseFilter();renderProfileCompletion();
 }
 function addPrivateBusy(){openPrivateCalendarEntry()}
@@ -1574,21 +1574,23 @@ const contractFields=[['ownerLegal','Artistens / byråets juridiske navn','text'
 function contractDetails(r){const details={ownerLegal:ownerLabel(r),organizerLegal:r.organizer,payment:'Betalingsfrist og eventuelt forskudd avtales skriftlig før signering.',cancellation:'Frister, eventuell avbestillingsbetaling og håndtering av sykdom eller andre hindringer avtales skriftlig før signering.',...(r.contractDetails||{})};if(details.arrival&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(details.arrival)){details.arrivalNote=details.arrivalNote||details.arrival;details.arrival=''}return details}
 function contractLocked(r){return r.stage==='signed'||r.ownerSigned||r.agencySigned||r.organizerSigned}
 function openContractEditor(id){const r=state.requests.find(x=>x.id===id);if(!r||contractLocked(r)){toast('Avtalen er låst etter signering');return}contractEditId=id;contractDraft=structuredClone(contractDetails(r));activeProfileEditor='contract';profileFocus=document.activeElement;$('profileEditorTitle').textContent='Avtaledetaljer';$('profileEditorEyebrow').textContent=r.name;$('profileSaveError').textContent='';$('memberProfileForm').querySelector('[type=submit]').hidden=false;$('profileEditorBody').innerHTML='<p class="glassDesc">Avtaleutkast for den aktuelle bookingen. Tilpass vilkårene og få dem juridisk kvalitetssikret før reell bruk. Signering i denne prototypen er en demonstrasjon.</p><div class="glassFormGrid">'+contractEditorFields()+'</div>';$('profileGlassOverlay').classList.add('on');document.body.style.overflow='hidden';$('profileGlassOverlay').querySelector('button').focus()}
-function saveContractEditor(){const form=$('memberProfileForm');if(!form.reportValidity())return;const r=state.requests.find(x=>x.id===contractEditId);if(!r||contractLocked(r))return;const details=Object.fromEntries([...form.querySelectorAll('[data-contract]')].map(el=>[el.dataset.contract,el.value.trim()]));const previous=structuredClone(r);r.contractDetails=details;if(r.contractVersion)r.contractVersion++;delete r.contractSnapshot;try{save()}catch(e){Object.assign(r,previous);$('profileSaveError').textContent='Kunne ikke lagre avtalen. Prøv igjen.';return}closeProfileEditor();currentRequestId=null;openRequest(r.id);toast('Avtaledetaljene er lagret')}
+function saveContractEditor(){const form=$('memberProfileForm');if(!form.reportValidity())return;const r=state.requests.find(x=>x.id===contractEditId);if(!r||contractLocked(r))return;const details=Object.fromEntries([...form.querySelectorAll('[data-contract]')].map(el=>[el.dataset.contract,el.value.trim()]));if(form.querySelector('[name=contractTimeMode]:checked')?.value==='later')details.showTime='Avtales senere';const previous=structuredClone(r);r.contractDetails=details;if(r.contractVersion)r.contractVersion++;delete r.contractSnapshot;try{save()}catch(e){Object.assign(r,previous);$('profileSaveError').textContent='Kunne ikke lagre avtalen. Prøv igjen.';return}closeProfileEditor();currentRequestId=null;openRequest(r.id);toast('Avtaledetaljene er lagret')}
 function contractBody(r){const d=contractDetails(r);return (r.demo?demoDocumentNote():'')+`<h2>Konsert- og bookingavtale</h2><p>Versjon ${r.contractVersion} · ${safe(r.name)}</p><div class="contractRow"><span>Artist / bookingbyrå</span><b>${safe(d.ownerLegal)} ${safe(d.ownerOrg)}</b></div><div class="contractRow"><span>Arrangør</span><b>${safe(d.organizerLegal)} ${safe(d.organizerOrg)}</b></div><div class="contractRow"><span>Artist</span><b>${safe(artistBy(r.artistId)?.name)}</b></div><div class="contractRow"><span>Dato og spillested</span><b>${safe(r.date)} · ${safe(r.venue)} · ${safe(r.city)}</b></div><div class="contractRow"><span>Honorar</span><b>${Number(r.fee||0).toLocaleString('nb-NO')} kr</b></div><p>Avgiftsbehandling og eventuelle tillegg må avklares i de avtalte vilkårene.</p>${contractFields.filter(([k])=>!['ownerLegal','ownerOrg','organizerLegal','organizerOrg'].includes(k)).map(([k,label])=>`<div class="member-card"><b>${label}</b><p>${safe(d[k]||'Ikke avtalt – må avklares ved behov')}</p></div>`).join('')}<div class="member-card"><h3>Backline</h3><p>${backlineLabel(r)}</p>${backlineRequirements(r)}</div><h3>Avtalens omfang og endringer</h3><p>Artisten gjennomfører den avtalte opptredenen. Arrangøren sørger for spillested og leveransene som er uttrykkelig avtalt ovenfor. Endringer i honorar, tidspunkt, omfang eller leveranseansvar skal bekreftes skriftlig av begge parter. Eventuelle tilleggskostnader avklares før de påløper.</p><h3>Vedlegg</h3><p>Teknisk rider og spesifiserte backlinekrav følger som vedlegg. Leveranseansvaret i denne avtalen går foran generelle ønsker i artistprofilen. Ved motstrid må partene avklare innholdet før signering.</p><details><summary>Teknisk rider vedlagt avtalen</summary>${riderDocument(r.artistId)}</details><p>Partenes kontaktpersoner og fullmakt til å signere skal avklares før en reell avtale inngås.</p>`}
-function getContractHtml(r){if(!r.contractVersion)return '<div class="rolecard"><b>Ingen kontrakt ennå</b><p>Kontrakten opprettes når tilbudet godkjennes.</p><button class="btn" onclick="openContractEditor('+r.id+')">Forbered avtaledetaljer</button></div>';return `<div class="actions">${!contractLocked(r)?`<button class="btn primary" onclick="openContractEditor(${r.id})">Rediger avtaledetaljer</button>`:''}<button class="btn" onclick="printContract(${r.id})">Forhåndsvis / skriv ut PDF</button></div><p class="meta">Avtaleutkast · juridisk kvalitetssikring gjenstår. Signeringsknappene er fortsatt demo.</p>${contractStatusHtml(r)}<div class="contract">${r.contractSnapshot||contractBody(r)}</div>`}
-function ensureContractSnapshot(r){if(!r.contractSnapshot)r.contractSnapshot=contractBody(r)}
+function getContractHtml(r){if(currentRole==='artist'&&!bookingPriceEditor(r))return '<button class="btn" onclick="printArtistAgreement('+r.id+')">Forhåndsvis artistavtale / PDF</button><div class="contract">'+(r.artistContractSnapshot||artistAgreement(r))+'</div>';if(!r.contractVersion)return '<div class="rolecard"><b>Ingen kontrakt ennå</b><p>Kontrakten opprettes når tilbudet godkjennes.</p><button class="btn" onclick="openContractEditor('+r.id+')">Forbered avtaledetaljer</button></div>';return `<div class="actions">${!contractLocked(r)?`<button class="btn primary" onclick="openContractEditor(${r.id})">Rediger avtaledetaljer</button>`:''}<button class="btn" onclick="printContract(${r.id})">Arrangøravtale / PDF</button><button class="btn" onclick="printArtistAgreement(${r.id})">Artistavtale / PDF</button></div><p class="meta">Avtaleutkast · juridisk kvalitetssikring gjenstår. Signeringsknappene er fortsatt demo.</p>${contractStatusHtml(r)}<div class="contract">${r.contractSnapshot||contractBody(r)}</div>`}
+function ensureContractSnapshot(r){if(!r.artistContractSnapshot)r.artistContractSnapshot=artistAgreement(r);if(!r.contractSnapshot)r.contractSnapshot=contractBody(r)}
 function printContract(id){const r=state.requests.find(x=>x.id===id);if(r)printDocument('Konsertavtale',getContractHtml(r).replace(/<div class="actions">[\s\S]*?<\/div>/,''),documentAgencyBrand(r))}
 
 
-function contractEditorFields(){const field=f=>profileField(contractDraft,f,'contract').replaceAll('data-field=','data-contract=');return contractFields.map(f=>f[0]==='soundcheck'?'':f[0]==='arrival'?'<div class="contract-time-pair">'+field(f)+field(contractFields.find(x=>x[0]==='soundcheck'))+'</div>':field(f)).join('')}
+function contractEditorFields(){const field=f=>f[0]==='showTime'?offerTimeField(contractDraft.showTime).replaceAll('data-offer=','data-contract=').replaceAll('offerTimeMode','contractTimeMode').replaceAll('toggleOfferTime()','toggleContractTime()'):profileField(contractDraft,f,'contract').replaceAll('data-field=','data-contract=');return contractFields.map(f=>f[0]==='soundcheck'?'':f[0]==='arrival'?'<div class="contract-time-pair">'+field(f)+field(contractFields.find(x=>x[0]==='soundcheck'))+'</div>':field(f)).join('')}
+
+function toggleContractTime(){const fixed=document.querySelector('[name=contractTimeMode]:checked')?.value==='fixed',el=document.querySelector('[data-contract=showTime]');el.hidden=!fixed;el.disabled=!fixed;el.required=fixed;if(fixed)el.focus()}
 
 let jobPopupState=null;
 function openNextJob(id){
  if(jobPopupState)closeJobPopup();
  const source=document.activeElement,scroll=window.scrollY;
  let overlay=$('jobGlassOverlay');
- if(!overlay){overlay=document.createElement('div');overlay.id='jobGlassOverlay';overlay.className='jobGlassOverlay';overlay.innerHTML='<section class="jobGlassModal" role="dialog" aria-modal="true" aria-label="Jobbdetaljer"><header class="jobGlassHead"><span class="eyebrow">Jobbdetaljer</span><button class="btn" id="closeJobGlass" onclick="closeJobPopup()">× Lukk</button></header><div id="jobGlassBody"></div></section>';overlay.addEventListener('click',e=>{if(e.target===overlay)closeJobPopup()});document.body.append(overlay)}
+ if(!overlay){overlay=document.createElement('div');overlay.id='jobGlassOverlay';overlay.className='jobGlassOverlay';overlay.innerHTML='<section class="jobGlassModal" role="dialog" aria-modal="true" aria-label="Jobbdetaljer"><header class="jobGlassHead"><span class="eyebrow">Jobbdetaljer</span><button class="btn" id="closeJobGlass" onclick="closeJobPopup()">× Lukk</button></header><div id="jobGlassBody"></div></section>';document.body.append(overlay)}
  const nodes=['bookingWorkspace','eventWorkspace'].map(id=>{const node=$(id),marker=document.createComment(id);node.before(marker);$('jobGlassBody').append(node);return {node,marker}});
  jobPopupState={source,scroll,nodes,overflow:document.body.style.overflow};
  document.querySelector('.layout').inert=true;document.querySelector('.top').inert=true;
@@ -1811,7 +1813,7 @@ function openRequest(id){if(currentRole==='agency'&&!jobPopupState)return openNe
   <div class="rolecard"><b>Ønsket dato</b><small><br>${esc(r.date)} · Foreløpig reservert</small></div>
   <div class="rolecard"><b>Type jobb</b><small><br>${esc(r.type)}</small></div>
   <div class="rolecard"><b>Venue</b><small><br>${esc(r.venue)} · ${esc(r.city)}</small></div>
-  <div class="rolecard"><b>Honorarramme</b><small><br>${Number(r.fee).toLocaleString('nb-NO')} kr</small></div>
+  ${priceOverview(r)}
  </div>${inviteHtml}${r.stage==='new'?'<div style="margin-top:14px"><button class="btn primary" onclick="moveToOffer()">Lag tilbud</button></div>':''}`;
 
  $('caseOverview').innerHTML+=backlineControl(r);
@@ -1854,9 +1856,9 @@ function openNewRequest(source='agency'){
    if(!canArtistDirectBook(currentPortalArtistId)){toast('Denne artisten har valgt at all booking går via bookingbyrået');return}
    selectedArtistId=currentPortalArtistId;
  }else{
-   selectedArtistId=selectedArtistId||artists[0].id;
+   selectedArtistId=null;
  }
- wizardStep=1;
+ wizardStep=1;Object.values(requestRequired).flat().forEach(id=>$(id).value='');
  $('artistSearchInput').value='';
  if($('rqDate'))$('rqDate').value='';
  if($('rqOrganizerEmail'))$('rqOrganizerEmail').value='';
@@ -1876,7 +1878,7 @@ function renderArtistPicker(){
  $('artistPicker').innerHTML=rows.map(a=>`<div class="artistOption ${a.id===selectedArtistId?'on':''}" onclick="selectArtist('${a.id}')"><div><b>${esc(a.name)}</b><small>${esc(a.meta||'Artist i stallen')}</small></div><div class="artistTick">${a.id===selectedArtistId?'✓':''}</div></div>`).join('');
 }
 function filterArtists(){renderArtistPicker()}
-function selectArtist(id){selectedArtistId=id;renderArtistPicker();checkArtistAvailability()}
+function selectArtist(id){selectedArtistId=id;renderArtistPicker();checkArtistAvailability();syncRequestNext()}
 
 function requestStageText(stage){
   return stage==='new'?'Forespørsel':
@@ -1919,7 +1921,7 @@ function checkArtistAvailability(){
 
   const list=cases.map(r=>`<div class="conflictItem">
     <div class="conflictTop"><b>${esc(r.name)}</b><span class="badge ${requestStageClass(r.stage)}">${requestStageText(r.stage).toUpperCase()}</span></div>
-    <div class="conflictMeta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee||0).toLocaleString('nb-NO')} kr</div>
+    <div class="conflictMeta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(displayFee(r)).toLocaleString('nb-NO')} kr</div>
   </div>`).join('');
 
   if(confirmed.length){
@@ -1954,24 +1956,11 @@ function updateWizard(){
  $('wizardTitle').textContent=titles[wizardStep-1][0];
  $('wizardHelp').textContent=titles[wizardStep-1][1];
  $('wizardBack').style.visibility=wizardStep===1?'hidden':'visible';
- $('wizardNext').textContent=wizardStep===4?'Opprett forespørsel':'Neste →';
+ $('wizardNext').textContent=wizardStep===4?'Opprett forespørsel':'Neste →';syncRequestNext();
  if(wizardStep===2) setTimeout(checkArtistAvailability,0);
  if(wizardStep===4) renderRequestSummary();
 }
-function wizardNext(){
- if(wizardStep===1 && !selectedArtistId){toast('Velg artist først');return}
- if(wizardStep===2){
-  if(!$('rqName').value.trim()||!$('rqDate').value){toast('Fyll inn arrangement og dato');return}
-  const availability=checkArtistAvailability();
-  if(availability.blocked){toast('Artisten har allerede en bekreftet jobb denne datoen');return}
- }
- if(wizardStep===3){
-  if(!$('rqOrganizer').value.trim()){toast('Fyll inn arrangør');return}
-  if($('rqInviteOrganizer').checked&&!$('rqOrganizerEmail').value.trim()){toast('Legg inn e-post til arrangør eller fjern avhuking for invitasjon');return}
- }
- if(wizardStep===4){createRequest();return}
- wizardStep++;updateWizard();
-}
+function wizardNext(){if(!requestStepValid(wizardStep)){toast('Fyll ut alle feltene før du går videre');return}if(wizardStep===2&&checkArtistAvailability().blocked){toast('Artisten har allerede en bekreftet jobb denne datoen');return}if(wizardStep===4){createRequest();return}wizardStep++;updateWizard()}
 function wizardBack(){if(wizardStep>1){wizardStep--;updateWizard()}}
 function renderRequestSummary(){
  const a=artistBy(selectedArtistId);
@@ -1982,28 +1971,28 @@ function renderRequestSummary(){
   <div class="summaryRow"><span>Dato</span><b>${esc($('rqDate').value||'–')}</b></div>
   <div class="summaryRow"><span>Sted</span><b>${esc([$('rqVenue').value,$('rqCity').value].filter(Boolean).join(', ')||'–')}</b></div>
   <div class="summaryRow"><span>Arrangør</span><b>${esc($('rqOrganizer').value||'–')}</b></div>
-  <div class="summaryRow"><span>Invitasjon</span><b>${$('rqInviteOrganizer').checked?('Sendes til '+esc($('rqOrganizerEmail').value||'e-post mangler')):'Sendes senere'}</b></div>
-  <div class="summaryRow"><span>Honorar</span><b>${Number($('rqFee').value||0).toLocaleString('nb-NO')} kr</b></div>`;
+  <div class="summaryRow"><span>Invitasjon</span><b>Inviteres når tilbudet sendes</b></div>
+  <div class="summaryRow"><span>Artistens honorar</span><b>${Number($('rqArtistFee').value||0).toLocaleString('nb-NO')} kr</b></div><div class="summaryRow"><span>Totalpris til arrangør</span><b>${Number($('rqFee').value||0).toLocaleString('nb-NO')} kr</b></div>`;
 }
-function createRequest(){
+function createRequest(){if(!requestStepValid(1)||!requestStepValid(2)||!requestStepValid(3)){toast('Fyll ut alle feltene før opprettelse');return}
  const name=$('rqName').value.trim(),artistId=selectedArtistId,date=$('rqDate').value,organizer=$('rqOrganizer').value.trim(),contact=$('rqContact').value.trim(),organizerEmail=$('rqOrganizerEmail').value.trim(),city=$('rqCity').value.trim(),venue=$('rqVenue').value.trim(),fee=Number($('rqFee').value||0),type=$('rqType').value;
- if(!name||!date||!organizer){toast('Mangler nødvendig informasjon');return}
+ if(!$('rqArtistFee').value||!$('rqFee').value||!Number.isFinite(Number($('rqArtistFee').value))||Number($('rqArtistFee').value)<0||!Number.isFinite(fee)||fee<0){toast('Fyll inn artistens honorar og totalprisen til arrangør');return}if(!name||!date||!organizer){toast('Mangler nødvendig informasjon');return}
  const availability=checkArtistAvailability();if(availability.blocked){toast('Kan ikke opprette: artisten har en bekreftet jobb denne datoen');return}
  const bookingOwner=requestCreator==='artist'?'artist':'agency',pref=getBookingPref(artistId),inviteNow=false;
  const item={
-   id:Date.now(),name,artistId,date,organizer,contact:contact||'Ikke satt',organizerEmail,
+   id:Date.now(),artistFee:Number($('rqArtistFee').value),name,artistId,date,organizer,contact:contact||'Ikke satt',organizerEmail,
    organizerInvited:inviteNow&&!!organizerEmail,organizerInviteSentAt:inviteNow&&organizerEmail?new Date().toISOString():null,
    city:city||'Sted ikke satt',venue:venue||'Venue ikke satt',fee,type,stage:'new',
    bookingOwner,ownerSigned:false,agencySigned:false,organizerSigned:false,offerAccepted:false,contractVersion:0,
    agencyNotified:bookingOwner==='agency'||!!pref.notifyAgency
  };
  state.requests.unshift(item);save();renderAll();closeNewRequest();
- ['rqName','rqDate','rqOrganizer','rqContact','rqOrganizerEmail','rqCity','rqVenue','rqFee'].forEach(id=>$(id).value='');
+ ['rqName','rqDate','rqOrganizer','rqContact','rqOrganizerEmail','rqCity','rqVenue','rqFee','rqArtistFee'].forEach(id=>$(id).value='');
  if($('artistAvailability')){$('artistAvailability').className='availabilityBox hidden full';$('artistAvailability').innerHTML=''}
  toast(inviteNow&&organizerEmail?'✓ Booking opprettet og arrangør invitert':'✓ Booking opprettet');
  showView(requestCreator==='artist'?'artistRequests':'requests');
 }
-document.querySelectorAll('.modalback').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
+
 
 function searchData(){return state.requests.map(r=>({type:r.stage==='signed'?'Arrangement':'Bookingcase',name:r.name,meta:`${artistBy(r.artistId).name} · ${r.organizer} · ${r.city}`,id:r.id,signed:r.stage==='signed'})).concat(artists.map(a=>({type:'Artist',name:a.name,meta:'Artiststall',artist:true})))}
 const search=$('globalSearch'),res=$('searchResults');function renderSearch(q){q=q.trim().toLowerCase();if(!q){res.classList.remove('on');return}const hits=searchData().filter(x=>(x.type+' '+x.name+' '+x.meta).toLowerCase().includes(q)).slice(0,10);res.innerHTML=hits.length?hits.map((x,i)=>`<div class="result" data-i="${i}"><div class="ricon">${x.type==='Artist'?'AR':x.signed?'EV':'BK'}</div><div><div class="rtype">${esc(x.type)}</div><b>${esc(x.name)}</b><div class="rmeta">${esc(x.meta)}</div></div><span>→</span></div>`).join(''):'<div style="padding:16px;color:var(--muted)">Ingen treff</div>';res.classList.add('on');res.querySelectorAll('.result').forEach((el,i)=>el.onclick=()=>{const x=hits[i];res.classList.remove('on');search.blur();if(x.id)(x.signed?openEvent:openRequest)(x.id);else{const a=artists.find(a=>a.name===x.name);if(a){changePortalArtist(a.id);switchRole('artist');showView('artistProfile')}}})}
@@ -2025,26 +2014,30 @@ function updateDemoSummary(){
  const el=document.querySelector('.quickStat:last-child b');if(el)el.textContent=total.toLocaleString('nb-NO')+' kr';
 }
 
-const shortOfferFields=[['date','Dato','date'],['venue','Spillested','text'],['city','Sted / by','text'],['fee','Avtalt pris i kroner','number'],['organizerEmail','Arrangørens e-post','email'],['showTime','Spilletidspunkt','time'],['duration','Spillelengde / sett','text'],['hotel','Overnatting – hvem bestiller og betaler','textarea'],['travel','Reise og transport','textarea'],['production','Lyd og lys – hvem leverer','textarea'],['other','Tillegg og hva som er inkludert i prisen','textarea']];
+const shortOfferFields=[['date','Dato','date'],['venue','Spillested','text'],['city','Sted / by','text'],['fee','Totalpris til arrangør i kroner','number'],['organizerEmail','Arrangørens e-post','email'],['showTime','Spilletidspunkt','showTime'],['duration','Spillelengde / sett','text'],['hotel','Overnatting – hvem bestiller og betaler','responsibility'],['travel','Reise og transport – hvem betaler','responsibility'],['production','Lyd og lys – hvem leverer og betaler','responsibility'],['other','Andre opplysninger','textarea']];
 const shortOfferCore=['date','venue','city','fee','organizerEmail'];
 function offerValues(r){const d=contractDetails(r);return Object.fromEntries(shortOfferFields.map(([k])=>[k,shortOfferCore.includes(k)?r[k]??'':d[k]??'']).concat([['organizerBackline',!!r.organizerBackline]]))}
 function offerIsCurrent(r){return !!r.offerSentAt&&r.offerSentValues===JSON.stringify(offerValues(r))}
 function offerStateText(r){return r.offerAccepted?'Tilbud godkjent':offerIsCurrent(r)?'Venter på svar fra arrangør':r.stage==='new'?'Ingen tilbud laget':'Tilbudsutkast – ikke sendt'}
-function offerSummary(r){const v=offerValues(r);return '<div class="contract"><h3>Tilbud · '+safe(artistBy(r.artistId)?.name)+'</h3><p>'+safe(r.name)+' · '+safe(r.organizer)+'</p>'+shortOfferFields.filter(([k])=>k!=='organizerEmail').map(([k,label])=>'<div class="contractRow"><span>'+safe(label)+'</span><b>'+safe(k==='fee'?Number(v[k]).toLocaleString('nb-NO')+' kr':v[k]||'Ikke avtalt')+'</b></div>').join('')+'<div class="contractRow"><span>Backline</span><b>'+safe(backlineLabel(r))+'</b></div><p>Detaljert backlineliste og teknisk rider avklares senere.</p><p class="meta">Kortversjon av avtalen. Opplysningene følger videre til kontrakten. DEMO: Ingen e-post eller reell avtale sendes.</p></div>'}
-function offerPane(r){
+function offerSummary(r){const v=offerValues(r);return '<div class="contract"><h3>Tilbud · '+safe(artistBy(r.artistId)?.name)+'</h3><p>'+safe(r.name)+' · '+safe(r.organizer)+'</p>'+shortOfferFields.filter(([k])=>k!=='organizerEmail').map(([k,label])=>'<div class="contractRow"><span>'+safe(label)+'</span><b>'+safe(k==='fee'?Number(v[k]).toLocaleString('nb-NO')+' kr':v[k]||(k==='showTime'?'Avtales senere':'Ikke avtalt'))+'</b></div>').join('')+'<div class="contractRow"><span>Backline</span><b>'+safe(backlineLabel(r))+'</b></div><p>Detaljert backlineliste og teknisk rider avklares senere.</p><p class="meta">Kortversjon av avtalen. Opplysningene følger videre til kontrakten. DEMO: Ingen e-post eller reell avtale sendes.</p></div>'}
+function offerPane(r){if(!bookingPriceEditor(r))return artistPricePane(r);
  if(r.stage==='new')return '<p>Lag et tilbud med pris, dato og leveranser først.</p><button class="btn primary" onclick="moveToOffer()">Lag tilbud</button>';
  if(r.offerAccepted||contractLocked(r))return '<p><b>'+safe(offerStateText(r))+'</b></p>'+offerSummary(r);
- const v=offerValues(r);return '<p><b>'+safe(offerStateText(r))+'</b></p><p class="meta">Fyll inn kortversjonen av avtalen. Lagre et utkast eller send det til arrangøren. Sending og godkjenning er simulert i demoen.</p><form id="shortOfferForm" onsubmit="event.preventDefault();sendShortOffer('+r.id+')"><div class="glassFormGrid">'+shortOfferFields.map(([k,label,type])=>'<label class="glassField">'+label+(type==='textarea'?'<textarea data-offer="'+k+'">'+safe(v[k])+'</textarea>':'<input data-offer="'+k+'" type="'+type+'" '+(k==='fee'?'min="0" step="1" ':'')+'value="'+safe(v[k])+'" '+(['date','venue','fee','organizerEmail','showTime','duration'].includes(k)?'required':'')+'>')+'</label>').join('')+'</div><label><input type="checkbox" data-offer="organizerBackline" '+(v.organizerBackline?'checked':'')+'> Arrangør stiller med backline</label><p class="meta">Ellers tar bandet med egen backline. Detaljert backlineliste og teknisk rider avklares senere.</p><p id="offerError" role="alert"></p><div class="actions"><button type="button" class="btn" onclick="saveShortOffer('+r.id+')">Lagre utkast</button><button class="btn primary" type="submit">'+(offerIsCurrent(r)?'Send oppdatert tilbud til arrangør':'Send tilbud til arrangør')+'</button>'+(offerIsCurrent(r)?'<button type="button" class="btn" onclick="acceptOffer()">Simuler arrangørens godkjenning</button>':'')+'</div></form>';
+ const v=offerValues(r);return '<p><b>'+safe(offerStateText(r))+'</b></p><p class="meta">Fyll inn kortversjonen av avtalen. Lagre et utkast eller send det til arrangøren. Sending og godkjenning er simulert i demoen.</p><form id="shortOfferForm" onsubmit="event.preventDefault();sendShortOffer('+r.id+')"><div class="glassFormGrid">'+shortOfferFields.map(([k,label,type])=>(k==='fee'?pricingFields(r):'')+(type==='responsibility'?offerResponsibilityField(r,k,label):type==='showTime'?offerTimeField(v.showTime):'<label class="glassField">'+label+(type==='textarea'?'<textarea data-offer="'+k+'">'+safe(v[k])+'</textarea>':'<input data-offer="'+k+'" type="'+type+'" '+(k==='fee'?'min="0" step="1" ':'')+'value="'+safe(v[k])+'" '+(['date','venue','fee','organizerEmail','showTime','duration'].includes(k)?'required':'')+'>')+'</label>')).join('')+'</div><label><input type="checkbox" data-offer="organizerBackline" '+(v.organizerBackline?'checked':'')+'> Arrangør stiller med backline</label><p class="meta">Ellers tar bandet med egen backline. Detaljert backlineliste og teknisk rider avklares senere.</p><p id="offerError" role="alert"></p><div class="actions"><button type="button" class="btn" onclick="saveShortOffer('+r.id+')">Lagre utkast</button><button class="btn primary" type="submit">'+(offerIsCurrent(r)?'Send oppdatert tilbud til arrangør':'Send tilbud til arrangør')+'</button>'+(offerIsCurrent(r)?'<button type="button" class="btn" onclick="acceptOffer()">Simuler arrangørens godkjenning</button>':'')+'</div></form>';
 }
 function offerTab(){document.querySelector('[data-btab="offer"]').click()}
 function refreshOffer(r){renderAll();currentRequestId=null;openRequest(r.id);offerTab()}
-function moveToOffer(){const r=state.requests.find(x=>x.id===currentRequestId);if(!r||contractLocked(r))return;if(r.stage==='new'){r.stage='offer';save()}refreshOffer(r)}
+function moveToOffer(){const r=state.requests.find(x=>x.id===currentRequestId);if(!r||!bookingPriceEditor(r)||contractLocked(r))return;if(r.stage==='new'){r.stage='offer';save()}refreshOffer(r)}
 function collectShortOffer(r,send=false){
- const f=$('shortOfferForm');if(!f)return false;if(send&&!f.reportValidity())return false;
- const values={};f.querySelectorAll('[data-offer]').forEach(el=>values[el.dataset.offer]=el.type==='checkbox'?el.checked:el.value.trim());
+ const f=$('shortOfferForm');if(!f||!bookingPriceEditor(r))return false;if(send&&!f.reportValidity())return false;
+ const artistInput=f.querySelector('[data-offer-artist-fee]');const artistFee=Number(artistInput?.value);if(!artistInput?.value||!Number.isFinite(artistFee)||artistFee<0){$('offerError').textContent='Fyll inn et gyldig honorar til artisten.';return false}const values={};f.querySelectorAll('[data-offer]').forEach(el=>values[el.dataset.offer]=el.type==='checkbox'?el.checked:el.value.trim());
+ const timeMode=f.querySelector('[name=offerTimeMode]:checked')?.value||'later';values.showTime=timeMode==='later'?'Avtales senere':values.showTime;
+ if(timeMode==='fixed'&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(values.showTime)){$('offerError').textContent='Velg et klokkeslett eller Avtales senere.';return false}
+ const responsibilities={...r.offerResponsibilities};for(const key of ['hotel','travel','production']){const owner=f.querySelector('[name=offerOwner-'+key+']:checked')?.value||'',note=f.querySelector('[data-offer-note='+key+']')?.value.trim()||'';if(send&&!owner){$('offerError').textContent='Velg artist eller arrangør for overnatting, reise og lyd/lys.';return false}responsibilities[key]={owner,note};values[key]=(owner==='artist'?'Artist':owner==='organizer'?'Arrangør':'Ansvar ikke avklart')+(note?' – '+note:'');}
+
  if(!/^\d{4}-\d{2}-\d{2}$/.test(values.date)||!values.venue){$('offerError').textContent='Fyll inn dato og spillested før lagring.';return false}
  if(values.fee===''||!Number.isFinite(Number(values.fee))||Number(values.fee)<0){$('offerError').textContent='Skriv inn en gyldig pris på null eller mer.';return false}
- const before=JSON.stringify(offerValues(r));for(const k of shortOfferCore)r[k]=k==='fee'?Number(values[k]):values[k];r.organizerBackline=values.organizerBackline;r.contractDetails={...r.contractDetails,...Object.fromEntries(shortOfferFields.filter(([k])=>!shortOfferCore.includes(k)).map(([k])=>[k,values[k]]))};
+ const before=JSON.stringify(offerValues(r));r.artistFee=artistFee;r.offerResponsibilities=responsibilities;for(const k of shortOfferCore)r[k]=k==='fee'?Number(values[k]):values[k];r.organizerBackline=values.organizerBackline;r.contractDetails={...r.contractDetails,...Object.fromEntries(shortOfferFields.filter(([k])=>!shortOfferCore.includes(k)).map(([k])=>[k,values[k]]))};
  if(before!==JSON.stringify(offerValues(r))){delete r.offerSentAt;delete r.offerSentValues;r.offerAccepted=false;delete r.contractSnapshot}
  return true;
 }
@@ -2055,6 +2048,27 @@ function acceptOffer(id=currentRequestId){const r=state.requests.find(x=>x.id===
 function offerInvitationInfo(r){return '<div class="inviteStatus"><b>'+safe(offerStateText(r))+'</b><div class="creatorNote">'+(r.stage==='new'?'Arrangøren inviteres når du sender tilbudet.':offerIsCurrent(r)?'Demo: Tilbud og portalinvitasjon er registrert til '+safe(r.organizerEmail)+'. Ingen e-post er sendt.':r.offerAccepted?'Opplysningene fra tilbudet følger kontrakten.':'Utkastet er internt. Arrangøren får tilbudet og tilgang når du sender.')+'</div></div>'}
 function renderOrganizerOffers(){let el=$('organizerOffers');if(!el){el=document.createElement('div');el.id='organizerOffers';$('organizerEventSummary').before(el)}const offers=state.requests.filter(r=>r.stage==='offer'&&offerIsCurrent(r));el.innerHTML=offers.length?'<h2>Tilbud til gjennomgang</h2>'+offers.map(r=>'<div class="card"><h3>'+safe(r.name)+'</h3><p>'+safe(artistBy(r.artistId)?.name)+' · '+safe(r.organizer)+'</p><details><summary>Se tilbud</summary>'+offerSummary(r)+'<button class="btn primary" onclick="acceptOffer('+r.id+')">Simuler godkjenning og lag kontrakt</button></details></div>').join(''):''}
 
+function offerTimeField(value){const fixed=/^([01]\d|2[0-3]):[0-5]\d$/.test(value||'');return '<fieldset class="glassField offerChoices"><legend>Spilletidspunkt</legend><div><label><input type="radio" name="offerTimeMode" value="later" '+(!fixed?'checked':'')+' onchange="toggleOfferTime()"> Avtales senere</label><label><input type="radio" name="offerTimeMode" value="fixed" '+(fixed?'checked':'')+' onchange="toggleOfferTime()"> Tidspunkt er satt</label></div><input aria-label="Avtalt spilletidspunkt" data-offer="showTime" type="time" value="'+safe(fixed?value:'')+'" '+(fixed?'required':'disabled hidden')+'></fieldset>'}
+function toggleOfferTime(){const fixed=document.querySelector('[name=offerTimeMode]:checked')?.value==='fixed',el=document.querySelector('[data-offer=showTime]');el.hidden=!fixed;el.disabled=!fixed;el.required=fixed;if(fixed)el.focus()}
+function offerResponsibilityField(r,key,label){const saved=r.offerResponsibilities?.[key],old=contractDetails(r)[key]||'',owner=saved?.owner||'',note=saved?saved.note:old;return '<fieldset class="glassField offerChoices"><legend>'+safe(label)+'</legend><div>'+[['artist','Artist'],['organizer','Arrangør']].map(([v,t])=>'<label><input type="radio" name="offerOwner-'+key+'" value="'+v+'" '+(owner===v?'checked':'')+'> '+t+'</label>').join('')+'</div><input aria-label="Merknad '+key+'" data-offer-note="'+key+'" value="'+safe(note)+'" placeholder="Merknad (valgfritt)"></fieldset>'}
+
+// Demo view separation only; local role buttons are not access control.
+function bookingPriceEditor(r){return currentRole==='agency'||(currentRole==='artist'&&r.bookingOwner==='artist')}
+function artistAmount(r){return Number.isFinite(Number(r.artistFee))&&r.artistFee!==null?Number(r.artistFee):null}
+function displayFee(r){return currentRole==='artist'&&!bookingPriceEditor(r)?artistAmount(r)??0:Number(r.fee||0)}
+function pricingFields(r){const amount=artistAmount(r);return '<fieldset class="glassField offerChoices"><legend>Artistens honorar i kroner</legend><input aria-label="Artistens honorar i kroner" data-offer-artist-fee type="number" min="0" step="1" required value="'+safe(amount??'')+'"><p class="meta">Vises i artistens oversikt og artistavtale.</p></fieldset>'}
+function priceOverview(r){if(bookingPriceEditor(r))return '<div class="rolecard"><b>Priser · bookingansvarlig</b><p>Artistens honorar: '+(artistAmount(r)===null?'Ikke satt':artistAmount(r).toLocaleString('nb-NO')+' kr')+'<br>Totalpris til arrangør: '+Number(displayFee(r)).toLocaleString('nb-NO')+' kr<br>Differanse: '+(artistAmount(r)===null?'Ikke beregnet':(Number(r.fee||0)-artistAmount(r)).toLocaleString('nb-NO')+' kr')+'</p><small>Demo: Rollevisning, ikke sikker tilgangsstyring.</small></div>';return '<div class="rolecard"><b>'+ (currentRole==='artist'?'Artistens honorar':'Totalpris til arrangør')+'</b><p>'+ (currentRole==='artist'&&artistAmount(r)===null?'Ikke satt':displayFee(r).toLocaleString('nb-NO')+' kr')+'</p></div>'}
+function artistAgreement(r){const d=contractDetails(r);return (r.demo?demoDocumentNote():'')+'<h2>Artistavtale · '+safe(artistBy(r.artistId)?.name)+'</h2><p>'+safe(r.name)+' · '+safe(r.date)+' · '+safe(r.venue)+'</p><div class="contractRow"><span>Artistens honorar</span><b>'+(artistAmount(r)===null?'Ikke satt':artistAmount(r).toLocaleString('nb-NO')+' kr')+'</b></div>'+['showTime','duration','hotel','travel','production'].map(k=>'<div class="contractRow"><span>'+safe(({showTime:'Spilletidspunkt',duration:'Spillelengde',hotel:'Overnatting',travel:'Reise og transport',production:'Lyd og lys'})[k])+'</span><b>'+safe(d[k]||'Avtales senere')+'</b></div>').join('')+'<p>'+safe(backlineLabel(r))+'</p><p>Separat avtalevisning for artisten. Demoen innebærer ingen reell avtale eller signering.</p>'}
+function artistPricePane(r){return '<p><b>'+safe(offerStateText(r))+'</b></p>'+artistAgreement(r)}
+function printArtistAgreement(id){const r=state.requests.find(x=>x.id===id);if(r)printDocument('Artistavtale',r.artistContractSnapshot||artistAgreement(r),documentAgencyBrand(r))}
+function initializeDemoPrices(){let changed=false;for(const r of state.requests){if(r.artistFee===undefined){r.artistFee=r.demo?Math.round(Number(r.fee||0)*.8):null;changed=true}if(contractLocked(r)&&!r.artistContractSnapshot){r.artistContractSnapshot=artistAgreement(r);changed=true}}if(changed)save()}
+const requestRequired={2:['rqName','rqDate','rqType','rqArtistFee','rqFee','rqCity','rqVenue'],3:['rqOrganizer','rqContact','rqOrganizerEmail']};
+function requestStepValid(step){if(step===1)return !!artistBy(selectedArtistId);return (requestRequired[step]||[]).every(id=>$(id).value.trim()!==''&&$(id).checkValidity())}
+function syncRequestNext(){$('wizardNext').disabled=!requestStepValid(wizardStep)}
+function initializeRequestValidation(){for(const id of Object.values(requestRequired).flat()){$(id).required=true;$(id).removeAttribute('placeholder');$(id).addEventListener('input',syncRequestNext);$(id).addEventListener('change',syncRequestNext)}}
+
+initializeDemoPrices();
+initializeRequestValidation();
 initializeDemoDocuments();
 renderAll();
 document.body.classList.toggle('artist-role',currentRole==='artist');document.body.classList.toggle('organizer-role',currentRole==='organizer');$('roleAgencyBtn').classList.toggle('on',currentRole==='agency');$('roleArtistBtn').classList.toggle('on',currentRole==='artist');$('roleOrganizerBtn').classList.toggle('on',currentRole==='organizer');
