@@ -666,6 +666,18 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .artistEvent[role="button"]{cursor:pointer;transition:border-color .15s,background .15s}
 .artistEvent[role="button"]:hover{border-color:#e7c86a80;background:#e7c86a0c}
 .artistEvent[role="button"]:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+a[href],button:not(:disabled),[role="button"],summary{cursor:pointer}
+a[href],button,[role="button"],summary,.case,.eventrow,.calItem{transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s}
+@media(hover:hover){
+ a[href]:not(.btn):not(.nav):hover{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+ .btn:not(:disabled):hover,.nav:hover,summary:hover{background-color:#e7c86a18;border-color:#e7c86a80;color:var(--gold)}
+ .btn.primary:not(:disabled):hover,.tab.on:not(:disabled):hover{background:#f2d884;color:#151515;border-color:#f2d884}
+ .case:hover,.eventrow:hover,.artistStat:hover,.calItem[onclick]:hover,.result:hover{background-color:#e7c86a14;border-color:#e7c86a80;box-shadow:inset 0 0 0 1px #e7c86a45}
+ .roleSwitch button:not(.on):hover,.mobileNav button:not(.on):hover{background:#e7c86a18;color:var(--gold)}
+}
+a[href]:focus-visible,button:focus-visible,[role="button"]:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed}
+
 </style></head>
 <body>
 <div class="top">
