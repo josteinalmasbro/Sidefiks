@@ -22,7 +22,7 @@ async function readURL(input, budget, redirects=0) {
     const req=https.get(url,{agent:false,headers:{'User-Agent':'BookingDesignPreview/1.0','Accept':'text/html,text/css,image/png,image/jpeg,image/webp;q=0.9','Accept-Encoding':'identity'},lookup:(_h,options,cb)=>options.all?cb(null,[records[0]]):cb(null,records[0].address,4)},res=>{
       if([301,302,303,307,308].includes(res.statusCode)){
         res.resume();if(redirects>=3||!res.headers.location)return reject(Error('For mange videresendinger.'));
-        return readURL(siteURL(res.headers.location,url).href,budget,redirects+1).then(resolve,reject);
+        return Promise.resolve().then(()=>readURL(siteURL(res.headers.location,url).href,budget,redirects+1)).then(resolve,reject);
       }
       if(res.statusCode!==200){res.resume();return reject(Error('Nettsiden tillot ikke henting.'))}
       const chunks=[];let size=0;
@@ -71,5 +71,6 @@ async function handler(req,res){
 }
 module.exports=handler;
 module.exports._test={publicIP,siteURL,colors,extract,rasterType};
+
 
 
