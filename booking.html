@@ -1636,7 +1636,7 @@ function resetBrandColors(){$('agencyBrandPrimary').value=agencyBrandDefaults.pr
 
 
 let brandImportController=null,brandImportResult=null;
-function brandImportControls(){return `<section style="border:1px solid var(--line,#304149);border-radius:12px;padding:12px;margin:12px 0"><label for="brandWebsite"><b>Hent design fra nettside</b></label><p class="glassDesc" style="margin:6px 0">Skriv inn hjemmesiden din. Se forslag til farger og logo før du bruker dem.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><input id="brandWebsite" type="text" inputmode="url" placeholder="artistpartner.no" maxlength="2048" style="flex:1;min-width:160px"><button id="brandFetchButton" class="btn" type="button" onclick="fetchWebsiteBrand()">Hent forslag</button></div><p id="brandImportStatus" role="status" aria-live="polite" style="font-size:13px"></p><div id="brandImportResult"></div></section>`}
+function brandImportControls(){return `<section style="border:1px solid var(--line,#304149);border-radius:12px;padding:12px;margin:12px 0"><label for="brandWebsite"><b>Hent design fra nettside</b></label><p class="glassDesc" style="margin:6px 0">Skriv inn hjemmesiden din. Se forslag til farger og logo før du bruker dem.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><input id="brandWebsite" type="text" inputmode="url" placeholder="Skriv inn hjemmesiden din" maxlength="2048" style="flex:1;min-width:160px"><button id="brandFetchButton" class="btn" type="button" onclick="fetchWebsiteBrand()">Hent forslag</button></div><p id="brandImportStatus" role="status" aria-live="polite" style="font-size:13px"></p><div id="brandImportResult"></div></section>`}
 async function fetchWebsiteBrand(){
   const input=$('brandWebsite').value.trim(),draft=agencyBrandDraft,status=$('brandImportStatus');
   if(!input){status.textContent='Skriv inn hjemmesiden din først.';return}
@@ -1663,6 +1663,7 @@ async function applyImportedBrand(){
   for(const [k,id] of [['primary','agencyBrandPrimary'],['accent','agencyBrandAccent']])if(b[k]&&$('brandUse'+k)?.checked)$(id).value=b[k];
   if(logo)draft.logo=logo;updateAgencyBrandPreview();$('brandImportStatus').textContent='Forslaget vises nedenfor. Juster ved behov, og velg Lagre eller Avbryt.';
 }
+
 
 function renderAll(){applyAgencyBrand();
  const active=state.requests.filter(r=>r.stage!=='signed'),signed=state.requests.filter(r=>r.stage==='signed');
