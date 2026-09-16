@@ -679,6 +679,10 @@ a[href]:focus-visible,button:focus-visible,[role="button"]:focus-visible,summary
 button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 
 .artistEvent>.badge,.case>.badge,#bwStatus{max-width:240px;white-space:normal;line-height:1.4}
+.attentionLink{border-radius:10px;padding:12px 8px;transition:background .15s,color .15s}
+.attentionLink:hover{background:#e7c86a12;color:var(--gold)}
+.attentionHeading{border:0;background:transparent;color:inherit;padding:0;font-weight:700;text-align:left}
+.attentionHeading:hover{color:var(--gold)}
 </style></head>
 <body>
 <div class="top">
@@ -818,10 +822,10 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
  <div class="artistQuick">
   <div class="card"><div class="sectionTitle" style="margin:0 0 8px"><h2 style="margin:0">Neste jobber</h2><button class="btn" onclick="showView('artistCalendar')">Kalender</button></div><div id="artistUpcoming"></div></div>
   <div class="card"><h2 style="margin-top:0">Krever oppmerksomhet</h2>
-   <div class="artistAction"><div class="artistActionIcon">◉</div><div><b id="artistAttentionRequests">Forespørsler</b><div class="meta">Se nye og parallelle forespørsler før datoen blir bekreftet.</div></div></div>
-   <div class="artistAction"><div class="artistActionIcon">□</div><div><b>Kalenderen din</b><div class="meta">Marker private opptatte datoer, så bookingbyrået ser det før de sender tilbud.</div></div></div>
-   <div class="artistAction"><div class="artistActionIcon">⚡</div><div><b>Teknisk profil</b><div class="meta">Monitor, backline og medlemsprofiler brukes på nye jobber.</div></div></div>
-   <div class="artistAction"><div class="artistActionIcon">🚐</div><div style="width:100%"><b>Sjåfør fra bandet</b><div class="meta">Legg inn sjåfør dersom bandet har med egen sjåfør på en bekreftet jobb.</div><div id="artistDriverBlock" class="artistDriverBlock"></div></div></div>
+   <div class="artistAction attentionLink" role="button" tabindex="0" onclick="showArtistCases('open')"><div class="artistActionIcon">◉</div><div><b id="artistAttentionRequests">Forespørsler</b><div class="meta">Se nye og parallelle forespørsler før datoen blir bekreftet.</div></div></div>
+   <div class="artistAction attentionLink" role="button" tabindex="0" onclick="showView('artistCalendar')"><div class="artistActionIcon">□</div><div><b>Kalenderen din</b><div class="meta">Marker private opptatte datoer, så bookingbyrået ser det før de sender tilbud.</div></div></div>
+   <div class="artistAction attentionLink" role="button" tabindex="0" onclick="showView('artistProfile');openProfileEditor('monitor')"><div class="artistActionIcon">⚡</div><div><b>Teknisk profil</b><div class="meta">Monitor, backline og medlemsprofiler brukes på nye jobber.</div></div></div>
+   <div class="artistAction"><div class="artistActionIcon">🚐</div><div style="width:100%"><button class="attentionHeading" type="button" onclick="showArtistCases('signed')">Sjåfør fra bandet →</button><div class="meta">Legg inn sjåfør dersom bandet har med egen sjåfør på en bekreftet jobb.</div><div id="artistDriverBlock" class="artistDriverBlock"></div></div></div>
   </div>
  </div>
 </section>
@@ -1383,7 +1387,7 @@ function renderArtistCaseFilter(){
  $('artistRequestList').innerHTML=rows.length?rows.map(r=>`<button class="case" style="width:100%;text-align:left;color:inherit" onclick="openRequest(${r.id})"><div class="datebox"><b>${fmtDate(r.date).day}</b><small>${fmtDate(r.date).mon}</small></div><div><div class="caseTitle">${safe(r.name)}</div><div class="meta">${safe(r.organizer)} · ${safe(r.city)}</div></div>${artistStageBadge(r)}</button>`).join(''):'<div class="card">Ingen '+(artistListFilter==='signed'?'bekreftede jobber':artistListFilter==='open'?'åpne forespørsler':'saker')+' registrert for dette bandet.</div>';
 }
 
-document.addEventListener('keydown',e=>{const row=e.target.closest?.('.artistEvent[role="button"]');if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();row.click()}});
+document.addEventListener('keydown',e=>{const row=e.target.closest?.('.artistEvent[role="button"],.attentionLink[role="button"]');if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();row.click()}});
 function privateEntries(id){return memberData(id).busyEntries||(artistProfiles[id]?.busy||[]).map(date=>({date,members:[]}))}
 function privateEntryNames(entry,id){return entry.members.map(person=>memberData(id).members.find(m=>m.id===person.id)?.name||person.name).filter(Boolean).join(', ')||'Hvem er opptatt?'}
 function privateCalendarChip(date){const entry=privateEntries(currentPortalArtistId).find(e=>e.date===date);return entry?`<button type="button" class="calItem artistPrivate" onclick="openPrivateCalendarEntry('${date}')">${safe(privateEntryNames(entry,currentPortalArtistId))}<br><span>Privat opptatt</span></button>`:''}
