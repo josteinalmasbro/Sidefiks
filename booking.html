@@ -683,6 +683,22 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 .attentionLink:hover{background:#e7c86a12;color:var(--gold)}
 .attentionHeading{border:0;background:transparent;color:inherit;padding:0;font-weight:700;text-align:left}
 .attentionHeading:hover{color:var(--gold)}
+.cal{grid-template-columns:repeat(7,minmax(0,1fr));width:100%;min-width:0}
+.cal .day{min-width:0;overflow:hidden}
+.cal button.calItem{display:block;width:100%;max-width:100%;min-width:0;border:0;text-align:left;color:inherit;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.cal button.hold{color:#f0d57d}.cal button.signed{color:#7ce0ad}.cal button.contractSent{color:#f5b37e}
+.calendarMonthHeader{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:1.2rem;margin:0 0 16px}
+.calendarMonthActions{display:flex;align-items:center;gap:6px}.calendarMonthActions button{min-height:40px;min-width:40px;padding:7px 10px;font-size:.8rem}
+.cal .todayDay{border-color:var(--gold)}.cal .emptyDay{background:transparent;border-color:transparent}
+@media(max-width:760px){#artistCalendar>.card,#calendar>.card{padding:10px}.cal{gap:3px}.cal .day{padding:3px;min-height:64px}.cal .calItem,.artist-role #artistCalendarGrid button.calItem{font-size:.6rem;padding:4px 2px;line-height:1.2}.calendarMonthHeader{font-size:1rem}.calendarMonthActions button{min-height:44px}}
+.calendarModeActions{display:flex;gap:6px;flex-basis:100%}.calendarModeActions .btn{font-size:.8rem;min-height:40px}
+.cal.calendarList{display:block}.calendarListDate{padding:8px 0 16px;border-top:1px solid var(--line)}.calendarListDate h3{font-size:.95rem;color:var(--gold);text-transform:capitalize}
+.calendarListJob{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%;min-width:0;margin:7px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:#ffffff04;color:var(--text);text-align:left;overflow-wrap:anywhere}
+.calendarListJob:hover{background:#e7c86a12;border-color:#e7c86a80}.calendarListJob .badge{white-space:normal}
+.artist-role #artistCalendarGrid.calendarList button.artistPrivate{padding:12px;font-size:.85rem}
+.calendarMonthActions{flex-wrap:wrap;max-width:100%}.calendarMonthPicker{min-width:0;max-width:180px;background:#0e1519;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px;color-scheme:dark;font:inherit;font-size:.8rem}
+#artistCalendar>.card,#calendar>.card{max-width:980px;width:100%}
+@media(min-width:761px){#artistCalendar h1,#calendar h1{font-size:2rem;margin:6px 0}#artistCalendar .lead,#calendar .lead{font-size:.85rem;line-height:1.4}#artistCalendar .artistCalLegend{margin:8px 0}#artistCalendar>.card,#calendar>.card{padding:12px}.cal .day{min-height:clamp(42px,7vh,64px);padding:5px}.cal:not(.calendarList) .calItem{font-size:.64rem;padding:4px;margin-top:4px}.calendarMonthHeader{margin-bottom:8px;gap:6px}.calendarModeActions{flex-basis:auto}}
 </style></head>
 <body>
 <div class="top">
@@ -1183,7 +1199,7 @@ function renderEvents(){
  const arr=state.requests.filter(r=>r.stage==='signed');
  $('allEvents').innerHTML=arr.length?arr.map(r=>{const a=artistBy(r.artistId),d=fmtDate(r.date);return `<div class="eventrow" onclick="openEvent(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="eventTitle">${esc(r.name)}</div><div class="artistTitle">${esc(a.name)}</div><div class="meta">${esc(r.city)} · ${esc(r.venue)}</div></div><span class="badge bg-green">BEKREFTET</span></div>`}).join(''):'<div class="card"><div class="meta">Ingen bekreftede arrangement ennå.</div></div>';
 }
-function renderCalendar(){
+function renderLegacyCalendar(){
  let html=['M','T','O','T','F','L','S'].map(x=>`<div class="dow">${x}</div>`).join('');const first=new Date('2026-09-01T12:00:00'),start=(first.getDay()+6)%7;for(let i=0;i<start;i++)html+='<div class="day"></div>';
  for(let d=1;d<=30;d++){let iso=`2026-09-${String(d).padStart(2,'0')}`,rs=state.requests.filter(r=>r.date===iso).filter(r=>r.bookingOwner!=='artist'||currentRole!=='agency'||getBookingPref(r.artistId).agencyCalendar);html+=`<div class="day"><div class="num">${d}</div>${rs.map(r=>`<div class="calItem ${r.stage==='signed'?'signed':r.stage==='contract'?'contractSent':'hold'}" onclick="${r.stage==='signed'?'openEvent':'openRequest'}(${r.id});event.stopPropagation()">${esc(r.name)}<br>${esc(artistBy(r.artistId).name)}</div>`).join('')}</div>`} $('calendarGrid').innerHTML=html;
 }
@@ -1204,10 +1220,7 @@ function renderArtistPortal(){
  const upcoming=cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).filter(r=>r.date>='2026-09-16').slice(0,4);
  $('artistUpcoming').innerHTML=upcoming.length?upcoming.map(r=>{const d=fmtDate(r.date);return `<div class="artistEvent" role="button" tabindex="0" onclick="openNextJob(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><b>${esc(r.name)}</b><div class="meta">${esc(r.city)} · ${esc(r.organizer)}</div></div>${artistStageBadge(r)}</div>`}).join(''):'<div class="meta">Ingen kommende saker registrert.</div>';
  $('artistRequestList').innerHTML=cases.length?cases.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(r=>{const d=fmtDate(r.date);return `<div class="case" onclick="openRequest(${r.id})"><div class="datebox"><b>${d.day}</b><small>${d.mon}</small></div><div><div class="caseTitle">${esc(r.name)}</div><div class="meta">${esc(r.organizer)} · ${esc(r.city)} · ${Number(r.fee||0).toLocaleString('nb-NO')} kr</div>${ownerBadge(r)}</div>${artistStageBadge(r)}</div>`}).join(''):'<div class="card"><div class="meta">Ingen forespørsler eller jobber.</div></div>';
- let cal=['M','T','O','T','F','L','S'].map(x=>`<div class="dow">${x}</div>`).join(''),start=(new Date('2026-09-01T12:00:00').getDay()+6)%7;
- for(let i=0;i<start;i++)cal+='<div class="day"></div>';
- for(let d=1;d<=30;d++){const iso=`2026-09-${String(d).padStart(2,'0')}`,cs=cases.filter(r=>r.date===iso);let chips=cs.map(r=>`<button type="button" class="calItem ${r.stage==='signed'?'signed':r.stage==='contract'?'contractSent':'hold'}" onclick="currentRequestId=null;openRequest(${r.id})">${esc(r.name)}</button>`).join('');chips+=privateCalendarChip(iso);cal+=`<div class="day"><div class="num">${d}</div>${chips}</div>`}
- $('artistCalendarGrid').innerHTML=cal;renderArtistCaseFilter();renderProfileCompletion();
+ renderMonthCalendar('artist');renderArtistCaseFilter();renderProfileCompletion();
 }
 function addPrivateBusy(){openPrivateCalendarEntry()}
 
@@ -1507,6 +1520,42 @@ document.addEventListener('keydown',e=>{
  if(e.key!=='Tab')return;const all=[...$('jobGlassOverlay').querySelectorAll('button,a[href],input,select,textarea,[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length),first=all[0],last=all.at(-1);
  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
 });
+
+const calendarMonths={artist:new Date(new Date().getFullYear(),new Date().getMonth(),1),agency:new Date(new Date().getFullYear(),new Date().getMonth(),1)};
+const calendarModes={artist:'month',agency:'month'};
+const calendarListScopes={artist:'all',agency:'all'};
+function setCalendarListScope(kind,scope){calendarListScopes[kind]=scope;renderMonthCalendar(kind)}
+function pickCalendarMonth(kind,value){if(!/^\d{4}-\d{2}$/.test(value))return;const [y,m]=value.split('-').map(Number);calendarMonths[kind]=new Date(y,m-1,1);renderMonthCalendar(kind)}
+function setCalendarMode(kind,mode){calendarModes[kind]=mode;renderMonthCalendar(kind)}
+function changeCalendarMonth(kind,delta){const d=calendarMonths[kind];calendarMonths[kind]=new Date(d.getFullYear(),d.getMonth()+delta,1);renderMonthCalendar(kind)}
+function todayCalendar(kind){const d=new Date();calendarMonths[kind]=new Date(d.getFullYear(),d.getMonth(),1);renderMonthCalendar(kind)}
+function renderCalendar(){renderMonthCalendar('agency')}
+function renderMonthCalendar(kind){
+ const artist=kind==='artist',grid=$(artist?'artistCalendarGrid':'calendarGrid');if(!grid)return;
+ const d=calendarMonths[kind],year=d.getFullYear(),month=d.getMonth(),count=new Date(year,month+1,0).getDate(),offset=(d.getDay()+6)%7;
+ let header=grid.previousElementSibling;header.className='calendarMonthHeader';
+ const title=d.toLocaleDateString('nb-NO',{month:'long',year:'numeric'});
+ header.innerHTML=`<span aria-live="polite">${safe(title[0].toUpperCase()+title.slice(1))}</span><span class="calendarMonthActions"><button type="button" class="btn" aria-label="Forrige måned" onclick="changeCalendarMonth('${kind}',-1)">‹</button><button type="button" class="btn" onclick="todayCalendar('${kind}')">I dag</button><button type="button" class="btn" aria-label="Neste måned" onclick="changeCalendarMonth('${kind}',1)">›</button></span><span class="calendarModeActions" aria-label="Kalendervisning"><button type="button" class="btn ${calendarModes[kind]==='month'?'primary':''}" aria-pressed="${calendarModes[kind]==='month'}" onclick="setCalendarMode('${kind}','month')">Måned</button><button type="button" class="btn ${calendarModes[kind]==='list'?'primary':''}" aria-pressed="${calendarModes[kind]==='list'}" onclick="setCalendarMode('${kind}','list')">Liste</button></span>`;
+ const rows=(artist?artistCases():state.requests.filter(r=>r.bookingOwner!=='artist'||currentRole!=='agency'||getBookingPref(r.artistId).agencyCalendar));
+ header.querySelector('.calendarMonthActions').insertAdjacentHTML('afterbegin',`<input class="calendarMonthPicker" type="month" aria-label="Velg måned" value="${year}-${String(month+1).padStart(2,'0')}" onchange="pickCalendarMonth('${kind}',this.value)">`);
+ grid.classList.toggle('calendarList',calendarModes[kind]==='list');
+ if(calendarModes[kind]==='list'){
+ header.insertAdjacentHTML('beforeend',`<span class="calendarModeActions"><button type="button" class="btn ${calendarListScopes[kind]==='all'?'primary':''}" onclick="setCalendarListScope('${kind}','all')">Alle datoer</button><button type="button" class="btn ${calendarListScopes[kind]==='month'?'primary':''}" onclick="setCalendarListScope('${kind}','month')">Valgt måned</button></span>`);
+ const prefix=year+'-'+String(month+1).padStart(2,'0')+'-',busy=artist?privateEntries(currentPortalArtistId):[];
+ const dates=[...new Set([...rows.map(r=>r.date),...busy.map(e=>e.date)].filter(date=>calendarListScopes[kind]==='all'||date.startsWith(prefix)))].sort();
+ grid.innerHTML=dates.length?dates.map(date=>'<section class="calendarListDate"><h3>'+safe(new Date(date+'T12:00:00').toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+'</h3>'+rows.filter(r=>r.date===date).map(r=>`<button type="button" class="calendarListJob" onclick="currentRequestId=null;openRequest(${r.id})"><strong>${safe(r.name)}</strong><span class="meta">${safe(r.city||'')}${r.venue?' · '+safe(r.venue):''}</span>${stageBadge(r.stage,r)}</button>`).join('')+(artist?privateCalendarChip(date):'')+'</section>').join(''):'<p class="meta">Ingen oppføringer'+(calendarListScopes[kind]==='month'?' denne måneden':'')+'.</p>';
+ return;
+ }
+ let html=['M','T','O','T','F','L','S'].map(x=>'<div class="dow">'+x+'</div>').join('');
+ for(let i=0;i<offset;i++)html+='<div class="day emptyDay" aria-hidden="true"></div>';
+ const now=new Date(),today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+ for(let day=1;day<=count;day++){
+ const iso=year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+ const chips=rows.filter(r=>r.date===iso).map(r=>`<button type="button" class="calItem ${r.stage==='signed'?'signed':r.stage==='contract'?'contractSent':'hold'}" title="${safe(r.name)}" onclick="currentRequestId=null;openRequest(${r.id})">${safe(r.name)}${artist?'':'<br>'+safe(artistBy(r.artistId)?.name||'')}</button>`).join('');
+ html+=`<div class="day ${today===iso?'todayDay':''}"><div class="num" ${today===iso?'aria-current="date"':''}>${day}</div>${chips}${artist?privateCalendarChip(iso):''}</div>`;
+ }
+ grid.innerHTML=html;
+}
 
 function renderAll(){
  const active=state.requests.filter(r=>r.stage!=='signed'),signed=state.requests.filter(r=>r.stage==='signed');
