@@ -31,7 +31,7 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.card{background:linear-gradient(180deg,#11191d,#0e1418);border:1px solid var(--line);border-radius:17px;padding:18px}.stat span{color:var(--muted);font-size:.8rem}.stat strong{display:block;font-size:1.75rem;margin:5px 0}
 .gold{color:var(--gold)!important}.green{color:var(--green)!important}.yellow{color:var(--yellow)!important}.orange{color:var(--orange)!important}.red{color:var(--red)!important}.blue{color:var(--blue)!important}
 .pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.pipe{background:#0d1316;border:1px solid #2c3941;border-radius:14px;padding:15px}.pipe strong{display:block;font-size:1.4rem;margin-top:4px}.pipe small{color:var(--muted)}
-.grid2{display:grid;grid-template-columns:1.35fr .85fr;gap:14px}.sectionTitle{display:flex;justify-content:space-between;align-items:center;margin:22px 0 10px}
+.grid2{display:grid;grid-template-columns:1.35fr .85fr;gap:14px}.dashboardRequestsGrid{grid-template-columns:1fr}.sectionTitle{display:flex;justify-content:space-between;align-items:center;margin:22px 0 10px}
 .caseList,.eventList{display:flex;flex-direction:column;gap:9px}.case,.eventrow{display:grid;grid-template-columns:62px 1fr auto;gap:12px;align-items:center;background:#0c1215;border:1px solid #263139;border-radius:13px;padding:13px;cursor:pointer}
 .datebox{border:1px solid #3a4851;border-radius:11px;text-align:center;padding:8px 5px}.datebox b{display:block;font-size:1.2rem}.datebox small{color:var(--muted)}
 .caseTitle,.eventTitle{font-weight:900;font-size:1.05rem}.artistTitle{color:var(--gold);font-weight:800;margin-top:3px}.meta{color:var(--muted);font-size:.8rem;margin-top:4px}
@@ -898,14 +898,8 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
   <div class="quickStat"><span>Bookingverdi</span><b>1,42m NOK</b></div>
  </div>
 
- <div class="grid2">
+ <div class="grid2 dashboardRequestsGrid">
   <div class="card"><h2 style="margin-top:0">Aktive forespørsler</h2><div class="meta">Klikk på en forespørsel for å jobbe den frem til signert kontrakt.</div><div id="dashboardRequests" class="caseList" style="margin-top:12px"></div></div>
-  <div class="card"><h2 style="margin-top:0">Neste steg</h2>
-   <div class="rolecard"><b>1. Opprett forespørsel</b><small><br>Artist, dato, arrangør, sted og rammer.</small></div>
-   <div class="rolecard" style="margin-top:8px"><b>2. Avklar og send tilbud</b><small><br>Honoraret og betingelsene forhandles.</small></div>
-   <div class="rolecard" style="margin-top:8px"><b>3. Generer kontrakt</b><small><br>Data gjenbrukes fra bookingcaset.</small></div>
-   <div class="rolecard" style="margin-top:8px"><b>4. Begge signerer</b><small><br>Bookingansvarlig + arrangør. Først da opprettes arrangementet.</small></div>
-  </div>
  </div>
 </section>
 
