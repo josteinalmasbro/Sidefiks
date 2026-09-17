@@ -753,7 +753,8 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 
 .calendarSplit{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:16px;align-items:start;width:100%}.calendarSplit>.card{min-width:0;padding:12px;box-sizing:border-box}.calendarListCard{max-height:540px;overflow:auto}.calendarListCard h2{font-size:1.15rem;margin:0 0 12px}.calendarListCard .calendarModeActions{display:flex;gap:8px;flex-wrap:wrap}.calendarMobileToggle{display:none}.calendarSplit .calendarMonthHeader{flex-wrap:wrap}
 @media(max-width:900px){.calendarSplit{display:block}.calendarMobileToggle{display:flex;gap:8px;margin-bottom:12px}.calendarSplit[data-mode="month"] .calendarListCard,.calendarSplit[data-mode="list"] .calendarMonthCard{display:none}.calendarListCard{max-height:none}.calendarSplit>.card{padding:10px}}
-.calendarListCard{color-scheme:dark;scrollbar-width:thin;scrollbar-color:#756b45 #10181c;max-height:460px}
+.calendarListCard{color-scheme:dark;scrollbar-width:thin;scrollbar-color:#756b45 #10181c}
+@media(min-width:901px){.calendarListCard{max-height:none;overflow:auto}}
 .calendarListCard::-webkit-scrollbar{width:6px}.calendarListCard::-webkit-scrollbar-track{background:transparent}.calendarListCard::-webkit-scrollbar-thumb{background:#756b45;border-radius:8px}
 .calendarListCard h2{font-size:1rem;margin-bottom:8px}.calendarListCard .calendarModeActions{gap:6px;margin-bottom:8px}.calendarListCard .calendarModeActions .btn{padding:6px 10px;min-height:34px}
 .calendarListDate{padding:8px 0;border-top:1px solid #ffffff10}.calendarListDate h3{font-size:.78rem;line-height:1.35;margin:0 0 5px}
@@ -1321,7 +1322,7 @@ function showView(id){
  const av=['artistDashboard','artistCalendar','artistRequests','artistProfile','artistMedia'],ov=['organizerDashboard','organizerPeople'],bv=['dashboard','requests','calendar','events'];
  if(currentRole==='artist'&&!av.includes(id))id='artistDashboard';if(currentRole==='organizer'&&!ov.includes(id))id='organizerDashboard';if(currentRole==='agency'&&!bv.includes(id))id='dashboard';
  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));document.querySelectorAll('[data-view]').forEach(n=>n.classList.toggle('on',n.dataset.view===id));
- $('bookingWorkspace').classList.remove('on');$('eventWorkspace').classList.remove('on');if(av.includes(id))renderArtistPortal();if(ov.includes(id))renderOrganizerPortal();window.scrollTo({top:0,behavior:'smooth'});
+ $('bookingWorkspace').classList.remove('on');$('eventWorkspace').classList.remove('on');if(av.includes(id))renderArtistPortal();if(ov.includes(id))renderOrganizerPortal();requestAnimationFrame(()=>{if(id==='calendar')syncCalendarPanelHeight('agency');if(id==='artistCalendar')syncCalendarPanelHeight('artist')});window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('[data-view]').forEach(n=>n.addEventListener('click',e=>{e.preventDefault();if(n.dataset.view==='requests')bookingStageFilter=null;showView(n.dataset.view);if(n.dataset.view==='requests'){$('requestFilterBar')?.classList.remove('on');renderCaseList('allRequests')}}));
 function switchRole(role){
@@ -1765,6 +1766,13 @@ document.addEventListener('keydown',e=>{
 const calendarMonths={artist:new Date(new Date().getFullYear(),new Date().getMonth(),1),agency:new Date(new Date().getFullYear(),new Date().getMonth(),1)};
 const calendarModes={artist:'month',agency:'month'};
 const calendarListScopes={artist:'all',agency:'all'};
+function syncCalendarPanelHeight(kind){
+ const grid=$(kind==='artist'?'artistCalendarGrid':'calendarGrid'),shell=grid?.closest('.calendarSplit'),month=shell?.querySelector('.calendarMonthCard'),list=shell?.querySelector('.calendarListCard');if(!month||!list)return;
+ if(innerWidth<=900){list.style.height='';return}
+ const height=Math.ceil(month.getBoundingClientRect().height);if(height>0)list.style.height=height+'px';
+}
+let calendarResizeTimer;
+addEventListener('resize',()=>{clearTimeout(calendarResizeTimer);calendarResizeTimer=setTimeout(()=>{syncCalendarPanelHeight('agency');syncCalendarPanelHeight('artist')},100)});
 function setCalendarListScope(kind,scope){calendarListScopes[kind]=scope;renderMonthCalendar(kind)}
 function pickCalendarMonth(kind,value){if(!/^\d{4}-\d{2}$/.test(value))return;const [y,m]=value.split('-').map(Number);calendarMonths[kind]=new Date(y,m-1,1);renderMonthCalendar(kind)}
 function setCalendarMode(kind,mode){calendarModes[kind]=mode;renderMonthCalendar(kind)}
@@ -1796,7 +1804,7 @@ function renderMonthCalendar(kind){
  const chips=rows.filter(r=>r.date===iso).map(r=>`<button type="button" class="calItem ${r.stage==='signed'?'signed':r.stage==='contract'?'contractSent':'hold'}" title="${safe(r.name)}" onclick="${artist?'openNextJob':'openRequest'}(${r.id})">${safe(r.name)}${artist?'':'<br>'+safe(artistBy(r.artistId)?.name||'')}</button>`).join('');
  html+=`<div class="day ${today===iso?'todayDay':''}"><div class="num" ${today===iso?'aria-current="date"':''}>${day}</div>${chips}${artist?privateCalendarChip(iso):''}</div>`;
  }
- grid.innerHTML=html;
+ grid.innerHTML=html;requestAnimationFrame(()=>syncCalendarPanelHeight(kind));
 }
 
 
