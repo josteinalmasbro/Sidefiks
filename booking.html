@@ -13,7 +13,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,select,textarea{font:inherit}button{cursor:pointer}
 .top{position:sticky;top:0;z-index:50;background:rgba(8,11,13,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.topin{max-width:1380px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.topin{max-width:1380px;min-height:64px;margin:auto;padding:10px 18px;display:flex;justify-content:flex-start;align-items:center;gap:12px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:900}.logo{width:40px;height:40px;border-radius:12px;background:var(--gold);color:#151515;display:grid;place-items:center}
 .user{display:flex;align-items:center;gap:9px;color:var(--muted)}.avatar{width:36px;height:36px;border-radius:50%;background:#26323a;display:grid;place-items:center;color:#fff;font-weight:900}
 .layout{max-width:1380px;margin:auto;display:grid;grid-template-columns:238px minmax(0,1fr)}
@@ -381,8 +381,27 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 
 
 /* === Artistrolle === */
-.roleSwitch{display:flex;gap:4px;padding:4px;border:1px solid #2c3941;border-radius:999px;background:#0b1114}
+.roleSwitch{display:flex;align-items:center;gap:4px;margin-left:auto;padding:4px;border:1px solid #2c3941;border-radius:999px;background:#0b1114}
+.roleSwitch>span{padding:7px 10px;color:#fff;font-size:.72rem;font-weight:900;white-space:nowrap}
 .roleSwitch button{border:0;background:transparent;color:#8e9aa1;padding:7px 10px;border-radius:999px;font-size:.72rem;font-weight:900;white-space:nowrap}
+.portalChange{border-left:1px solid #2c3941!important;border-radius:0 999px 999px 0!important;color:var(--gold)!important}
+.topin>.user{padding-left:12px;border-left:1px solid #263239}
+.helpToggle{display:flex;align-items:center;gap:7px;min-height:36px;padding:7px 11px;border:1px solid #34434c;border-radius:999px;background:#10181c;color:#c4cdd1;font-size:.72rem;font-weight:900;white-space:nowrap}
+.helpToggleIcon{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#26343b;color:var(--gold);font-size:.75rem}
+.helpToggle[aria-pressed="true"]{border-color:#756632;color:#fff;background:#e7c86a12}.helpToggle[aria-pressed="true"] .helpToggleIcon{background:var(--gold);color:#111}
+.contextHelpTooltip{position:fixed;z-index:500;width:max-content;max-width:min(320px,calc(100vw - 24px));padding:12px 14px;border:1px solid #7b6b38;border-radius:12px;background:#10181df5;color:#e9eef0;box-shadow:0 18px 55px #000b;backdrop-filter:blur(16px);font-size:.8rem;line-height:1.45;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+.contextHelpTooltip.on{opacity:1;transform:none}.contextHelpTooltip strong{display:block;margin-bottom:4px;color:var(--gold);font-size:.77rem}.contextHelpTooltip span{display:block;color:#d2dade}
+@media(hover:hover) and (min-width:761px){body.contextHelpOn [data-context-help]:hover{border-color:#8a783f!important;box-shadow:0 0 0 1px #e7c86a35}}
+@media(max-width:980px) and (min-width:761px){.helpToggleLabel{display:none}}
+.portalChooser{display:none;position:fixed;inset:0;z-index:300;background:radial-gradient(circle at 50% 18%,#283138 0,#11181c 42%,#070b0d 100%);padding:22px;align-items:center;justify-content:center;overflow:auto}
+.portalChooser.on{display:flex}
+.portalChooserCard{width:min(780px,100%);background:linear-gradient(145deg,#172126f5,#0b1114f8);border:1px solid #49565d;border-radius:26px;padding:28px;box-shadow:0 35px 120px #000b}
+.portalChooserCard h1{font-size:clamp(2rem,7vw,3.4rem);margin:8px 0 12px}.portalChooserCard>.lead{max-width:620px}
+.portalChoices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.portalChoice{min-height:160px;border:1px solid #3b4850;border-radius:18px;background:#0b1114;color:var(--text);padding:20px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.portalChoice:hover{border-color:var(--gold);background:#e7c86a10}.portalChoice b{display:block;font-size:1.25rem;color:#fff}.portalChoice small{display:block;color:var(--muted);line-height:1.45;margin-top:6px}.portalChoice span{color:var(--gold);font-weight:900}
+.portalChooserNote{margin-top:18px;padding-top:16px;border-top:1px solid #28343a;color:var(--muted);font-size:.78rem;line-height:1.5}
+@media(max-width:700px){.portalChooser{padding:12px}.portalChooserCard{padding:20px;border-radius:22px}.portalChoices{grid-template-columns:1fr;gap:9px;margin-top:18px}.portalChoice{min-height:112px;padding:16px;gap:10px}.roleSwitch{font-size:.72rem}.portalChange{padding:7px!important}}
 .roleSwitch button.on{background:var(--gold);color:#151515}
 .artistNavBlock{display:none}
 .artist-role .agencyNavBlock{display:none!important}
@@ -411,8 +430,10 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .mediaTile{min-height:110px;border:1px dashed #42515a;border-radius:14px;display:grid;place-items:center;text-align:center;padding:12px;color:#aeb8bd;background:#0b1114}
 @media(max-width:760px){
  .topin{gap:8px;flex-wrap:wrap}
- .roleSwitch{order:3;width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .roleSwitch{order:3;width:100%;margin-left:0;display:grid;grid-template-columns:1fr auto}
  .roleSwitch button{padding:8px}
+ .topin>.user{margin-left:auto;padding-left:0;border-left:0}
+ .helpToggle,.contextHelpTooltip{display:none!important}
  .artist-role .agencyNavBlock.mobileNav{display:none!important}
  .artist-role .artistNavBlock.mobileNav{display:flex}
  .artistHero{padding:15px}.artistHeroTop{display:block}.artistLogo{width:52px;height:52px;flex-basis:52px}
@@ -450,7 +471,7 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .addPersonCard{border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:130px;text-align:center}
 .artistDriverBlock{margin-top:12px}
 @media(max-width:760px){
- .roleSwitch{grid-template-columns:repeat(3,1fr)!important}
+ .roleSwitch{grid-template-columns:1fr auto!important}
  .organizer-role .organizerNavBlock.mobileNav{display:flex}
  .organizerPeople{grid-template-columns:1fr}
  .callBtn{min-height:40px}
@@ -761,10 +782,24 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 #brandWebsite{background:#0a1115;color:var(--text,#fff);border:1px solid #3b4b54;border-radius:9px;padding:10px;min-height:40px;box-sizing:border-box}
 </style><style>.demoNotice{font-size:11px;line-height:1.4;padding:8px 12px;margin-bottom:12px;border:1px solid var(--line);border-radius:8px;color:var(--muted)}.demoNote{border:1px solid #b99a45;border-left:4px solid #b99a45;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.5}.demoNote p{margin:5px 0}.demoNote a{color:inherit;text-decoration:underline}</style><style>.offerChoices{border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0;margin:0}.offerChoices legend{font-size:13px;padding:0 4px}.offerChoices>div{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px}.offerChoices label{display:flex;align-items:center;gap:6px}.offerChoices input[type=radio]{width:auto;min-height:0;accent-color:var(--gold)}.offerChoices input[hidden]{display:none}</style></head>
 <body>
+<div id="portalChooser" class="portalChooser" role="dialog" aria-modal="true" aria-labelledby="portalChooserTitle">
+ <div class="portalChooserCard">
+  <div class="eyebrow">Bookingsystem · demo</div>
+  <h1 id="portalChooserTitle">Velg portal.</h1>
+  <div class="lead">Velg hvilken side av bookingsystemet du vil se.</div>
+  <div class="portalChoices">
+   <button class="portalChoice" onclick="enterPortal('agency')"><div><b>Bookingbyrå</b><small>Forespørsler, tilbud, kontrakter, kalender og arrangement.</small></div><span>Åpne byråportal →</span></button>
+   <button class="portalChoice" onclick="enterPortal('artist')"><div><b>Artist</b><small>Artistens egne bookinger, kalender, medlemmer og profilinnstillinger.</small></div><span>Åpne artistportal →</span></button>
+   <button class="portalChoice" onclick="enterPortal('organizer')"><div><b>Arrangør</b><small>Arrangement, kontaktpersoner, tilbud og praktisk informasjon.</small></div><span>Åpne arrangørportal →</span></button>
+  </div>
+  <div class="portalChooserNote">Dette er portalvalget for demoen. I den ferdige løsningen åpnes riktig portal gjennom brukerens egen innlogging eller invitasjonslenke.</div>
+ </div>
+</div>
 <div class="top">
  <div class="topin">
   <div class="brand"><div class="logo">BK</div><div>BOOKINGSYSTEM <span style="color:#66747b;font-weight:600">/ OPERATIV</span></div></div>
-  <div class="roleSwitch" aria-label="Aktiv portal"><span id="portalRolePill">Bookingbyrå</span></div>
+  <div class="roleSwitch" aria-label="Aktiv portal"><span id="portalRolePill">Bookingbyrå</span><button class="portalChange" onclick="openPortalChooser()">Bytt demoportal</button></div>
+  <button id="helpToggle" class="helpToggle" type="button" aria-pressed="true" onclick="toggleContextHelp()"><span class="helpToggleIcon" aria-hidden="true">?</span><span class="helpToggleLabel">Forklaringer på</span></button>
   <div class="user"><div class="words"><strong id="userRoleName" style="color:#fff">Demo Agency</strong><br><small id="userRoleSub">Bookingadministrator</small></div><div class="avatar" id="userAvatar">DA</div></div>
  </div>
  <div class="mobileNav agencyNavBlock">
@@ -785,6 +820,8 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
   <button data-view="organizerPeople">Personer</button>
  </div>
 </div>
+
+<div id="contextHelpTooltip" class="contextHelpTooltip" role="tooltip" aria-hidden="true"><strong></strong><span></span></div>
 
 <div class="layout">
 <aside>
@@ -922,9 +959,9 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 
 <section id="artistProfile" class="view">
  <div class="headrow"><div><div class="eyebrow">Artist · profil</div><h1 id="artistProfileName">Hollywood Scandal.</h1><div class="lead">Én masterprofil som følger alle bookinger og kan overstyres på enkeltjobber.</div></div><div class="actions"><button class="btn primary" onclick="openProfileEditor('members')">Lagre profil</button></div></div>
- <div class="card" style="margin-top:18px"><b>Profilstatus · <span id="profilePctText">86 %</span> komplett</b><div class="profileProgress"><i></i></div><div class="meta">Medlemsprofiler, rider, media og tekniske preferanser samles her.</div></div>
+ <div id="artistProfileStatusCard" class="card" style="margin-top:18px"><b>Profilstatus · <span id="profilePctText">86 %</span> komplett</b><div class="profileProgress"><i></i></div><div class="meta">Medlemsprofiler, rider, media og tekniske preferanser samles her.</div></div>
 
- <div class="card" style="margin-top:12px">
+ <div id="artistBookingSettingsCard" class="card" style="margin-top:12px">
   <div class="eyebrow">Bookinginnstillinger</div>
   <h2 style="margin:6px 0">Hvem kan booke artisten?</h2>
   <div class="meta">Dette styrer hvem som kan opprette bookingcase og hvem som blir kontraktspart mot arrangøren.</div>
@@ -1149,6 +1186,19 @@ const portalParams=new URLSearchParams(location.search);
 const requestedRole=portalParams.get('portal');
 let currentPortalArtistId=portalParams.get('artist')||localStorage.getItem('portal-artist-id')||'hs';
 let currentRole=['agency','artist','organizer'].includes(requestedRole)?requestedRole:'agency';
+function enterPortal(role){
+ if(!['agency','artist','organizer'].includes(role))return;
+ const url=new URL(location.href);url.searchParams.set('portal',role);
+ if(role==='artist'&&!url.searchParams.get('artist'))url.searchParams.set('artist',currentPortalArtistId||'hs');
+ if(role!=='artist')url.searchParams.delete('artist');
+ location.href=url.toString();
+}
+function openPortalChooser(){$('portalChooser')?.classList.add('on');document.body.style.overflow='hidden'}
+function initializePortalChooser(){
+ const chooser=$('portalChooser');if(!chooser)return;
+ chooser.classList.toggle('on',!['agency','artist','organizer'].includes(requestedRole));
+ if(chooser.classList.contains('on'))document.body.style.overflow='hidden';
+}
 const artistProfiles=structuredClone(DEMO_PROFILES);
 const BOOKING_PREFS_KEY='booking-artist-prefs-v1';
 let bookingPrefs;try{bookingPrefs=JSON.parse(localStorage.getItem(BOOKING_PREFS_KEY))}catch(e){}
@@ -1181,6 +1231,84 @@ function ensurePeople(id){
 
 let currentRequestId=null,currentEventId=null;
 const $=id=>document.getElementById(id), artistBy=id=>artists.find(a=>a.id===id), esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const CONTEXT_HELP_KEY='booking-context-help-v1';
+let contextHelpEnabled=true,contextHelpTarget=null;
+try{contextHelpEnabled=localStorage.getItem(CONTEXT_HELP_KEY)!=='off'}catch{}
+const contextHelpRules=[
+ ['#globalSearch','Globalt søk','Søk samtidig i forespørsler, artister, arrangører, kontaktpersoner, spillesteder og bekreftede arrangement.'],
+ ['#dashboard .newStage','Nye og uavklarte','Forespørsler som nettopp har kommet inn. Her avklarer du artist, dato, arrangør, sted og de viktigste rammene.'],
+ ['#dashboard .offerStage','Tilbudsfasen','Saker hvor pris og betingelser klargjøres eller er sendt til arrangøren for gjennomgang.'],
+ ['#dashboard .contractStage','Kontrakt og signering','Avtaler som er opprettet og venter på signatur fra bookingansvarlig og/eller arrangør.'],
+ ['#dashboard .signedStage','Bekreftede arrangement','Ferdig signerte jobber. Disse flyttes videre fra booking til praktisk produksjon og gjennomføring.'],
+ ['#dashboard .quickStat:nth-child(1)','Aktive saker','Alle pågående forespørsler, tilbud og kontrakter som ennå ikke er ferdig signert.'],
+ ['#dashboard .quickStat:nth-child(2)','Kontrakter ute','Kontrakter som er sendt ut og fortsatt mangler én eller flere signaturer.'],
+ ['#dashboard .quickStat:nth-child(3)','Bekreftede jobber','Jobber hvor begge kontraktspartene har signert, og arrangementet er opprettet.'],
+ ['#dashboard .quickStat:nth-child(4)','Bookingverdi','Samlet verdi av bookingene som ligger i demoen. I ferdig løsning kan perioden og beregningsgrunnlaget filtreres.'],
+ ['#dashboard .grid2>.card:first-child','Aktive forespørsler','De nyeste aktive sakene. Trykk på en sak for å åpne hele bookingløpet.'],
+ ['#calendar .card','Masterkalender','Viser alle reserverte, kontraktsfestede og bekreftede datoer på tvers av artistene.'],
+ ['#artistDashboard .artistStat:nth-child(1)','Profilstatus','Viser hvor komplett artistprofilen er. Manglende medlems-, rider- eller teknisk informasjon bør fylles ut før neste booking.'],
+ ['#artistDashboard .artistStat:nth-child(2)','Åpne forespørsler','Jobber som ikke er endelig bekreftet. Flere forespørsler kan finnes på samme dato frem til en kontrakt er signert.'],
+ ['#artistDashboard .artistStat:nth-child(3)','Bekreftede jobber','Signerte jobber som er låst inn i artistens kalender og klare for produksjonsarbeid.'],
+ ['#artistDashboard .artistStat:nth-child(4)','Medlemsprofiler','Åpner bandets medlemmer, roller, kontaktinformasjon, utstyr, monitorønsker og personlige behov.'],
+ ['#artistDashboard .artistQuick>.card:first-child','Neste jobber','De nærmeste bekreftede jobbene og datoene artisten må forberede seg til.'],
+ ['#artistDashboard .artistQuick>.card:last-child','Krever oppmerksomhet','Snarveier til opplysninger som bør kontrolleres før neste jobb.'],
+ ['#artistDashboard .artistAction:nth-child(1)','Forespørsler','Åpner artistens ubekreftede forespørsler og eventuelle parallelle forespørsler på samme dato.'],
+ ['#artistDashboard .artistAction:nth-child(2)','Kalender','Her kan artisten markere private opptatte datoer som bookingbyrået må ta hensyn til.'],
+ ['#artistDashboard .artistAction:nth-child(3)','Teknisk profil','Åpner monitorønsker, backline og tekniske data som følger artisten inn i nye jobber.'],
+ ['#artistDashboard .artistAction:nth-child(4)','Sjåfør fra bandet','Registrer bandets egen sjåfør på en bekreftet jobb. Lokal sjåfør legges inn av arrangøren.'],
+ ['#artistCalendar .card','Artistkalender','Viser forespørsler, kontrakter, bekreftede jobber og datoer som medlemmer har markert som privat opptatt.'],
+ ['#artistProfileStatusCard','Profilstatus','Oppsummerer hvor mye av artistens booking- og produksjonsprofil som er ferdig utfylt.'],
+ ['#artistBookingSettingsCard','Bookinginnstillinger','Bestem om nye bookinger skal gå gjennom byrået, artisten selv eller begge. Valget styrer ansvar og kontraktspart.'],
+ ['#artistProfile .profileBox:nth-child(1)','Medlemmer','Personlige profiler for faste medlemmer, med roller, kontaktinformasjon og instrumenter.'],
+ ['#artistProfile .profileBox:nth-child(2)','Monitor','In-ear, wedge og ønsket monitormiks registreres per medlem.'],
+ ['#artistProfile .profileBox:nth-child(3)','Backline','Skiller mellom utstyr artisten tar med og utstyr som må finnes på spillestedet.'],
+ ['#artistProfile .profileBox:nth-child(4)','Vikarbank','Aktuelle vikarer kobles til riktig rolle og medlem, slik at de er lette å finne ved fravær.'],
+ ['#artistProfile .profileBox:nth-child(5)','Hospitality','Mat, allergier og personlige behov registreres per medlem og samles til arrangøren.'],
+ ['#artistProfile .profileBox:nth-child(6)','Teknisk rider','Stageplot, inputliste, sceneplassering og øvrige tekniske krav samles her.'],
+ ['#artistMedia .mediaTile:nth-child(1)','Konsertbilder','Last opp høyoppløselige presse- og konsertbilder som kan brukes av byrå og arrangør.'],
+ ['#artistMedia .mediaTile:nth-child(2)','Video og reels','Samler promo-, live- og presentasjonsvideoer for tilbud og markedsføring.'],
+ ['#artistMedia .mediaTile:nth-child(3)','Presseskriv','Artistens korte og lange presentasjonstekst til arrangører og presse.'],
+ ['#artistMedia .mediaTile:nth-child(4)','Teknisk rider','Dokumenter for scene, lyd, lys, kanaler og teknisk produksjon.'],
+ ['#artistMedia .mediaTile:nth-child(5)','Backstage rider','Hospitality, garderobe, mat og praktiske behov utenfor scenen.'],
+ ['#artistMedia .mediaTile:nth-child(6)','Logo og pressepakke','Logoer og ferdige filer i formater arrangører og designere kan bruke.'],
+ ['#organizerDashboard .card','Arrangementet','Samler opplysninger arrangøren må kontrollere eller fylle ut før artist og produksjon ankommer.'],
+ ['#organizerPeople .personMini','Kontaktperson','En person som kan kontaktes direkte rundt arrangementet. Rolle og telefon deles med de relevante partene.'],
+ ['.case','Bookingcase','Åpner hele saken med tilbud, kontrakt, signaturstatus og informasjon som følger videre til arrangementet.'],
+ ['.eventrow','Bekreftet arrangement','Åpner produksjonsflaten for en signert jobb med personer, tider, reise, teknikk og praktiske oppgaver.'],
+ ['.calendarListJob','Kalenderoppføring','Åpner saken eller arrangementet som ligger på denne datoen.'],
+ ['.profileBox','Profilområde','Åpner informasjonen som lagres i artistens masterprofil og gjenbrukes på nye jobber.'],
+ ['.mediaTile','Mediaområde','Her samles filer som bookingbyrå og arrangør trenger i booking- og produksjonsarbeidet.'],
+ ['.personMini','Kontaktperson','Viser en person, rollen vedkommende har og tilgjengelige kontaktmåter.'],
+ ['.workspace .rolecard','Informasjonsrute','Denne informasjonen følger bookingcaset eller arrangementet og deles med relevante roller.'],
+ ['.workspace .signcard','Signatur','Viser hvem som har signert, og hvem som fortsatt må signere før jobben kan bekreftes.']
+];
+function applyContextHelp(){
+ document.querySelectorAll('[data-context-help]').forEach(el=>{delete el.dataset.contextHelp;delete el.dataset.helpTitle});
+ for(const [selector,title,text] of contextHelpRules)document.querySelectorAll(selector).forEach(el=>{if(!el.dataset.contextHelp){el.dataset.helpTitle=title;el.dataset.contextHelp=text}});
+}
+function syncContextHelp(){
+ document.body.classList.toggle('contextHelpOn',contextHelpEnabled);
+ const btn=$('helpToggle');if(btn){btn.setAttribute('aria-pressed',String(contextHelpEnabled));btn.querySelector('.helpToggleLabel').textContent='Forklaringer '+(contextHelpEnabled?'på':'av')}
+ if(!contextHelpEnabled)hideContextHelp();
+}
+function toggleContextHelp(){contextHelpEnabled=!contextHelpEnabled;try{localStorage.setItem(CONTEXT_HELP_KEY,contextHelpEnabled?'on':'off')}catch{}syncContextHelp();toast('Forklaringer '+(contextHelpEnabled?'slått på':'slått av'))}
+function showContextHelp(target){
+ if(!contextHelpEnabled||!matchMedia('(hover:hover) and (min-width:761px)').matches)return;
+ const tip=$('contextHelpTooltip');if(!tip)return;contextHelpTarget=target;
+ tip.querySelector('strong').textContent=target.dataset.helpTitle||'Forklaring';tip.querySelector('span').textContent=target.dataset.contextHelp;tip.classList.add('on');tip.setAttribute('aria-hidden','false');
+ requestAnimationFrame(()=>positionContextHelp(target));
+}
+function positionContextHelp(target){
+ const tip=$('contextHelpTooltip');if(!tip||!target||contextHelpTarget!==target)return;const r=target.getBoundingClientRect(),t=tip.getBoundingClientRect(),gap=10;
+ let left=r.left+r.width/2-t.width/2,top=r.bottom+gap;left=Math.max(12,Math.min(left,innerWidth-t.width-12));if(top+t.height>innerHeight-12)top=r.top-t.height-gap;tip.style.left=left+'px';tip.style.top=Math.max(12,top)+'px';
+}
+function hideContextHelp(){const tip=$('contextHelpTooltip');contextHelpTarget=null;if(tip){tip.classList.remove('on');tip.setAttribute('aria-hidden','true')}}
+function initializeContextHelp(){applyContextHelp();syncContextHelp()}
+document.addEventListener('pointerover',e=>{const target=e.target.closest?.('[data-context-help]');if(target&&target!==contextHelpTarget)showContextHelp(target)});
+document.addEventListener('pointerout',e=>{if(contextHelpTarget&&!contextHelpTarget.contains(e.relatedTarget))hideContextHelp()});
+document.addEventListener('focusin',e=>{const target=e.target.closest?.('[data-context-help]');if(target)showContextHelp(target)});
+document.addEventListener('focusout',e=>{if(contextHelpTarget&&!contextHelpTarget.contains(e.relatedTarget))hideContextHelp()});
+addEventListener('scroll',hideContextHelp,{passive:true});addEventListener('resize',hideContextHelp);
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('on'),2200)}
 function fmtDate(iso){const d=new Date(iso+'T12:00:00'),m=['JAN','FEB','MAR','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DES'];return{day:d.getDate(),mon:m[d.getMonth()]}}
@@ -1792,7 +1920,7 @@ function renderAll(){renderOrganizerOffers();applyAgencyBrand();updateDemoSummar
  const active=state.requests.filter(r=>r.stage!=='signed'),signed=state.requests.filter(r=>r.stage==='signed');
  $('requestCount').textContent=active.length;$('eventCount').textContent=signed.length;$('statRequests').textContent=active.length;$('statContracts').textContent=state.requests.filter(r=>r.stage==='contract').length;$('statEvents').textContent=signed.length;
  $('pipeNew').textContent=state.requests.filter(r=>r.stage==='new').length;$('pipeOffer').textContent=state.requests.filter(r=>r.stage==='offer').length;$('pipeContract').textContent=state.requests.filter(r=>r.stage==='contract').length;$('pipeSigned').textContent=signed.length;
- renderCaseList('dashboardRequests',4);renderCaseList('allRequests');renderEvents();renderCalendar();renderArtistPortal();renderOrganizerPortal();renderArtistDriver();
+ renderCaseList('dashboardRequests',4);renderCaseList('allRequests');renderEvents();renderCalendar();renderArtistPortal();renderOrganizerPortal();renderArtistDriver();applyContextHelp();
 }
 function stages(r){const order=['new','offer','contract','signed'],labels=['Forespørsel','Tilbud','Kontrakt / signering','Bekreftet arrangement'];return labels.map((l,i)=>`<div class="stage ${order.indexOf(r.stage)>i?'done':order.indexOf(r.stage)===i?'current':''}">${order.indexOf(r.stage)>i?'✓ ':''}${l}</div>`).join('')}
 
@@ -2092,6 +2220,8 @@ initializeDemoPrices();
 initializeRequestValidation();
 initializeDemoDocuments();
 renderAll();
+initializeContextHelp();
+initializePortalChooser();
 document.body.classList.toggle('artist-role',currentRole==='artist');document.body.classList.toggle('organizer-role',currentRole==='organizer');
 $('portalRolePill').textContent=currentRole==='artist'?'Artistportal':currentRole==='organizer'?'Arrangørportal':'Bookingbyrå';
 if(currentRole==='artist'){const a=artistBy(currentPortalArtistId);$('userRoleName').textContent=a?.name||'Artist';$('userRoleSub').textContent='Artistportal';$('userAvatar').textContent=(a?.name||'AR').split(' ').map(x=>x[0]).join('').slice(0,2);showView('artistDashboard')}
