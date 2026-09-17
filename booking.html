@@ -255,6 +255,27 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
     padding:0 2px 8px 0!important;
   }
 
+  #requestModal .wstep[data-step="1"]{
+    overflow:hidden!important;
+  }
+
+  #requestModal #agencyArtistPicker{
+    display:grid!important;
+    grid-template-rows:auto minmax(0,1fr)!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+  }
+
+  #requestModal #agencyArtistPicker .artistPicker{
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain!important;
+    padding-bottom:8px!important;
+  }
+
   #requestModal .formgrid,
   #requestModal .step2grid{
     display:grid!important;
@@ -743,7 +764,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 <div class="top">
  <div class="topin">
   <div class="brand"><div class="logo">BK</div><div>BOOKINGSYSTEM <span style="color:#66747b;font-weight:600">/ OPERATIV</span></div></div>
-  <div class="roleSwitch"><button id="roleAgencyBtn" class="on" onclick="switchRole('agency')">Bookingbyrå</button><button id="roleArtistBtn" onclick="switchRole('artist')">Artist</button><button id="roleOrganizerBtn" onclick="switchRole('organizer')">Arrangør</button></div>
+  <div class="roleSwitch" aria-label="Aktiv portal"><span id="portalRolePill">Bookingbyrå</span></div>
   <div class="user"><div class="words"><strong id="userRoleName" style="color:#fff">Demo Agency</strong><br><small id="userRoleSub">Bookingadministrator</small></div><div class="avatar" id="userAvatar">DA</div></div>
  </div>
  <div class="mobileNav agencyNavBlock">
@@ -864,7 +885,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
  <div class="artistHero"><div class="artistHeroTop">
   <div class="artistIdentity"><div class="artistLogo" id="artistLogo">HS</div><div><div class="eyebrow">Artistens arbeidsflate</div><h1 id="artistDashName" style="font-size:2.25rem;margin-bottom:6px">Hollywood Scandal</h1><div class="lead" style="font-size:.92rem">Forespørsler, kalender, medlemmer, profil og alt som må være på plass før jobb.</div></div></div>
   <div>
-   <select id="artistPortalSelect" class="artistSelect" onchange="changePortalArtist(this.value)"></select>
+   <div id="artistPortalSelect" class="artistSelect" aria-label="Innlogget artist"></div>
    <div class="directAction"><button id="artistNewDirectBtn" class="btn primary" onclick="openNewRequest('artist')">+ Ny booking</button></div>
   </div>
  </div></div>
@@ -1124,8 +1145,10 @@ try{
 const KEY='booking-system-phase-v1';
 const artists=DEMO_CATALOG;
 let wizardStep=1, selectedArtistId='hs', requestCreator='agency';
-let currentPortalArtistId=localStorage.getItem('portal-artist-id')||'hs';
-let currentRole=localStorage.getItem('booking-role')||'agency';
+const portalParams=new URLSearchParams(location.search);
+const requestedRole=portalParams.get('portal');
+let currentPortalArtistId=portalParams.get('artist')||localStorage.getItem('portal-artist-id')||'hs';
+let currentRole=['agency','artist','organizer'].includes(requestedRole)?requestedRole:'agency';
 const artistProfiles=structuredClone(DEMO_PROFILES);
 const BOOKING_PREFS_KEY='booking-artist-prefs-v1';
 let bookingPrefs;try{bookingPrefs=JSON.parse(localStorage.getItem(BOOKING_PREFS_KEY))}catch(e){}
@@ -1171,12 +1194,10 @@ function showView(id){
 }
 document.querySelectorAll('[data-view]').forEach(n=>n.addEventListener('click',e=>{e.preventDefault();if(n.dataset.view==='requests')bookingStageFilter=null;showView(n.dataset.view);if(n.dataset.view==='requests'){$('requestFilterBar')?.classList.remove('on');renderCaseList('allRequests')}}));
 function switchRole(role){
- currentRole=role;applyAgencyBrand();localStorage.setItem('booking-role',role);
+ if(role!==currentRole){toast('Denne portalen krever egen innlogging');return}
+ applyAgencyBrand();
  document.body.classList.toggle('artist-role',role==='artist');
  document.body.classList.toggle('organizer-role',role==='organizer');
- $('roleAgencyBtn').classList.toggle('on',role==='agency');
- $('roleArtistBtn').classList.toggle('on',role==='artist');
- $('roleOrganizerBtn').classList.toggle('on',role==='organizer');
  const a=artistBy(currentPortalArtistId);
  if(role==='artist'){
    $('userRoleName').textContent=a?.name||'Artist';$('userRoleSub').textContent='Artistportal';$('userAvatar').textContent=(a?.name||'AR').split(' ').map(x=>x[0]).join('').slice(0,2);
@@ -1294,7 +1315,7 @@ function artistCases(){return state.requests.filter(r=>r.artistId===currentPorta
 function artistStageBadge(r){if(r.stage==='contract'||r.stage==='signed')return stageBadge(r.stage,r);return r.stage==='signed'?'<span class="badge bg-green">BEKREFTET</span>':r.stage==='contract'?'<span class="badge bg-orange">KONTRAKT UTE</span>':r.stage==='offer'?'<span class="badge bg-blue">TILBUD</span>':'<span class="badge bg-yellow">FORESPØRSEL</span>'}
 function renderArtistPortal(){
  const a=artistBy(currentPortalArtistId)||artists[0],p=artistProfiles[currentPortalArtistId]||{pct:80,members:1,busy:[]},cases=artistCases(),open=cases.filter(r=>r.stage!=='signed'),confirmed=cases.filter(r=>r.stage==='signed');
- $('artistPortalSelect').innerHTML=artists.map(x=>`<option value="${x.id}" ${x.id===currentPortalArtistId?'selected':''}>${esc(x.name)}</option>`).join('');
+ $('artistPortalSelect').textContent=a.name;
  $('artistDashName').textContent=a.name;$('artistProfileName').textContent=a.name+'.';$('artistLogo').textContent=a.name.split(' ').map(x=>x[0]).join('').slice(0,2);
  $('artistProfilePct').textContent=p.pct+'%';$('profilePctText').textContent=p.pct+' %';$('artistMemberCount').textContent=memberData(currentPortalArtistId).members.length;$('profileMembers').textContent=`${memberData(currentPortalArtistId).members.length} medlemmer · personlige profiler.`;
  const pref=getBookingPref(currentPortalArtistId),canDirect=canArtistDirectBook(currentPortalArtistId);
@@ -1995,7 +2016,7 @@ function createRequest(){if(!requestStepValid(1)||!requestStepValid(2)||!request
 
 
 function searchData(){return state.requests.map(r=>({type:r.stage==='signed'?'Arrangement':'Bookingcase',name:r.name,meta:`${artistBy(r.artistId).name} · ${r.organizer} · ${r.city}`,id:r.id,signed:r.stage==='signed'})).concat(artists.map(a=>({type:'Artist',name:a.name,meta:'Artiststall',artist:true})))}
-const search=$('globalSearch'),res=$('searchResults');function renderSearch(q){q=q.trim().toLowerCase();if(!q){res.classList.remove('on');return}const hits=searchData().filter(x=>(x.type+' '+x.name+' '+x.meta).toLowerCase().includes(q)).slice(0,10);res.innerHTML=hits.length?hits.map((x,i)=>`<div class="result" data-i="${i}"><div class="ricon">${x.type==='Artist'?'AR':x.signed?'EV':'BK'}</div><div><div class="rtype">${esc(x.type)}</div><b>${esc(x.name)}</b><div class="rmeta">${esc(x.meta)}</div></div><span>→</span></div>`).join(''):'<div style="padding:16px;color:var(--muted)">Ingen treff</div>';res.classList.add('on');res.querySelectorAll('.result').forEach((el,i)=>el.onclick=()=>{const x=hits[i];res.classList.remove('on');search.blur();if(x.id)(x.signed?openEvent:openRequest)(x.id);else{const a=artists.find(a=>a.name===x.name);if(a){changePortalArtist(a.id);switchRole('artist');showView('artistProfile')}}})}
+const search=$('globalSearch'),res=$('searchResults');function renderSearch(q){q=q.trim().toLowerCase();if(!q){res.classList.remove('on');return}const hits=searchData().filter(x=>(x.type+' '+x.name+' '+x.meta).toLowerCase().includes(q)).slice(0,10);res.innerHTML=hits.length?hits.map((x,i)=>`<div class="result" data-i="${i}"><div class="ricon">${x.type==='Artist'?'AR':x.signed?'EV':'BK'}</div><div><div class="rtype">${esc(x.type)}</div><b>${esc(x.name)}</b><div class="rmeta">${esc(x.meta)}</div></div><span>→</span></div>`).join(''):'<div style="padding:16px;color:var(--muted)">Ingen treff</div>';res.classList.add('on');res.querySelectorAll('.result').forEach((el,i)=>el.onclick=()=>{const x=hits[i];res.classList.remove('on');search.blur();if(x.id)(x.signed?openEvent:openRequest)(x.id);else toast('Artistprofil og bookingvalg administreres av artisten i egen portal')})}
 search.addEventListener('input',e=>renderSearch(e.target.value));document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))res.classList.remove('on')});
 function demoProfileNotice(id){
  const a=DEMO_CATALOG.find(x=>x.id===id);if(!a)return '';
@@ -2071,7 +2092,8 @@ initializeDemoPrices();
 initializeRequestValidation();
 initializeDemoDocuments();
 renderAll();
-document.body.classList.toggle('artist-role',currentRole==='artist');document.body.classList.toggle('organizer-role',currentRole==='organizer');$('roleAgencyBtn').classList.toggle('on',currentRole==='agency');$('roleArtistBtn').classList.toggle('on',currentRole==='artist');$('roleOrganizerBtn').classList.toggle('on',currentRole==='organizer');
+document.body.classList.toggle('artist-role',currentRole==='artist');document.body.classList.toggle('organizer-role',currentRole==='organizer');
+$('portalRolePill').textContent=currentRole==='artist'?'Artistportal':currentRole==='organizer'?'Arrangørportal':'Bookingbyrå';
 if(currentRole==='artist'){const a=artistBy(currentPortalArtistId);$('userRoleName').textContent=a?.name||'Artist';$('userRoleSub').textContent='Artistportal';$('userAvatar').textContent=(a?.name||'AR').split(' ').map(x=>x[0]).join('').slice(0,2);showView('artistDashboard')}
 else if(currentRole==='organizer'){const r=state.requests.find(x=>x.stage==='signed');$('userRoleName').textContent=r?.organizer||'Arrangør';$('userRoleSub').textContent='Arrangørportal';$('userAvatar').textContent='AR';showView('organizerDashboard')}
 
