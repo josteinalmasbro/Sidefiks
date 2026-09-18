@@ -382,9 +382,11 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .conflictTop{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .conflictItem b{font-size:.86rem}
 .conflictMeta{font-size:.73rem;color:var(--muted);margin-top:3px}
+.privateBusyRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,auto);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 @media(max-width:760px){
   .availabilityBox{padding:10px;margin-top:8px}
   .conflictItem{padding:8px 0}
+  .privateBusyRow{grid-template-columns:1fr}.privateBusyRow select{width:100%}
 }
 
 
@@ -959,7 +961,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 
 <section id="artistCalendar" class="view">
  <div class="headrow"><div><div class="eyebrow">Artist · kalender</div><h1>Min kalender.</h1><div class="lead">Samme bookingdata som byrået ser. Flere forespørsler kan ligge parallelt frem til én jobb er bekreftet.</div></div><div class="actions"><button class="btn primary" onclick="addPrivateBusy()">+ Sett meg opptatt</button></div></div>
- <div class="artistCalLegend"><span class="legendChip legendRequest">Forespørsel / tilbud</span><span class="legendChip legendContract">Kontrakt ute</span><span class="legendChip legendConfirmed">Bekreftet</span><span class="legendChip legendPrivate">Privat opptatt</span></div>
+ <div class="artistCalLegend"><span class="legendChip legendRequest">Forespørsel / tilbud</span><span class="legendChip legendContract">Kontrakt ute</span><span class="legendChip legendConfirmed">Bekreftet</span><span class="legendChip legendPrivate">Kan omprioritere / 100 % opptatt</span></div>
  <div id="artistCalendarFilters" class="calendarFilterBar" aria-label="Filtrer artistkalenderen"></div>
  <div class="card"><h2 style="margin-top:0">September 2026</h2><div id="artistCalendarGrid" class="cal"></div></div>
 </section>
@@ -1670,18 +1672,21 @@ function renderArtistCaseFilter(){
 }
 
 document.addEventListener('keydown',e=>{const row=e.target.closest?.('.artistEvent[role="button"],.attentionLink[role="button"]');if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();row.click()}});
-function privateEntries(id){return memberData(id).busyEntries||(artistProfiles[id]?.busy||[]).map(date=>({date,members:[]}))}
+function privateBusyLevel(person){return person?.status==='flexible'?'flexible':'busy'}
+function privateEntries(id){const entries=memberData(id).busyEntries||(artistProfiles[id]?.busy||[]).map(date=>({date,members:[]}));return entries.map(entry=>({...entry,members:(entry.members||[]).map(person=>({...person,status:privateBusyLevel(person)}))}))}
 function privateEntryNames(entry,id){return entry.members.map(person=>memberData(id).members.find(m=>m.id===person.id)?.name||person.name).filter(Boolean).join(', ')||'Hvem er opptatt?'}
-function privateCalendarChip(date){const entry=privateEntries(currentPortalArtistId).find(e=>e.date===date);return entry?`<button type="button" class="calItem artistPrivate" onclick="openPrivateCalendarEntry('${date}')">${safe(privateEntryNames(entry,currentPortalArtistId))}<br><span>Privat opptatt</span></button>`:''}
+function privateEntryStatus(entry){const flexible=entry.members.filter(person=>privateBusyLevel(person)==='flexible').length,busy=entry.members.length-flexible;if(busy&&flexible)return `${busy} helt opptatt · ${flexible} kan omprioritere`;if(flexible)return `${flexible} kan omprioritere`;return busy?`${busy} helt opptatt`:'Status må avklares'}
+function privateCalendarChip(date){const entry=privateEntries(currentPortalArtistId).find(e=>e.date===date);return entry?`<button type="button" class="calItem artistPrivate" onclick="openPrivateCalendarEntry('${date}')">${safe(privateEntryNames(entry,currentPortalArtistId))}<br><span>${safe(privateEntryStatus(entry))}</span></button>`:''}
+function privateAvailability(id,date){const all=memberData(id).members,entry=privateEntries(id).find(e=>e.date===date),known=new Set(all.map(m=>m.id)),selected=(entry?.members||[]).filter(person=>known.has(person.id)),busy=selected.filter(person=>privateBusyLevel(person)==='busy'),flexible=selected.filter(person=>privateBusyLevel(person)==='flexible'),unknown=!!entry&&!selected.length;return {entry,total:all.length,busy,flexible,unknown,free:Math.max(0,all.length-busy.length-flexible.length)}}
 let privateEditDate=null;
 function openPrivateCalendarEntry(date=''){
  privateEditDate=date;profileArtist=currentPortalArtistId;activeProfileEditor='privateCalendar';profileFocus=document.activeElement;
  const entry=privateEntries(profileArtist).find(e=>e.date===date),members=memberData(profileArtist).members;
  $('profileEditorTitle').textContent='Hvem er opptatt?';$('profileEditorEyebrow').textContent=artistBy(profileArtist)?.name||'Artist';$('profileSaveError').textContent='';
  $('memberProfileForm').querySelector('[type=submit]').hidden=false;
- $('profileEditorBody').innerHTML='<p class="glassDesc">Velg hvem som er privat opptatt denne dagen. Navnene vises i bandets kalender. Lagres i denne nettleseren.</p><label class="glassField">Dato<input id="privateBusyDate" type="date" required value="'+safe(date)+'"></label><div class="member-card">'+(members.length?members.map(m=>`<label style="display:flex;gap:10px;align-items:center;padding:10px 0"><input type="checkbox" name="privateBusyMember" value="${safe(m.id)}" ${entry?.members.some(p=>p.id===m.id)?'checked':''}>${safe(m.name||'Medlem uten navn')} · ${safe(m.role||'')}</label>`).join(''):'<p>Legg til medlemsprofiler først, så kan du velge hvem som er opptatt.</p><button type="button" class="btn" onclick="closeProfileEditor();openProfileEditor(\'members\')">Legg til medlemmer</button>')+'</div>'+(entry&&!entry.members.length?'<p class="meta">Denne eldre oppføringen mangler navn. Velg riktig medlem og lagre.</p>':'');
+ $('profileEditorBody').innerHTML='<p class="glassDesc">Velg medlem og hvor låst datoen er. «Kan omprioritere» betyr at en god booking fortsatt kan prioriteres. «100 % opptatt» betyr at medlemmet ikke kan stille.</p><label class="glassField">Dato<input id="privateBusyDate" type="date" required value="'+safe(date)+'"></label><div class="member-card">'+(members.length?members.map(m=>{const saved=entry?.members.find(p=>p.id===m.id),checked=!!saved,level=privateBusyLevel(saved);return `<div class="privateBusyRow"><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" name="privateBusyMember" value="${safe(m.id)}" ${checked?'checked':''}> <span>${safe(m.name||'Medlem uten navn')} · ${safe(m.role||'')}</span></label><select data-private-busy-level="${safe(m.id)}" aria-label="Grad av opptatt for ${safe(m.name||'medlem')}" ${checked?'':'disabled'}><option value="flexible" ${level==='flexible'?'selected':''}>Kan omprioritere</option><option value="busy" ${level==='busy'?'selected':''}>100 % opptatt</option></select></div>`}).join(''):'<p>Legg til medlemsprofiler først, så kan du velge hvem som er opptatt.</p><button type="button" class="btn" onclick="closeProfileEditor();openProfileEditor(\'members\')">Legg til medlemmer</button>')+'</div>'+(entry&&!entry.members.length?'<p class="meta">Denne eldre oppføringen mangler navn. Velg riktig medlem og lagre.</p>':'');
  $('profileEditorBody').insertAdjacentHTML('beforeend','<div id="privateSubstitutes"></div>');
- document.querySelectorAll('[name=privateBusyMember]').forEach(el=>el.addEventListener('change',renderPrivateSubstitutes));renderPrivateSubstitutes();
+ document.querySelectorAll('[name=privateBusyMember]').forEach(el=>el.addEventListener('change',()=>{const select=document.querySelector(`[data-private-busy-level="${CSS.escape(el.value)}"]`);if(select)select.disabled=!el.checked;renderPrivateSubstitutes()}));renderPrivateSubstitutes();
  $('profileGlassOverlay').classList.add('on');document.body.style.overflow='hidden';$('privateBusyDate').focus();
 }
 function renderPrivateSubstitutes(){
@@ -1692,13 +1697,13 @@ function renderPrivateSubstitutes(){
 function savePrivateCalendarEntry(){
  const date=$('privateBusyDate').value,ids=[...document.querySelectorAll('[name=privateBusyMember]:checked')].map(el=>el.value);
  if(!$('memberProfileForm').reportValidity())return;
- const members=memberData(profileArtist).members.filter(m=>ids.includes(m.id)&&m.name?.trim()).map(m=>({id:m.id,name:m.name}));
+ const members=memberData(profileArtist).members.filter(m=>ids.includes(m.id)&&m.name?.trim()).map(m=>({id:m.id,name:m.name,status:document.querySelector(`[data-private-busy-level="${CSS.escape(m.id)}"]`)?.value==='flexible'?'flexible':'busy'}));
  if(!members.length){$('profileSaveError').textContent='Velg minst ett medlem med navn.';return}
  const entries=structuredClone(privateEntries(profileArtist));
  if(date!==privateEditDate&&entries.some(e=>e.date===date)){$('profileSaveError').textContent='Datoen har allerede en oppføring. Åpne den fra kalenderen for å endre medlemmer.';return}
  const next=structuredClone(memberStore);next.artists[profileArtist].busyEntries=entries.filter(e=>e.date!==privateEditDate).concat({date,members});
  try{localStorage.setItem(MEMBER_KEY,JSON.stringify(next))}catch(e){$('profileSaveError').textContent='Kunne ikke lagre. Prøv igjen.';return}
- memberStore=next;closeProfileEditor();renderArtistPortal();toast('Opptattdato lagret med medlemmer');
+ memberStore=next;closeProfileEditor();renderArtistPortal();toast('Tilgjengeligheten er lagret');
 }
 function contractStatusText(r){
  const owner=!!(r.ownerSigned??r.agencySigned),organizer=!!r.organizerSigned,label=r.bookingOwner==='artist'?'Artisten':'Byrået';
@@ -2206,13 +2211,20 @@ function checkArtistAvailability(){
   const cases=sameDateCases();
   const confirmed=cases.filter(r=>r.stage==='signed');
   const open=cases.filter(r=>r.stage!=='signed');
+  const privateStatus=privateAvailability(selectedArtistId,date);
 
-  if(!cases.length){
+  const memberName=person=>memberData(selectedArtistId).members.find(m=>m.id===person.id)?.name||person.name||'Medlem';
+  const privateList=privateStatus.entry?`<div class="conflictItem">
+    <div class="conflictTop"><b>Medlemmenes kalender</b><span class="badge ${privateStatus.busy.length?'bg-red':'bg-yellow'}">${privateStatus.busy.length?'OPPTATT':'KAN OMPRIORITERE'}</span></div>
+    <div class="conflictMeta">${privateStatus.busy.length?'100 % opptatt: '+privateStatus.busy.map(memberName).map(esc).join(', '):''}${privateStatus.busy.length&&privateStatus.flexible.length?' · ':''}${privateStatus.flexible.length?'Kan omprioritere: '+privateStatus.flexible.map(memberName).map(esc).join(', '):''}${privateStatus.unknown?'Oppføringen mangler medlem. Artisten må avklare datoen.':''}</div>
+  </div>`:'';
+
+  if(!cases.length&&!privateStatus.entry){
     box.className='availabilityBox free full';
     box.innerHTML=`<div class="availabilityHead">
       <div class="availabilityIcon">✓</div>
-      <div><div class="availabilityTitle">${esc(artist.name)} er ledig</div>
-      <div class="availabilityText">Ingen andre forespørsler eller bekreftede jobber er registrert denne datoen.</div></div>
+      <div><div class="availabilityTitle">Alle ${privateStatus.total}/${privateStatus.total} medlemmer er ledige</div>
+      <div class="availabilityText">Ingen private kalenderkonflikter, forespørsler eller bekreftede jobber er registrert denne datoen.</div></div>
     </div>`;
     return {blocked:false,cases};
   }
@@ -2228,8 +2240,20 @@ function checkArtistAvailability(){
       <div class="availabilityIcon">!</div>
       <div><div class="availabilityTitle">${esc(artist.name)} er opptatt denne datoen</div>
       <div class="availabilityText">Det finnes allerede en signert/bekreftet jobb. Du kan se hvilken jobb som ligger på datoen under.</div></div>
-    </div><div class="conflictList">${list}</div>`;
+    </div><div class="conflictList">${privateList}${list}</div>`;
     return {blocked:true,cases};
+  }
+
+  if(privateStatus.entry){
+    const available=Math.max(0,privateStatus.total-privateStatus.busy.length),title=privateStatus.busy.length?`${available}/${privateStatus.total} medlemmer ledige`:privateStatus.flexible.length?`${privateStatus.free}/${privateStatus.total} medlemmer helt ledige · ${privateStatus.flexible.length} kan omprioritere`:'Tilgjengeligheten må avklares';
+    const detail=privateStatus.busy.length?'Ett eller flere medlemmer er 100 % opptatt. Forespørselen kan fortsatt registreres, men besetning eller vikar må avklares.':'Medlemmet kan prioritere en aktuell forespørsel foran det som allerede ligger i kalenderen.';
+    box.className=`availabilityBox ${privateStatus.busy.length?'busy':'warn'} full`;
+    box.innerHTML=`<div class="availabilityHead">
+      <div class="availabilityIcon">${privateStatus.busy.length?'!':'↔'}</div>
+      <div><div class="availabilityTitle">${title}</div>
+      <div class="availabilityText">${detail}${open.length?' Det finnes også '+open.length+' åpen bookingcase denne datoen.':''}</div></div>
+    </div><div class="conflictList">${privateList}${list}</div>`;
+    return {blocked:false,cases,privateStatus};
   }
 
   box.className='availabilityBox warn full';
