@@ -382,10 +382,14 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .conflictTop{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .conflictItem b{font-size:.86rem}
 .conflictMeta{font-size:.73rem;color:var(--muted);margin-top:3px}
+.availabilityPerson{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,.06)}
+.availabilityPerson:first-of-type{margin-top:8px}.availabilityPersonInfo{min-width:0}.availabilityPersonInfo small{display:block;color:var(--muted);margin-top:2px}
+.availabilityContactActions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.availabilityContactActions .btn{padding:7px 10px;font-size:.72rem;white-space:nowrap}
 .privateBusyRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,auto);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 @media(max-width:760px){
   .availabilityBox{padding:10px;margin-top:8px}
   .conflictItem{padding:8px 0}
+  .availabilityPerson{display:block}.availabilityContactActions{justify-content:flex-start;margin-top:8px}
   .privateBusyRow{grid-template-columns:1fr}.privateBusyRow select{width:100%}
 }
 
@@ -2197,6 +2201,10 @@ function sameDateCases(){
   if(!date||!selectedArtistId)return [];
   return state.requests.filter(r=>r.artistId===selectedArtistId && r.date===date);
 }
+function availabilityMemberContact(person){
+  const member=memberData(selectedArtistId).members.find(m=>m.id===person.id)||person,phone=String(member.phone||'').replace(/[^+\d]/g,''),email=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email||'')?member.email:'',status=privateBusyLevel(person)==='flexible'?'Kan omprioritere':'100 % opptatt',actions=[phone?`<a class="btn" href="tel:${safe(phone)}">Ring</a>`:'',phone?`<a class="btn" href="sms:${safe(phone)}">SMS</a>`:'',email?`<a class="btn" href="mailto:${safe(email)}?subject=${encodeURIComponent('Bookingforespørsel '+($('rqDate')?.value||''))}">E-post</a>`:''].join('');
+  return `<div class="availabilityPerson"><div class="availabilityPersonInfo"><b>${esc(member.name||person.name||'Medlem')}</b><small>${status}${member.role?' · '+esc(member.role):''}</small></div>${actions?`<div class="availabilityContactActions">${actions}</div>`:'<div class="conflictMeta">Kontaktinfo mangler i medlemsprofilen.</div>'}</div>`;
+}
 function checkArtistAvailability(){
   const box=$('artistAvailability');
   if(!box)return {blocked:false,cases:[]};
@@ -2213,10 +2221,9 @@ function checkArtistAvailability(){
   const open=cases.filter(r=>r.stage!=='signed');
   const privateStatus=privateAvailability(selectedArtistId,date);
 
-  const memberName=person=>memberData(selectedArtistId).members.find(m=>m.id===person.id)?.name||person.name||'Medlem';
   const privateList=privateStatus.entry?`<div class="conflictItem">
     <div class="conflictTop"><b>Medlemmenes kalender</b><span class="badge ${privateStatus.busy.length?'bg-red':'bg-yellow'}">${privateStatus.busy.length?'OPPTATT':'KAN OMPRIORITERE'}</span></div>
-    <div class="conflictMeta">${privateStatus.busy.length?'100 % opptatt: '+privateStatus.busy.map(memberName).map(esc).join(', '):''}${privateStatus.busy.length&&privateStatus.flexible.length?' · ':''}${privateStatus.flexible.length?'Kan omprioritere: '+privateStatus.flexible.map(memberName).map(esc).join(', '):''}${privateStatus.unknown?'Oppføringen mangler medlem. Artisten må avklare datoen.':''}</div>
+    ${privateStatus.busy.concat(privateStatus.flexible).map(availabilityMemberContact).join('')}${privateStatus.unknown?'<div class="conflictMeta">Oppføringen mangler medlem. Artisten må avklare datoen.</div>':''}
   </div>`:'';
 
   if(!cases.length&&!privateStatus.entry){
