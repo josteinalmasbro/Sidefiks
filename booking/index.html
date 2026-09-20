@@ -616,6 +616,8 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .profileGlassBody{
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  overflow-anchor:none;
   padding:18px 20px 22px;
 }
 .profileGlassFoot{
@@ -1725,6 +1727,10 @@ function memberOverview(id,kind,organizerProvides=true){const d=memberData(id);l
  if(kind==='technical')html+='<div class="member-card"><b>Felles teknisk rider</b>'+Object.entries(d.rider).filter(([k,v])=>typeof v==='string'||typeof v==='number').map(([k,v])=>v?`<p>${safe(({stageplot:'Stageplot',inputlist:'Inputliste',riderInputs:'Inputkanaler',riderStage:'Minimum scene',riderNote:'Merknader'})[k]||k)}: ${/^https?:\/\//i.test(v)?`<a href="${safe(v)}" target="_blank" rel="noopener">Åpne dokument</a>`:safe(v)}</p>`:'').join('')+'</div>';
  return html;
 }
+let profilePasteScrollToken=0;
+function preserveProfilePasteScroll(e){const body=e.target?.closest?.('#profileEditorBody');if(!body||!e.target.matches('input,textarea'))return;const top=body.scrollTop,token=++profilePasteScrollToken,restore=()=>{if(token===profilePasteScrollToken&&$('profileGlassOverlay').classList.contains('on'))body.scrollTop=top};requestAnimationFrame(restore);[40,120,260,420].forEach(ms=>setTimeout(restore,ms))}
+document.addEventListener('paste',preserveProfilePasteScroll,true);
+document.addEventListener('beforeinput',e=>{if(e.inputType==='insertFromPaste'||e.inputType==='insertReplacementText')preserveProfilePasteScroll(e)},true);
 document.addEventListener('keydown',e=>{if(e.key!=='Tab'||!activeProfileEditor)return;const all=[...$('profileGlassOverlay').querySelectorAll('button,input,select,textarea,a[href]')].filter(x=>x.getClientRects().length);const first=all[0],last=all.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
 
 
