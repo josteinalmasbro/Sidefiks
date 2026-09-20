@@ -435,8 +435,8 @@ main{padding:24px 28px 80px;min-width:0}.view{display:none}.view.on{display:bloc
 .artistEvent{display:grid;grid-template-columns:54px 1fr auto;gap:11px;align-items:center;padding:12px;border:1px solid #263139;background:#0b1114;border-radius:13px;margin-top:8px}
 .artistCalLegend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .legendChip{font-size:.68rem;font-weight:900;border-radius:99px;padding:5px 8px}
-.legendRequest{background:#392f16;color:#f0d57d}.legendContract{background:#432817;color:#f5b37e}.legendConfirmed{background:#123427;color:#7ce0ad}.legendPrivate{background:#2d2539;color:#cbb3ff}
-.artistPrivate{background:#2d2539!important;color:#cbb3ff!important}
+.legendRequest{background:#392f16;color:#f0d57d}.legendContract{background:#432817;color:#f5b37e}.legendConfirmed{background:#123427;color:#7ce0ad}.legendPrivateFlexible{background:#3a3016;color:#f0d57d}.legendPrivateBusy{background:#3b1c20;color:#ff9da3}
+.artistPrivate{background:#263139!important;color:#c8d0d4!important}.artistPrivate.flexible{background:#3a3016!important;color:#f0d57d!important}.artistPrivate.busy{background:#3b1c20!important;color:#ffb0b5!important}.artistPrivate.mixed{background:linear-gradient(110deg,#3b1c20 0 48%,#3a3016 52% 100%)!important;color:#fff0c7!important}.privateStatusLine{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.privateStatusPill{display:inline-block;padding:2px 5px;border-radius:99px;font-size:.57rem;font-weight:900;line-height:1.25}.privateStatusPill.flexible{background:#66551f;color:#ffe79a}.privateStatusPill.busy{background:#702c34;color:#ffc1c5}
 .profileProgress{height:8px;background:#1c262b;border-radius:99px;overflow:hidden;margin:10px 0}.profileProgress i{display:block;height:100%;background:var(--gold);width:86%}
 .profileRows{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .profileBox{background:#0b1114;border:1px solid #28343b;border-radius:13px;padding:13px}.profileBox small{display:block;color:var(--muted);margin-top:4px;line-height:1.4}
@@ -773,7 +773,7 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 .calendarListCard h2{font-size:1rem;margin-bottom:8px}.calendarListCard .calendarModeActions{gap:6px;margin-bottom:8px}.calendarListCard .calendarModeActions .btn{padding:6px 10px;min-height:34px}
 .calendarListDate{padding:8px 0;border-top:1px solid #ffffff10}.calendarListDate h3{font-size:.78rem;line-height:1.35;margin:0 0 5px}
 .calendarListJob{gap:3px;margin:0;padding:7px 8px;border:0;border-radius:7px;background:transparent;font-size:.86rem}.calendarListJob .meta{font-size:.74rem;line-height:1.3}.calendarListJob .badge{font-size:.65rem;padding:3px 7px;line-height:1.3}
-.calendarListCard button.artistPrivate{display:block;width:100%;min-height:40px;text-align:left;border:0;border-radius:7px;background:#ad7ace15;color:#d2b9ff;font-size:.75rem;line-height:1.35;padding:7px 8px;cursor:pointer;overflow-wrap:anywhere}.calendarListCard button.artistPrivate:hover{background:#ad7ace28}
+.calendarListCard button.artistPrivate{display:block;width:100%;min-height:40px;text-align:left;border:0;border-radius:7px;font-size:.75rem;line-height:1.35;padding:7px 8px;cursor:pointer;overflow-wrap:anywhere}.calendarListCard button.artistPrivate.flexible:hover{background:#4b3e18!important}.calendarListCard button.artistPrivate.busy:hover{background:#512229!important}
 @media(max-width:900px){.calendarListCard{max-height:none}.calendarListJob,.calendarListCard button.artistPrivate{min-height:44px}}
 
 body:not(.artist-role):not(.organizer-role) .layout{grid-template-columns:minmax(0,1fr)}
@@ -984,7 +984,7 @@ body:not(.artist-role):not(.organizer-role) .agencyNavBlock.mobileNav button:foc
 
 <section id="artistCalendar" class="view">
  <div class="headrow"><div><div class="eyebrow">Artist · kalender</div><h1>Min kalender.</h1><div class="lead">Samme bookingdata som byrået ser. Flere forespørsler kan ligge parallelt frem til én jobb er bekreftet.</div></div><div class="actions"><button class="btn primary" onclick="addPrivateBusy()">+ Sett meg opptatt</button></div></div>
- <div class="artistCalLegend"><span class="legendChip legendRequest">Forespørsel / tilbud</span><span class="legendChip legendContract">Kontrakt ute</span><span class="legendChip legendConfirmed">Bekreftet</span><span class="legendChip legendPrivate">Kan omprioritere / 100 % opptatt</span></div>
+   <div class="artistCalLegend"><span class="legendChip legendRequest">Forespørsel / tilbud</span><span class="legendChip legendContract">Kontrakt ute</span><span class="legendChip legendConfirmed">Bekreftet</span><span class="legendChip legendPrivateFlexible">Kan omprioritere</span><span class="legendChip legendPrivateBusy">100 % opptatt</span></div>
  <div id="artistCalendarFilters" class="calendarFilterBar" aria-label="Filtrer artistkalenderen"></div>
  <div class="card"><h2 style="margin-top:0">September 2026</h2><div id="artistCalendarGrid" class="cal"></div></div>
 </section>
@@ -1706,7 +1706,7 @@ function privateBusyLevel(person){return person?.status==='flexible'?'flexible':
 function privateEntries(id){const entries=memberData(id).busyEntries||(artistProfiles[id]?.busy||[]).map(date=>({date,members:[]}));return entries.map(entry=>({...entry,members:(entry.members||[]).map(person=>({...person,status:privateBusyLevel(person)}))}))}
 function privateEntryNames(entry,id){return entry.members.map(person=>memberData(id).members.find(m=>m.id===person.id)?.name||person.name).filter(Boolean).join(', ')||'Hvem er opptatt?'}
 function privateEntryStatus(entry){const flexible=entry.members.filter(person=>privateBusyLevel(person)==='flexible').length,busy=entry.members.length-flexible;if(busy&&flexible)return `${busy} helt opptatt · ${flexible} kan omprioritere`;if(flexible)return `${flexible} kan omprioritere`;return busy?`${busy} helt opptatt`:'Status må avklares'}
-function privateCalendarChip(date){const entry=privateEntries(currentPortalArtistId).find(e=>e.date===date);return entry?`<button type="button" class="calItem artistPrivate" onclick="openPrivateCalendarEntry('${date}')">${safe(privateEntryNames(entry,currentPortalArtistId))}<br><span>${safe(privateEntryStatus(entry))}</span></button>`:''}
+function privateCalendarChip(date){const entry=privateEntries(currentPortalArtistId).find(e=>e.date===date);if(!entry)return '';const flexible=entry.members.filter(person=>privateBusyLevel(person)==='flexible').length,busy=entry.members.length-flexible,tone=busy&&flexible?'mixed':busy?'busy':flexible?'flexible':'';return `<button type="button" class="calItem artistPrivate ${tone}" onclick="openPrivateCalendarEntry('${date}')">${safe(privateEntryNames(entry,currentPortalArtistId))}<span class="privateStatusLine">${busy?`<span class="privateStatusPill busy">${busy} · 100 % opptatt</span>`:''}${flexible?`<span class="privateStatusPill flexible">${flexible} · kan omprioritere</span>`:''}${!busy&&!flexible?'<span>Status må avklares</span>':''}</span></button>`}
 function privateAvailability(id,date){const all=memberData(id).members,entry=privateEntries(id).find(e=>e.date===date),known=new Set(all.map(m=>m.id)),selected=(entry?.members||[]).filter(person=>known.has(person.id)),busy=selected.filter(person=>privateBusyLevel(person)==='busy'),flexible=selected.filter(person=>privateBusyLevel(person)==='flexible'),unknown=!!entry&&!selected.length;return {entry,total:all.length,busy,flexible,unknown,free:Math.max(0,all.length-busy.length-flexible.length)}}
 let privateEditDate=null;
 function openPrivateCalendarEntry(date=''){
@@ -2246,8 +2246,8 @@ function sameDateCases(){
   return state.requests.filter(r=>r.artistId===selectedArtistId && r.date===date);
 }
 function availabilityMemberContact(person){
-  const member=memberData(selectedArtistId).members.find(m=>m.id===person.id)||person,phone=String(member.phone||'').replace(/[^+\d]/g,''),email=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email||'')?member.email:'',status=privateBusyLevel(person)==='flexible'?'Kan omprioritere':'100 % opptatt',actions=[phone?`<a class="btn" href="tel:${safe(phone)}">Ring</a>`:'',phone?`<a class="btn" href="sms:${safe(phone)}">SMS</a>`:'',email?`<a class="btn" href="mailto:${safe(email)}?subject=${encodeURIComponent('Bookingforespørsel '+($('rqDate')?.value||''))}">E-post</a>`:''].join('');
-  return `<div class="availabilityPerson"><div class="availabilityPersonInfo"><b>${esc(member.name||person.name||'Medlem')}</b><small>${status}${member.role?' · '+esc(member.role):''}</small></div>${actions?`<div class="availabilityContactActions">${actions}</div>`:'<div class="conflictMeta">Kontaktinfo mangler i medlemsprofilen.</div>'}</div>`;
+  const flexible=privateBusyLevel(person)==='flexible',member=memberData(selectedArtistId).members.find(m=>m.id===person.id)||person,phone=String(member.phone||'').replace(/[^+\d]/g,''),email=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email||'')?member.email:'',status=flexible?'Kan omprioritere':'100 % opptatt',actions=[phone?`<a class="btn" href="tel:${safe(phone)}">Ring</a>`:'',phone?`<a class="btn" href="sms:${safe(phone)}">SMS</a>`:'',email?`<a class="btn" href="mailto:${safe(email)}?subject=${encodeURIComponent('Bookingforespørsel '+($('rqDate')?.value||''))}">E-post</a>`:''].join('');
+  return `<div class="availabilityPerson"><div class="availabilityPersonInfo"><b>${esc(member.name||person.name||'Medlem')}</b><small><span class="badge ${flexible?'bg-yellow':'bg-red'}">${status}</span>${member.role?' · '+esc(member.role):''}</small></div>${actions?`<div class="availabilityContactActions">${actions}</div>`:'<div class="conflictMeta">Kontaktinfo mangler i medlemsprofilen.</div>'}</div>`;
 }
 function checkArtistAvailability(){
   const box=$('artistAvailability');
