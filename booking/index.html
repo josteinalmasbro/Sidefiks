@@ -6,6 +6,12 @@
 <meta name="theme-color" content="#0c1418">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Artistapp">
+<link id="memberAppManifestLink" rel="manifest">
+<link id="memberAppAppleIcon" rel="apple-touch-icon">
+<script>
+(()=>{const base=location.pathname==='/booking'||location.pathname.startsWith('/booking/')?'/booking/':'/';document.getElementById('memberAppManifestLink').href=base+'manifest.webmanifest';document.getElementById('memberAppAppleIcon').href=base+'icon-192.png';window.MEMBER_APP_BASE=base})();
+</script>
 <title>Bookingsystem – Booking → Arrangement</title>
 <style>
 :root{
@@ -829,7 +835,9 @@ body.member-role{overflow-x:hidden}body.member-role>.top,body.member-role>.layou
 .memberAppHeaderInner{max-width:920px;margin:auto;display:flex;align-items:center;gap:12px}.memberAppAvatar{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;background:var(--gold);color:#161616;font-weight:950}.memberAppIdentity{min-width:0;flex:1}.memberAppIdentity b,.memberAppIdentity span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.memberAppIdentity b{font-size:1rem}.memberAppIdentity span{margin-top:3px;color:var(--muted);font-size:.75rem}.memberDemoButton{border:1px solid #34434c;border-radius:999px;background:#111a1f;color:#cbd3d7;padding:8px 10px;font-size:.72rem;font-weight:850}
 .memberAppMain{width:min(920px,100%);margin:auto;padding:22px 16px calc(104px + env(safe-area-inset-bottom))}.memberAppView{display:none}.memberAppView.on{display:block}.memberAppLead{margin:7px 0 18px;color:var(--muted);line-height:1.55}.memberAppTitle{font-size:clamp(2rem,9vw,3.6rem);letter-spacing:-.055em;margin:6px 0 8px}.memberAppTitleRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.memberAppTitleRow .btn{flex:0 0 auto}.memberAppCard{padding:17px;margin:12px 0;border:1px solid #2b3941;border-radius:18px;background:linear-gradient(145deg,#141d22,#0d1418);box-shadow:0 18px 50px #0002}.memberAppCard h2,.memberAppCard h3{margin:0 0 10px}.memberProfileHero{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;border-color:#e7c86a45;background:radial-gradient(circle at 100% 0,#e7c86a1c,transparent 48%),linear-gradient(145deg,#172127,#0d1418)}.memberProfileHero .memberAppAvatar{width:58px;height:58px;border-radius:19px;font-size:1.15rem}.memberProfileHero h2{margin:0}.memberProfileHero p{margin:4px 0 0;color:var(--muted)}.memberProfileGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.memberProfileItem{min-width:0;padding:14px;border:1px solid #ffffff12;border-radius:14px;background:#070c0f66}.memberProfileItem.wide{grid-column:1/-1}.memberProfileItem small{display:block;margin-bottom:5px;color:var(--muted);font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em}.memberProfileItem b,.memberProfileItem span{overflow-wrap:anywhere}.memberProfileItem span{display:block;color:#d8dfe2;line-height:1.45}.memberAppStatus{display:inline-flex!important;width:max-content;padding:5px 8px;border-radius:999px;background:#69d7a718;color:#7ce1af!important;font-size:.7rem;font-weight:900}.memberGigHero{overflow:hidden;border-color:#e7c86a48;background:radial-gradient(circle at 95% 8%,#e7c86a22,transparent 42%),linear-gradient(145deg,#182229,#0c1317)}.memberGigHero .badge{margin-bottom:10px}.memberGigHero h2{font-size:clamp(1.65rem,7vw,2.8rem);margin:2px 0 7px}.memberGigMeta{color:#cbd3d7;line-height:1.55}.memberGigCountdown{display:inline-flex;margin-top:14px;padding:8px 11px;border-radius:999px;background:#e7c86a;color:#171717;font-size:.74rem;font-weight:950}.memberApp #memberNextGigContent .dayPlan{margin-top:14px}.memberApp #memberNextGigContent .dayPlanHero{border-radius:18px}.memberAppEmpty{padding:28px 20px;text-align:center}.memberAppEmpty strong{display:block;font-size:1.2rem}.memberAppEmpty span{display:block;margin-top:7px;color:var(--muted);line-height:1.5}
 .memberAppTabs{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));z-index:40;width:min(560px,calc(100% - 24px));transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px;border:1px solid #3a4850;border-radius:20px;background:#0b1216ed;box-shadow:0 18px 60px #000b;backdrop-filter:blur(22px)}.memberAppTab{min-height:58px;border:0;border-radius:14px;background:transparent;color:#8f9ca3;font-weight:900}.memberAppTab span{display:block;font-size:1.15rem;line-height:1}.memberAppTab small{display:block;margin-top:5px;font-size:.72rem}.memberAppTab.on{background:var(--gold);color:#151515;box-shadow:0 8px 24px #0005}
+.memberInstallCard{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:center;border-color:#e7c86a55;background:linear-gradient(135deg,#e7c86a14,#11191d)}.memberInstallIcon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#e7c86a;color:#151515;font-size:1.25rem;font-weight:950}.memberInstallCard b{display:block}.memberInstallCard small{display:block;margin-top:3px;color:var(--muted);line-height:1.35}.memberInstallCard.installed{display:none}.installGuideOverlay{display:none;position:fixed;inset:0;z-index:180;background:#020507c7;backdrop-filter:blur(15px);padding:18px;align-items:flex-end;justify-content:center}.installGuideOverlay.on{display:flex}.installGuide{width:min(500px,100%);padding:22px;border:1px solid #42515a;border-radius:24px;background:linear-gradient(155deg,#172127,#0b1115);box-shadow:0 30px 100px #000c}.installGuideHead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.installGuideHead h2{margin:3px 0 0}.installGuideClose{width:42px;height:42px;border:1px solid #45535b;border-radius:50%;background:#11191d;color:#fff;font-size:1.35rem}.installSteps{display:grid;gap:10px;margin:20px 0}.installStep{display:grid;grid-template-columns:38px 1fr;gap:11px;align-items:center;padding:12px;border:1px solid #ffffff12;border-radius:14px;background:#070c0f88}.installStep span{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#e7c86a;color:#151515;font-weight:950}.installStep b{display:block}.installStep small{display:block;margin-top:3px;color:var(--muted)}
 @media(max-width:600px){.memberAppMain{padding-left:13px;padding-right:13px}.memberAppTitleRow{display:block}.memberAppTitleRow .btn{width:100%;margin-top:3px}.memberProfileGrid{grid-template-columns:1fr}.memberProfileItem.wide{grid-column:auto}.memberApp #memberNextGigContent .dayPlanGrid{grid-template-columns:1fr}.memberApp #memberNextGigContent .dayPlanHero{padding:18px}.memberApp #memberNextGigContent .dayPlan{font-size:.92rem}.memberApp #memberNextGigContent .dayPlanHero .actions .btn{width:100%;text-align:center}}
+@media(max-width:520px){.memberInstallCard{grid-template-columns:42px 1fr}.memberInstallCard .btn{grid-column:1/-1;width:100%}.installGuideOverlay{padding:10px}.installGuide{padding:18px}}
 </style></head>
 <body>
 <div id="portalChooser" class="portalChooser" role="dialog" aria-modal="true" aria-labelledby="portalChooserTitle">
@@ -888,6 +896,7 @@ body.member-role{overflow-x:hidden}body.member-role>.top,body.member-role>.layou
   <section id="memberProfileApp" class="memberAppView on">
    <div class="eyebrow">Min artistprofil</div>
    <div class="memberAppTitleRow"><div><h1 class="memberAppTitle">Dette er meg.</h1><p class="memberAppLead">Opplysningene brukes automatisk i rider, inputliste, hospitality og planlegging av jobbene.</p></div><button class="btn primary" type="button" onclick="openMemberSelfEditor()">Rediger profil</button></div>
+   <div id="memberInstallCard" class="memberAppCard memberInstallCard"><div class="memberInstallIcon">↓</div><div><b>Ha medlemsappen på telefonen</b><small>Åpnes som en vanlig app – rett fra hjemskjermen.</small></div><button class="btn primary" type="button" onclick="installMemberApp()">Legg til på telefonen</button></div>
    <div id="memberProfileContent"></div>
   </section>
   <section id="memberNextGigApp" class="memberAppView">
@@ -901,6 +910,15 @@ body.member-role{overflow-x:hidden}body.member-role>.top,body.member-role>.layou
   <button class="memberAppTab on" type="button" data-member-tab="profile" onclick="showMemberTab('profile')"><span>●</span><small>Min profil</small></button>
   <button class="memberAppTab" type="button" data-member-tab="gig" onclick="showMemberTab('gig')"><span>★</span><small>Neste gig</small></button>
  </nav>
+</div>
+
+<div id="installGuideOverlay" class="installGuideOverlay" role="dialog" aria-modal="true" aria-labelledby="installGuideTitle" onclick="closeInstallGuide(event)">
+ <section class="installGuide">
+  <div class="installGuideHead"><div><div class="eyebrow">Installer medlemsappen</div><h2 id="installGuideTitle">Legg den på hjemskjermen.</h2></div><button class="installGuideClose" type="button" aria-label="Lukk" onclick="closeInstallGuide()">×</button></div>
+  <div id="installGuideIntro" class="memberAppLead">På iPhone gjøres dette fra delingsmenyen i Safari.</div>
+  <div id="installGuideSteps" class="installSteps"></div>
+  <button class="btn primary" style="width:100%" type="button" onclick="closeInstallGuide()">Skjønner</button>
+ </section>
 </div>
 
 <div class="layout">
@@ -1354,6 +1372,7 @@ let smsDemo={plan:'plus',ordered:false,phone:'+47 900 00 000',usage:37,events:{n
 try{smsDemo={...smsDemo,...JSON.parse(localStorage.getItem(SMS_DEMO_KEY)||'{}')}}catch{}
 const CONTEXT_HELP_KEY='booking-context-help-v1';
 let contextHelpEnabled=true,contextHelpTarget=null;
+let deferredMemberInstallPrompt=null;
 try{contextHelpEnabled=localStorage.getItem(CONTEXT_HELP_KEY)!=='off'}catch{}
 const contextHelpRules=[
  ['#globalSearch','Globalt søk','Søk samtidig i forespørsler, artister, arrangører, kontaktpersoner, spillesteder og bekreftede arrangement.'],
@@ -1434,6 +1453,33 @@ document.addEventListener('focusout',e=>{if(contextHelpTarget&&!contextHelpTarge
 addEventListener('scroll',hideContextHelp,{passive:true});addEventListener('resize',hideContextHelp);
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('on'),2200)}
+function memberAppInstalled(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}
+function syncMemberInstallCard(){const card=$('memberInstallCard');if(card)card.classList.toggle('installed',memberAppInstalled())}
+function showInstallGuide(){
+ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),intro=$('installGuideIntro'),steps=$('installGuideSteps');
+ if(!intro||!steps)return;
+ intro.textContent=ios?'Apple lar nettsider installeres fra Del-menyen. Det tar bare noen sekunder.':'Hvis installasjonsvinduet ikke vises automatisk, kan appen legges til fra nettlesermenyen.';
+ steps.innerHTML=ios
+  ?'<div class="installStep"><span>1</span><div><b>Trykk Del</b><small>Bruk deleknappen nederst i Safari.</small></div></div><div class="installStep"><span>2</span><div><b>Velg «Legg til på Hjem-skjerm»</b><small>Rull litt ned i menyen hvis valget ikke vises med én gang.</small></div></div><div class="installStep"><span>3</span><div><b>Trykk «Legg til»</b><small>Appikonet dukker opp sammen med de andre appene.</small></div></div>'
+  :'<div class="installStep"><span>1</span><div><b>Åpne nettlesermenyen</b><small>Trykk på de tre prikkene øverst.</small></div></div><div class="installStep"><span>2</span><div><b>Velg «Installer app»</b><small>Valget kan også hete «Legg til på startskjermen».</small></div></div><div class="installStep"><span>3</span><div><b>Bekreft installasjonen</b><small>Appen åpnes deretter uten nettleserfelt.</small></div></div>';
+ $('installGuideOverlay').classList.add('on');document.body.style.overflow='hidden';
+}
+function closeInstallGuide(event){if(event&&event.target!==$('installGuideOverlay'))return;$('installGuideOverlay')?.classList.remove('on');document.body.style.overflow=''}
+async function installMemberApp(){
+ if(memberAppInstalled()){syncMemberInstallCard();toast('Appen er allerede installert');return}
+ if(!deferredMemberInstallPrompt){showInstallGuide();return}
+ deferredMemberInstallPrompt.prompt();
+ const result=await deferredMemberInstallPrompt.userChoice;
+ deferredMemberInstallPrompt=null;
+ if(result.outcome==='accepted')toast('Appen legges til på telefonen');
+ syncMemberInstallCard();
+}
+async function initializeMemberPwa(){
+ syncMemberInstallCard();
+ if('serviceWorker' in navigator){try{await navigator.serviceWorker.register((window.MEMBER_APP_BASE||'/')+'sw.js',{scope:window.MEMBER_APP_BASE||'/'})}catch(error){console.warn('Kunne ikke registrere appmodus',error)}}
+}
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredMemberInstallPrompt=event;syncMemberInstallCard()});
+window.addEventListener('appinstalled',()=>{deferredMemberInstallPrompt=null;syncMemberInstallCard();toast('Appen er installert')});
 function fmtDate(iso){const d=new Date(iso+'T12:00:00'),m=['JAN','FEB','MAR','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DES'];return{day:d.getDate(),mon:m[d.getMonth()]}}
 function stageLabel(s){return s==='new'?'FORespørsel':s==='offer'?'TILBUD':s==='contract'?'KONTRAKT SENDT':'SIGNERT'}
 function stageBadge(s,r){if(r&&s==='offer')return '<span class="badge bg-blue">'+esc(offerStateText(r))+'</span>';if(r&&(s==='contract'||s==='signed'))return `<span class="badge ${r.ownerSigned&&r.organizerSigned?'bg-green':'bg-orange'}">${esc(contractStatusText(r))}</span>`;return s==='new'?'<span class="badge bg-yellow">FORESPØRSEL</span>':s==='offer'?'<span class="badge bg-blue">TILBUD</span>':s==='contract'?'<span class="badge bg-orange">KONTRAKT UTE</span>':'<span class="badge bg-green">BEKREFTET</span>'}
@@ -2627,7 +2673,9 @@ document.addEventListener('keydown',e=>{
 
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'&&activeProfileEditor!=='agencyBrand'&&$('profileGlassOverlay')?.classList.contains('on'))closeProfileEditor();
+ if(e.key==='Escape'&&$('installGuideOverlay')?.classList.contains('on'))closeInstallGuide();
 });
+if(currentRole==='member')initializeMemberPwa();
 </script>
 </body>
 </html>
