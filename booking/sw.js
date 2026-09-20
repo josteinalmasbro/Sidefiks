@@ -1,5 +1,5 @@
 const CACHE_NAME='artistapp-shell-v1';
-const APP_SHELL=new URL('./?portal=member&artist=hs&member=hs-member-1&tab=gig',self.registration.scope).href;
+const APP_SHELL=new URL('./?portal=member&tab=gig',self.registration.scope).href;
 
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.add(APP_SHELL)).then(()=>self.skipWaiting()));

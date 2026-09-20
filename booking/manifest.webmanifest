@@ -3,7 +3,7 @@
   "short_name": "Artistapp",
   "description": "Oppdater artistprofilen og ha all informasjon om neste bekreftede gig lett tilgjengelig.",
   "id": "/booking/?portal=member",
-  "start_url": "/booking/?portal=member&artist=hs&member=hs-member-1&tab=gig",
+  "start_url": "/booking/?portal=member&tab=gig",
   "scope": "/booking/",
   "display": "standalone",
   "display_override": [
@@ -31,12 +31,12 @@
     {
       "name": "Neste gig",
       "short_name": "Neste gig",
-      "url": "/booking/?portal=member&artist=hs&member=hs-member-1&tab=gig"
+      "url": "/booking/?portal=member&tab=gig"
     },
     {
       "name": "Min profil",
       "short_name": "Profil",
-      "url": "/booking/?portal=member&artist=hs&member=hs-member-1&tab=profile"
+      "url": "/booking/?portal=member&tab=profile"
     }
   ]
 }
