@@ -44,3 +44,9 @@ Språkvalg lagres lokalt i nettleseren. Ingen analyseverktøy er lagt inn.
 Demoen har noindex,nofollow slik at søkemotorer bes om ikke å indeksere den.
 Lokal forhåndsvisning: server mappen over miljo og åpne /miljo/.
 Nettsiden bruker /miljo/ som base. Ved flytting må base-adressen oppdateres.
+
+OPPDATERING: Siden viser ett av fem skjermbilder om gangen via #hjem,
+#tjenester, #prosjekter, #om-oss og #kontakt. Prosjektgalleriet har paginering.
+Header og footer bruker logo.svg, hentet direkte fra PDF uten hvit bakgrunn.
+Britisk flagg: assets/flag-uk.svg, Wikimedia Commons, public domain.
+Kilde: https://commons.wikimedia.org/wiki/File:Flag_of_the_United_Kingdom_(3-5).svg
