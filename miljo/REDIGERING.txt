@@ -31,8 +31,11 @@ Nøkler til en e-posttjeneste skal aldri legges i nettleserkoden.
 PROFIL OG KILDER
 Trelogoen er hentet fra Skilt_dibond_3mm_cut.pdf. Grønn/brun profil og
 tjenesteområder er hentet fra Roll up.pdf. Tilleggsopplysninger og bilder
-kommer fra brukerens materiale og m-le.no. Den genererte designillustrasjonen
-fra tidligere chat var ikke tilgjengelig; denne versjonen følger PDF-profilen.
+kommer fra brukerens materiale og m-le.no. Designet er oppdatert etter designillustrasjonen brukeren leverte 14.10.2026.
+Fire demobilder er gjenskapt med bildeverktøyet fra denne referansen og merkes
+som illustrasjoner. De tre første galleribildene vises først; Se alle prosjekter
+åpner resten, inkludert bedriftens tolv arbeidsbilder. Tre-elementet i tree.svg
+er hentet som vektor direkte fra originalskiltet, med hvit bakgrunn fjernet.
 Tekst og prosjektopplysninger må godkjennes av kunden før endelig lansering.
 
 TEKNISK
