@@ -1,21 +1,21 @@
-/* Rediger innhold på norsk (nb) og engelsk (en) her. Prosjekter: image, category, demo, nb og en. */
+/* Rediger begge språk og prosjektlisten her. demo:true markerer illustrasjoner. */
 window.SITE_CONTENT = {
   "nb": {
     "skip": "Hopp til innhold",
-    "demo": "NETTSIDEDEMO · Bilder fra bedriftens arbeid · Skjemaet sender ikke meldinger",
+    "demo": "Nettsidedemo · Illustrasjoner er merket · Kontaktskjemaet sender ikke meldinger",
     "menu": "Meny",
     "home": "Hjem",
     "services": "Tjenester",
     "projects": "Prosjekter",
     "about": "Om oss",
     "contact": "Kontakt",
-    "heroLabel": "Miljø og Landskapsentreprenørene AS",
-    "heroTitle": "Gode uterom.\nFra grunnen av.",
-    "heroText": "Fra det første spadetaket til den siste detaljen. Vi hjelper deg med små og store oppdrag ute.",
-    "heroCta": "La oss snakke om prosjektet ↗",
-    "projectCta": "Se arbeidene våre →",
+    "heroLabel": "Anleggsgartner · Grunnarbeider · Betong · Riving",
+    "heroTitle": "Entreprenøren",
+    "heroText": "Vi skaper utemiljøer som varer – med kvalitet, kompetanse og respekt for miljøet.",
+    "heroCta": "Be om tilbud →",
+    "projectCta": "Se våre prosjekter",
     "heroNote": "Anleggsgartner · Grunnarbeider · Betong · Riving",
-    "imageNote": "Fra bedriftens arbeid",
+    "imageNote": "Demobilde · Illustrasjon",
     "captionSmall": "Miljø for",
     "captionBig": "fremtiden",
     "s1": "Anleggsgartner",
@@ -25,46 +25,46 @@ window.SITE_CONTENT = {
     "servicesLabel": "Dette hjelper vi deg med",
     "servicesTitle": "Fra gode ideer\ntil gode uteområder.",
     "servicesText": "Et godt resultat starter med riktig grunnlag. Her er tjenestene presentert i bedriftens profil.",
-    "learnMore": "Snakk med oss →",
+    "learnMore": "Les mer →",
     "serviceItems": [
       [
         "Anleggsgartner",
-        "Hager, beplantning og plen. Vi lager også trapper, murer, uteplasser og lekeplasser med gummidekke og fallunderlag."
+        "Beplantning, plen, steinlegging og komplette uteområder."
       ],
       [
         "Grunnarbeider",
-        "Drenering, terrengarbeid og underlag. Vi arbeider også med brostein, skifer, grus og asfalt på uteområder."
+        "Terrengarbeid, drenering, masser og klargjøring."
       ],
       [
         "Betong",
-        "Betongarbeid som en del av små og store oppdrag. Vi avklarer behovene sammen med deg."
+        "Støttemurer, trapper, dekker og betongarbeider."
       ],
       [
         "Riving",
-        "Har du noe som skal bort før noe nytt kan ta form? Fortell oss hva du planlegger."
+        "Store og små riveoppdrag. Vi avklarer behov og omfang."
       ]
     ],
-    "projectsLabel": "Muligheter for ditt uterom",
-    "projectsTitle": "Et lite innblikk.\nMange muligheter.",
-    "projectsText": "Bilder fra bedriftens arbeid. Bildetekstene beskriver det som vises. Prosjektsted, kunde og omfang er foreløpig ikke lagt inn.",
+    "projectsLabel": "Våre resultater",
+    "projectsTitle": "Resultater som inspirerer",
+    "projectsText": "Demobilder viser mulighetene. Se alle prosjekter for bilder fra bedriftens faktiske arbeid.",
     "concrete": "Betong",
     "all": "Alle",
     "garden": "Hage og uterom",
     "ground": "Grunnarbeid",
-    "demoProject": "Demo · Prosjekteksempel",
-    "projectDisclaimer": "Illustrasjon fra profilmaterialet. Prosjektnavn og beskrivelse er demoinnhold, ikke dokumentasjon av et utført oppdrag.",
+    "demoProject": "Demobilde",
+    "projectDisclaimer": "AI-generert illustrasjon gjenskapt fra designreferansen. Dette er demoinnhold, ikke dokumentasjon av et utført kundeprosjekt.",
     "viewProject": "Åpne prosjekt",
     "filterLabel": "Filtrer prosjekter",
     "aboutLabel": "Om oss",
-    "aboutTitle": "Med omtanke\nfor det som skal vare.",
-    "aboutText": "Miljø og Landskapsentreprenørene AS holder til på Lundamo. Vi arbeider med uterom og entreprenøroppdrag, med tjenester innen anleggsgartnerarbeid, grunnarbeider, betong og riving.",
+    "aboutTitle": "Lidenskap for\nutemiljøer",
+    "aboutText": "Miljø og Landskapsentreprenørene AS leverer kvalitetsarbeid innen anleggsgartnerfaget, grunnarbeider, betong og riving. Vi tar både små og store oppdrag, og legger vekt på gode løsninger og et resultat som varer.",
     "principle1": "Plass til dine ideer",
     "principle1Text": "Fortell oss hva du ønsker å få til. Sammen kan vi avklare behov, muligheter og veien videre.",
     "principle2": "Helheten ligger i detaljene",
     "principle2Text": "Terreng, materialer og beplantning er deler av samme uterom. Vi tar gjerne en prat om helheten.",
-    "aboutCta": "Bli kjent med oss →",
+    "aboutCta": "Les mer om oss →",
     "contactLabel": "La oss ta en prat",
-    "contactTitle": "Hva drømmer\ndu om å skape?",
+    "contactTitle": "La oss skape noe sammen.",
     "contactText": "Et nytt uterom, en bedre adkomst eller et prosjekt som trenger en god start? Ta kontakt.",
     "contactSource": "Kontaktopplysninger fra bedriftens eksisterende nettsted.",
     "formNote": "Demoskjema: Opplysningene sendes eller lagres ikke. Bruk telefon eller e-post for en reell henvendelse.",
@@ -82,24 +82,29 @@ window.SITE_CONTENT = {
     "invalidName": "Skriv inn navnet ditt.",
     "invalidMessage": "Skriv litt om prosjektet ditt.",
     "facebook": "Følg oss på Facebook ↗",
-    "map": "Finn oss på kartet ↗"
+    "map": "Finn oss på kartet ↗",
+    "heroAccent": "for små og store oppdrag",
+    "heroHand": "Utemiljøer\nsom gjør en forskjell",
+    "showAll": "Se alle prosjekter →",
+    "showLess": "Vis utvalgte prosjekter ↑",
+    "aboutHand": "Varige resultater\nfor mennesker\nog miljø"
   },
   "en": {
     "skip": "Skip to content",
-    "demo": "WEBSITE DEMO · Photos of the company’s work · The form does not send messages",
+    "demo": "Website demo · Illustrations are labelled · The contact form does not send messages",
     "menu": "Menu",
     "home": "Home",
     "services": "Services",
     "projects": "Projects",
     "about": "About us",
     "contact": "Contact",
-    "heroLabel": "Miljø og Landskapsentreprenørene AS",
-    "heroTitle": "Better outdoor spaces.\nFrom the ground up.",
-    "heroText": "From the first groundworks to the finishing touches. We help with outdoor projects, large and small.",
-    "heroCta": "Let’s talk about your project ↗",
-    "projectCta": "Explore our work →",
+    "heroLabel": "Landscaping · Groundworks · Concrete · Demolition",
+    "heroTitle": "Your contractor",
+    "heroText": "We create outdoor spaces that last — with quality, expertise and respect for the environment.",
+    "heroCta": "Request a quote →",
+    "projectCta": "Explore our projects",
     "heroNote": "Landscaping · Groundworks · Concrete · Demolition",
-    "imageNote": "From the company’s work",
+    "imageNote": "Demo image · Illustration",
     "captionSmall": "An environment for",
     "captionBig": "the future",
     "s1": "Landscaping",
@@ -109,46 +114,46 @@ window.SITE_CONTENT = {
     "servicesLabel": "How we can help",
     "servicesTitle": "From good ideas\nto great outdoor spaces.",
     "servicesText": "A good result starts with the right foundations. Explore the services featured in the company’s brand material.",
-    "learnMore": "Talk to us →",
+    "learnMore": "Read more →",
     "serviceItems": [
       [
         "Landscaping",
-        "Gardens, planting and lawns. We also create steps, walls, outdoor seating areas and playgrounds with rubber surfacing and impact-absorbing surfaces."
+        "Planting, lawns, paving and complete outdoor spaces."
       ],
       [
         "Groundworks",
-        "Drainage, earthworks and foundations. We also work with cobblestone, slate, gravel and asphalt for outdoor areas."
+        "Earthworks, drainage, aggregates and site preparation."
       ],
       [
         "Concrete",
-        "Concrete work for projects large and small. We discuss your requirements with you."
+        "Retaining walls, steps, surfaces and concrete work."
       ],
       [
         "Demolition",
-        "Does something need to go before a new idea can take shape? Tell us what you are planning."
+        "Demolition projects large and small. We discuss your needs and scope."
       ]
     ],
-    "projectsLabel": "Possibilities for your outdoor space",
-    "projectsTitle": "A little inspiration.\nA world of possibilities.",
-    "projectsText": "Photos of the company’s work. Captions describe what is shown. Project location, client and scope have not yet been added.",
+    "projectsLabel": "Our results",
+    "projectsTitle": "Results that inspire",
+    "projectsText": "Demo images show the possibilities. View all projects for photos of the company’s actual work.",
     "concrete": "Concrete",
     "all": "All",
     "garden": "Gardens and outdoor spaces",
     "ground": "Groundworks",
-    "demoProject": "Demo · Project example",
-    "projectDisclaimer": "Illustration from brand material. Project names and descriptions are demo content, not records of completed work.",
+    "demoProject": "Demo image",
+    "projectDisclaimer": "AI-generated illustration reconstructed from the design reference. This is demo content, not documentation of a completed client project.",
     "viewProject": "Open project",
     "filterLabel": "Filter projects",
     "aboutLabel": "About us",
-    "aboutTitle": "Care for what\ncomes next.",
-    "aboutText": "Miljø og Landskapsentreprenørene AS is based in Lundamo, Norway. Our services cover landscaping, groundworks, concrete and demolition for outdoor and construction projects.",
+    "aboutTitle": "A passion for\noutdoor spaces",
+    "aboutText": "Miljø og Landskapsentreprenørene AS delivers quality work in landscaping, groundworks, concrete and demolition. We undertake projects large and small, with a focus on thoughtful solutions and lasting results.",
     "principle1": "Room for your ideas",
     "principle1Text": "Tell us what you would like to achieve. Together we can discuss your needs, options and next steps.",
     "principle2": "The details make the whole",
     "principle2Text": "Terrain, materials and planting all shape the same outdoor space. Let’s talk about the bigger picture.",
-    "aboutCta": "Get to know us →",
+    "aboutCta": "Read more about us →",
     "contactLabel": "Let’s talk",
-    "contactTitle": "What would you\nlike to create?",
+    "contactTitle": "Let’s create something together.",
     "contactText": "A new garden, better access or a project that needs a solid start? Get in touch.",
     "contactSource": "Contact details from the company’s existing website.",
     "formNote": "Demo form: Your details are not sent or stored. Please call or email for a real enquiry.",
@@ -166,10 +171,72 @@ window.SITE_CONTENT = {
     "invalidName": "Please enter your name.",
     "invalidMessage": "Please tell us a little about your project.",
     "facebook": "Follow us on Facebook ↗",
-    "map": "Find us on the map ↗"
+    "map": "Find us on the map ↗",
+    "heroAccent": "for projects large and small",
+    "heroHand": "Outdoor spaces\nthat make a difference",
+    "showAll": "View all projects →",
+    "showLess": "Show featured projects ↑",
+    "aboutHand": "Lasting results\nfor people\nand nature"
   }
 };
 window.SITE_PROJECTS = [
+  {
+    "id": "demo-stone",
+    "category": "garden",
+    "image": "./assets/demo-stone.jpg",
+    "position": "center",
+    "demo": true,
+    "nb": {
+      "title": "Steinlagt hage med støttemurer",
+      "summary": "Anleggsgartner · Betong",
+      "description": "Illustrert eksempel på et uteområde med naturmaterialer og beplantning.",
+      "alt": "Steinlagt hage med støttemurer – illustrasjon"
+    },
+    "en": {
+      "title": "Stone garden with retaining walls",
+      "summary": "Landscaping · Concrete",
+      "description": "An illustrated example of an outdoor space with natural materials and planting.",
+      "alt": "Stone garden with retaining walls — illustration"
+    }
+  },
+  {
+    "id": "demo-garden",
+    "category": "garden",
+    "image": "./assets/demo-garden.jpg",
+    "position": "center",
+    "demo": true,
+    "nb": {
+      "title": "Komplett uteområde",
+      "summary": "Anleggsgartner · Grunnarbeider",
+      "description": "Illustrert eksempel på et uteområde med naturmaterialer og beplantning.",
+      "alt": "Komplett uteområde – illustrasjon"
+    },
+    "en": {
+      "title": "A complete outdoor space",
+      "summary": "Landscaping · Groundworks",
+      "description": "An illustrated example of an outdoor space with natural materials and planting.",
+      "alt": "A complete outdoor space — illustration"
+    }
+  },
+  {
+    "id": "demo-steps",
+    "category": "garden",
+    "image": "./assets/demo-steps.jpg",
+    "position": "center",
+    "demo": true,
+    "nb": {
+      "title": "Naturstein og trapper",
+      "summary": "Betong · Anleggsgartner",
+      "description": "Illustrert eksempel på et uteområde med naturmaterialer og beplantning.",
+      "alt": "Naturstein og trapper – illustrasjon"
+    },
+    "en": {
+      "title": "Natural stone and steps",
+      "summary": "Concrete · Landscaping",
+      "description": "An illustrated example of an outdoor space with natural materials and planting.",
+      "alt": "Natural stone and steps — illustration"
+    }
+  },
   {
     "id": "arbeid-1",
     "category": "garden",
