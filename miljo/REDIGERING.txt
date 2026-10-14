@@ -1,0 +1,43 @@
+MILJØ OG LANDSKAPSENTREPRENØRENE AS – NETTSIDEDEMO
+
+Plassering: /miljo i Sidefiks-prosjektet på GitHub og Vercel.
+
+REDIGER INNHOLD
+Åpne content.js. SITE_CONTENT inneholder norsk (nb) og engelsk (en).
+Endre samme tekstnøkkel i begge språk. Behold anførselstegn og komma.
+Telefon, e-post, adresse og eksterne lenker står i index.html.
+
+REDIGER GALLERI
+SITE_PROJECTS i content.js inneholder galleriet. Hvert element har:
+- id: unik verdi
+- category: garden, ground eller concrete
+- image: bildefil, for eksempel ./assets/arbeid-1.jpg
+- position: utsnitt, vanligvis center
+- demo: true for oppdiktede prosjekteksempler; false for faktiske arbeidsbilder
+- nb og en: title, summary, description og alt
+Legg nye bilder i assets og legg til et nytt element i listen.
+Fjern et element fra listen for å fjerne det fra galleriet.
+Arbeidsbildene er levert av oppdragsgiver. Ingen kundenavn, datoer eller
+prosjektsteder er lagt til. Bildetekstene er nøytrale utkast.
+
+KONTAKTSKJEMA
+Skjemaet er kun en demo. Ingen opplysninger sendes, lagres eller publiseres.
+Det validerer navn, e-post og melding. Suksessmeldingen sier uttrykkelig
+at ingen melding er sendt. Telefon- og e-postlenkene kan brukes direkte.
+Før ekte innsending må en backend/skjematjeneste settes opp med validering,
+misbruksbeskyttelse, mottaker, personverninformasjon og test av levering.
+Nøkler til en e-posttjeneste skal aldri legges i nettleserkoden.
+
+PROFIL OG KILDER
+Trelogoen er hentet fra Skilt_dibond_3mm_cut.pdf. Grønn/brun profil og
+tjenesteområder er hentet fra Roll up.pdf. Tilleggsopplysninger og bilder
+kommer fra brukerens materiale og m-le.no. Den genererte designillustrasjonen
+fra tidligere chat var ikke tilgjengelig; denne versjonen følger PDF-profilen.
+Tekst og prosjektopplysninger må godkjennes av kunden før endelig lansering.
+
+TEKNISK
+Ingen byggesteg eller eksterne biblioteker. Kun HTML, CSS og JavaScript.
+Språkvalg lagres lokalt i nettleseren. Ingen analyseverktøy er lagt inn.
+Demoen har noindex,nofollow slik at søkemotorer bes om ikke å indeksere den.
+Lokal forhåndsvisning: server mappen over miljo og åpne /miljo/.
+Nettsiden bruker /miljo/ som base. Ved flytting må base-adressen oppdateres.
