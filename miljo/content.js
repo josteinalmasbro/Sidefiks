@@ -1,4 +1,4 @@
-/* Rediger begge språk og prosjektlisten her. demo:true markerer illustrasjoner. */
+/* Editable bilingual content and projects. */
 window.SITE_CONTENT = {
   "nb": {
     "skip": "Hopp til innhold",
@@ -23,7 +23,7 @@ window.SITE_CONTENT = {
     "s3": "Betong",
     "s4": "Riving",
     "servicesLabel": "Dette hjelper vi deg med",
-    "servicesTitle": "Fra gode ideer\ntil gode uteområder.",
+    "servicesTitle": "Små og store oppdrag.",
     "servicesText": "Et godt resultat starter med riktig grunnlag. Her er tjenestene presentert i bedriftens profil.",
     "learnMore": "Les mer →",
     "serviceItems": [
@@ -46,7 +46,7 @@ window.SITE_CONTENT = {
     ],
     "projectsLabel": "Våre resultater",
     "projectsTitle": "Resultater som inspirerer",
-    "projectsText": "Demobilder viser mulighetene. Se alle prosjekter for bilder fra bedriftens faktiske arbeid.",
+    "projectsText": "Merkede demobilder er illustrasjoner. Resten viser bedriftens arbeid.",
     "concrete": "Betong",
     "all": "Alle",
     "garden": "Hage og uterom",
@@ -62,18 +62,18 @@ window.SITE_CONTENT = {
     "principle1Text": "Fortell oss hva du ønsker å få til. Sammen kan vi avklare behov, muligheter og veien videre.",
     "principle2": "Helheten ligger i detaljene",
     "principle2Text": "Terreng, materialer og beplantning er deler av samme uterom. Vi tar gjerne en prat om helheten.",
-    "aboutCta": "Les mer om oss →",
+    "aboutCta": "Snakk med oss →",
     "contactLabel": "La oss ta en prat",
     "contactTitle": "La oss skape noe sammen.",
-    "contactText": "Et nytt uterom, en bedre adkomst eller et prosjekt som trenger en god start? Ta kontakt.",
+    "contactText": "Fortell oss kort om prosjektet ditt.",
     "contactSource": "Kontaktopplysninger fra bedriftens eksisterende nettsted.",
-    "formNote": "Demoskjema: Opplysningene sendes eller lagres ikke. Bruk telefon eller e-post for en reell henvendelse.",
+    "formNote": "Demoskjema – ingenting sendes eller lagres. Bruk telefon eller e-post for å kontakte oss.",
     "name": "Navn",
     "email": "E-post",
     "message": "Fortell oss om prosjektet",
     "submit": "Prøv demoskjemaet →",
     "formSuccess": "Skjemaet er fylt ut korrekt. Dette er en demo – ingen melding er sendt eller lagret. Kontakt oss på telefon eller e-post.",
-    "footer": "Nettsidedemo for Miljø og Landskapsentreprenørene AS. Tekstutkast og prosjektopplysninger må godkjennes før endelig lansering.",
+    "footer": "Nettsidedemo · Skjemaet sender ikke meldinger",
     "top": "Til toppen ↑",
     "close": "Lukk ×",
     "previous": "← Forrige",
@@ -87,7 +87,9 @@ window.SITE_CONTENT = {
     "heroHand": "Utemiljøer\nsom gjør en forskjell",
     "showAll": "Se alle prosjekter →",
     "showLess": "Vis utvalgte prosjekter ↑",
-    "aboutHand": "Varige resultater\nfor mennesker\nog miljø"
+    "aboutHand": "Varige resultater\nfor mennesker\nog miljø",
+    "page": "Side",
+    "pageOf": "av"
   },
   "en": {
     "skip": "Skip to content",
@@ -112,7 +114,7 @@ window.SITE_CONTENT = {
     "s3": "Concrete",
     "s4": "Demolition",
     "servicesLabel": "How we can help",
-    "servicesTitle": "From good ideas\nto great outdoor spaces.",
+    "servicesTitle": "Projects large and small.",
     "servicesText": "A good result starts with the right foundations. Explore the services featured in the company’s brand material.",
     "learnMore": "Read more →",
     "serviceItems": [
@@ -135,7 +137,7 @@ window.SITE_CONTENT = {
     ],
     "projectsLabel": "Our results",
     "projectsTitle": "Results that inspire",
-    "projectsText": "Demo images show the possibilities. View all projects for photos of the company’s actual work.",
+    "projectsText": "Labelled demo images are illustrations. The others show the company’s work.",
     "concrete": "Concrete",
     "all": "All",
     "garden": "Gardens and outdoor spaces",
@@ -151,18 +153,18 @@ window.SITE_CONTENT = {
     "principle1Text": "Tell us what you would like to achieve. Together we can discuss your needs, options and next steps.",
     "principle2": "The details make the whole",
     "principle2Text": "Terrain, materials and planting all shape the same outdoor space. Let’s talk about the bigger picture.",
-    "aboutCta": "Read more about us →",
+    "aboutCta": "Talk to us →",
     "contactLabel": "Let’s talk",
     "contactTitle": "Let’s create something together.",
-    "contactText": "A new garden, better access or a project that needs a solid start? Get in touch.",
+    "contactText": "Tell us a little about your project.",
     "contactSource": "Contact details from the company’s existing website.",
-    "formNote": "Demo form: Your details are not sent or stored. Please call or email for a real enquiry.",
+    "formNote": "Demo form — nothing is sent or stored. Contact us by phone or email.",
     "name": "Name",
     "email": "Email",
     "message": "Tell us about your project",
     "submit": "Try the demo form →",
     "formSuccess": "The form is complete. This is a demo — no message has been sent or stored. Please contact us by phone or email.",
-    "footer": "Website demo for Miljø og Landskapsentreprenørene AS. Draft copy and project details require approval before final launch.",
+    "footer": "Website demo · The form does not send messages",
     "top": "Back to top ↑",
     "close": "Close ×",
     "previous": "← Previous",
@@ -176,7 +178,9 @@ window.SITE_CONTENT = {
     "heroHand": "Outdoor spaces\nthat make a difference",
     "showAll": "View all projects →",
     "showLess": "Show featured projects ↑",
-    "aboutHand": "Lasting results\nfor people\nand nature"
+    "aboutHand": "Lasting results\nfor people\nand nature",
+    "page": "Page",
+    "pageOf": "of"
   }
 };
 window.SITE_PROJECTS = [
