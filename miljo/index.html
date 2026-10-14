@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<base href="/miljo/">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="Nettsidedemo for Miljø og Landskapsentreprenørene AS.">
+<title>Miljø og Landskapsentreprenørene AS</title>
+<link rel="stylesheet" href="./style.css"><script src="./content.js" defer></script><script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main" data-t="skip"></a>
+<div class="demo-bar" data-t="demo"></div>
+<header><a class="brand" href="#hjem"><img src="./assets/logo.png" alt="Miljø og Landskapsentreprenørene AS" width="600" height="232"></a><button id="menu" aria-expanded="false" aria-controls="navigation" data-t="menu"></button><nav id="navigation" aria-label="Hovedmeny"><a href="#hjem" data-t="home"></a><a href="#tjenester" data-t="services"></a><a href="#prosjekter" data-t="projects"></a><a href="#om-oss" data-t="about"></a><a href="#kontakt" class="nav-contact" data-t="contact"></a></nav><button id="language" class="language"></button></header>
+<main id="main">
+<section id="hjem" class="hero"><div class="hero-copy"><p class="eyebrow" data-t="heroLabel"></p><h1 data-t="heroTitle"></h1><p class="lead" data-t="heroText"></p><div class="actions"><a class="button" href="#kontakt" data-t="heroCta"></a><a class="text-link" href="#prosjekter" data-t="projectCta"></a></div><div class="hero-note"><span class="small-leaf" aria-hidden="true"></span><span data-t="heroNote"></span></div></div><div class="hero-picture"><img src="./assets/arbeid-9.jpg" alt="" fetchpriority="high"><span class="image-note" data-t="imageNote"></span><div class="picture-caption"><span data-t="captionSmall"></span><strong data-t="captionBig"></strong></div></div></section>
+<div class="service-strip"><span data-t="s1"></span><i>•</i><span data-t="s2"></span><i>•</i><span data-t="s3"></span><i>•</i><span data-t="s4"></span></div>
+<section id="tjenester" class="section"><div class="section-top"><div><p class="eyebrow" data-t="servicesLabel"></p><h2 data-t="servicesTitle"></h2></div><p data-t="servicesText"></p></div><div id="service-grid" class="service-grid"></div></section>
+<section id="prosjekter" class="section projects"><div class="section-top"><div><p class="eyebrow" data-t="projectsLabel"></p><h2 data-t="projectsTitle"></h2></div><p data-t="projectsText"></p></div><div id="filters" class="filters" role="group"></div><div id="project-grid" class="project-grid"></div></section>
+<section id="om-oss" class="section about"><div class="about-art"><img src="./assets/arbeid-5.jpg" alt="" loading="lazy"><div><span data-t="captionSmall"></span><strong data-t="captionBig"></strong></div></div><div><p class="eyebrow" data-t="aboutLabel"></p><h2 data-t="aboutTitle"></h2><p data-t="aboutText"></p><div class="principle"><span>01</span><div><h3 data-t="principle1"></h3><p data-t="principle1Text"></p></div></div><div class="principle"><span>02</span><div><h3 data-t="principle2"></h3><p data-t="principle2Text"></p></div></div><a class="text-link" href="#kontakt" data-t="aboutCta"></a></div></section>
+<section id="kontakt" class="section contact"><div><p class="eyebrow" data-t="contactLabel"></p><h2 data-t="contactTitle"></h2><p data-t="contactText"></p><a class="phone" href="tel:+4791853666">918 53 666 ↗</a><a href="mailto:arnt@m-le.no">arnt@m-le.no ↗</a><address>Lundamovegen 445<br>7232 Lundamo</address><div class="social-links"><a href="https://www.facebook.com/profile.php?id=61557363061562" target="_blank" rel="noopener noreferrer" data-t="facebook"></a><a href="https://www.google.com/maps/search/?api=1&query=Lundamovegen+445+7232+Lundamo" target="_blank" rel="noopener noreferrer" data-t="map"></a></div><p class="contact-source" data-t="contactSource"></p></div><form id="contact-form"><p class="form-note" data-t="formNote"></p><label for="name" data-t="name"></label><input id="name" name="name" autocomplete="name" required maxlength="100"><label for="email" data-t="email"></label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200"><label for="message" data-t="message"></label><textarea id="message" name="message" rows="4" required maxlength="3000"></textarea><button class="button" type="submit" data-t="submit"></button><p id="form-status" role="status" aria-live="polite"></p></form></section>
+</main>
+<footer><img src="./assets/logo.png" alt="Miljø og Landskapsentreprenørene AS" width="300" height="116"><p data-t="footer"></p><a href="#hjem" data-t="top"></a></footer>
+<dialog id="project-dialog" aria-labelledby="dialog-title"><button id="close-dialog" class="close"></button><img id="dialog-image" alt=""><p class="eyebrow" data-t="demoProject"></p><h2 id="dialog-title"></h2><p id="dialog-text"></p><p class="muted" data-t="projectDisclaimer"></p><div class="dialog-controls"><button id="previous"></button><span id="counter"></span><button id="next"></button></div></dialog>
+<noscript>Denne demoen trenger JavaScript for innhold og språkbytte. / This demo requires JavaScript.</noscript>
+</body></html>

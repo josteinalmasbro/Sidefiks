@@ -1,1 +1,20 @@
-{"rewrites":[{"source":"/booking","destination":"/booking.html"},{"source":"/booking/","destination":"/booking.html"}]}
+{
+  "rewrites": [
+    {
+      "source": "/booking",
+      "destination": "/booking.html"
+    },
+    {
+      "source": "/booking/",
+      "destination": "/booking.html"
+    },
+    {
+      "source": "/miljo",
+      "destination": "/miljo/index.html"
+    },
+    {
+      "source": "/miljo/",
+      "destination": "/miljo/index.html"
+    }
+  ]
+}
