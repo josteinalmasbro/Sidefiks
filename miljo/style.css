@@ -143,3 +143,11 @@ footer{padding:3px 5%;gap:8px}footer img{display:none}footer p{order:0;flex-basi
  main>.projects{height:420px}
  main>.about{min-height:420px;grid-template-rows:120px auto}
 }
+
+/* Compact branch spacing and stronger, slightly larger lettering. */
+@media(max-width:720px){
+ nav.open{grid-auto-rows:56px}
+ nav:before{height:335px;background-size:100% 335px}
+ .leaf-lettering text{font-size:32px;font-weight:700;letter-spacing:.2px}
+}
+
