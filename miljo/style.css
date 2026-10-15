@@ -84,10 +84,10 @@ footer{padding:3px 5%;gap:8px}footer img{display:none}footer p{order:0;flex-basi
 /* Touching leaves without a menu panel */
 @media(max-width:720px){
  nav,nav.open{width:min(290px,94vw);right:2%;padding:20px 20px 30px;gap:0;background:transparent;border:0;box-shadow:none;border-radius:0;pointer-events:none}
- nav a{pointer-events:auto;width:214px;min-height:76px;padding:22px 32px;border-radius:100% 0 100% 0;background:linear-gradient(155deg,#718e51,#405d30);box-shadow:0 5px 8px #14250d40;--tilt:-8deg;text-shadow:0 1px 2px #15260f90}
+ nav a{pointer-events:auto;width:178px;min-height:80px;padding:24px 22px;border-radius:65% 22% 65% 22%;background:linear-gradient(155deg,#718e51,#405d30);box-shadow:0 5px 8px #14250d40;--tilt:-8deg;text-shadow:0 1px 2px #15260f90}
  nav a+ a{margin-top:-17px}
  nav a:nth-child(odd){margin-right:12px;margin-left:0}
- nav a:nth-child(even){--tilt:8deg;margin-left:12px;margin-right:0;border-radius:0 100% 0 100%;background:linear-gradient(25deg,#6b5035,#9b7b4c)}
+ nav a:nth-child(even){--tilt:8deg;margin-left:12px;margin-right:0;border-radius:22% 65% 22% 65%;background:linear-gradient(25deg,#6b5035,#9b7b4c)}
  nav a:before{inset:18% 8%;height:auto;background:linear-gradient(160deg,transparent 48.8%,#e6edc44d 49.3%,#e6edc44d 50%,transparent 50.5%);transform:none;border-radius:inherit}
  nav a:nth-child(even):before{transform:scaleY(-1)}
  nav a[aria-current=page]{color:#fff;box-shadow:inset 0 0 0 2px #d6dfaa,0 5px 8px #14250d40}
