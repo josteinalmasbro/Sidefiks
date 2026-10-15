@@ -151,3 +151,30 @@ footer{padding:3px 5%;gap:8px}footer img{display:none}footer p{order:0;flex-basi
  .leaf-lettering text{font-size:32px;font-weight:700;letter-spacing:.2px}
 }
 
+
+/* Grow from the menu button, then unfurl each leaf along the stem. */
+@media(max-width:720px){
+ #menu{position:relative;z-index:3}
+ nav,nav.open{top:calc(100% - 16px);z-index:2}
+ nav.open{animation:none}
+ nav.open:before{animation:stem-grow 1.05s cubic-bezier(.3,.1,.35,1) both}
+ nav.open a{animation:leaf-unfurl .65s cubic-bezier(.18,.65,.25,1.12) both}
+ nav.open a:nth-child(1){animation-delay:.18s}
+ nav.open a:nth-child(2){animation-delay:.34s}
+ nav.open a:nth-child(3){animation-delay:.50s}
+ nav.open a:nth-child(4){animation-delay:.66s}
+ nav.open a:nth-child(5){animation-delay:.82s}
+}
+@keyframes stem-grow{
+ from{clip-path:inset(0 0 100% 0)}
+ to{clip-path:inset(0 0 0 0)}
+}
+@keyframes leaf-unfurl{
+ 0%{opacity:0;transform:rotate(calc(var(--tilt) - 22deg)) scale(.08,.18)}
+ 65%{opacity:1;transform:rotate(calc(var(--tilt) + 3deg)) scale(1.02)}
+ 100%{opacity:1;transform:rotate(var(--tilt)) scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+ nav.open,nav.open:before,nav.open a{animation:none}
+}
+
