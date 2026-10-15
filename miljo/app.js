@@ -32,14 +32,14 @@ $('contact-form').addEventListener('submit',e=>{e.preventDefault();for(const [id
 const routes=['hjem','tjenester','prosjekter','om-oss','kontakt'];
 function route(focus=false){
  const id=routes.includes(location.hash.slice(1))?location.hash.slice(1):'hjem';
- document.querySelectorAll('main > section').forEach(el=>{el.hidden=!mobile.matches && el.id!==id;});
+ document.querySelectorAll('main > section').forEach(el=>{el.hidden=el.id!==id;});
  $('navigation').querySelectorAll('a').forEach(a=>{if(a.getAttribute('href')==='#'+id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- if(focus){if(mobile.matches){$(id).scrollIntoView({behavior:'smooth',block:'start'});}else{const title=$(id).querySelector('h1,h2');title.tabIndex=-1;title.focus({preventScroll:true});}}
+ if(focus){const title=$(id).querySelector('h1,h2');title.tabIndex=-1;title.focus({preventScroll:true});}
 }
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href').slice(1);if(id==='main'){e.preventDefault();$('main').focus();return;}if(!routes.includes(id))return;e.preventDefault();history.pushState(null,'',location.pathname+location.search+'#'+id);route(true);});
 window.addEventListener('popstate',()=>route());window.addEventListener('hashchange',()=>route());
 $('page-previous').onclick=()=>{page--;renderProjects();};$('page-next').onclick=()=>{page++;renderProjects();};
-mobile.addEventListener('change',()=>{page=0;renderProjects();route();});
-render();route();if(mobile.matches && routes.includes(location.hash.slice(1))){requestAnimationFrame(()=>$(location.hash.slice(1)).scrollIntoView());}
+mobile.addEventListener('change',()=>{page=0;renderProjects();});
+render();route();
 $('contact-form').querySelector('[type=submit]').disabled=false;
 })();
