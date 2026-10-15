@@ -33,14 +33,16 @@ $('contact-form').addEventListener('submit',e=>{e.preventDefault();for(const [id
 const routes=['hjem','tjenester','prosjekter','om-oss','kontakt'];
 function route(focus=false){
  const id=routes.includes(location.hash.slice(1))?location.hash.slice(1):'hjem';
- document.querySelectorAll('main > section').forEach(el=>{el.hidden=el.id!==id;});
+ document.querySelectorAll('main > section').forEach(el=>{el.hidden=!mobile.matches && el.id!==id;});
  $('navigation').querySelectorAll('a').forEach(a=>{if(a.getAttribute('href')==='#'+id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ if(mobile.matches){const main=$('main');main.scrollTo({top:main.scrollTop+$(id).getBoundingClientRect().top-main.getBoundingClientRect().top,behavior:focus&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});}
  if(focus){const title=$(id).querySelector('h1,h2');title.tabIndex=-1;title.focus({preventScroll:true});}
 }
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href').slice(1);if(id==='main'){e.preventDefault();$('main').focus();return;}if(!routes.includes(id))return;e.preventDefault();history.pushState(null,'',location.pathname+location.search+'#'+id);route(true);});
 window.addEventListener('popstate',()=>route());window.addEventListener('hashchange',()=>route());
 $('page-previous').onclick=()=>{page--;renderProjects();};$('page-next').onclick=()=>{page++;renderProjects();};
-mobile.addEventListener('change',()=>{page=0;renderProjects();});
+mobile.addEventListener('change',()=>{page=0;renderProjects();route();});
+let scrollTimer; $('main').addEventListener('scroll',()=>{if(!mobile.matches)return;clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{const top=$('main').getBoundingClientRect().top;const section=[...document.querySelectorAll('main > section')].sort((a,b)=>Math.abs(a.getBoundingClientRect().top-top)-Math.abs(b.getBoundingClientRect().top-top))[0];$('navigation').querySelectorAll('a').forEach(a=>{if(a.getAttribute('href')==='#'+section.id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});history.replaceState(null,'',location.pathname+location.search+'#'+section.id);},160);},{passive:true});
 render();route();
 $('contact-form').querySelector('[type=submit]').disabled=false;
 })();
