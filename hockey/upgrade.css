@@ -38,3 +38,26 @@ html{overflow-x:clip;scrollbar-gutter:stable;overscroll-behavior-x:none}body{ove
  .section:has(>.product-layout)+.section{padding-top:10px}
  .section:has(>.product-layout)+.section .product-art{height:125px}
 }
+
+/* Transparent puck column, anchored to the mobile menu button. */
+#puck-menu{background:transparent;box-shadow:none;--puck-size:88px}
+#puck-menu::backdrop{background:transparent}
+#puck-menu:before,#puck-menu:after{display:none}
+#puck-menu .menu-top{height:0;padding:0;border:0}
+#puck-menu .menu-top strong,#puck-menu .menu-note{display:none}
+#puck-menu .menu-close{position:absolute;left:var(--close-x);top:var(--close-y);width:var(--close-width);height:var(--close-height);min-height:32px;background:#fff;color:#141b17;border:1px solid #d4d8cf;border-radius:4px;font-size:24px;z-index:5}
+#puck-menu .puck-grid{position:absolute;top:var(--puck-top);left:var(--puck-x);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;width:var(--puck-size);height:auto;padding:0;margin:0;overflow:visible}
+#puck-menu .nav-puck{width:var(--puck-size);height:var(--puck-size);flex:0 0 var(--puck-size);font-size:calc(var(--puck-size)*.22);box-shadow:0 5px 0 #060a08,0 7px 0 #4a514a,0 11px 16px #0004,inset 0 0 0 6px #151c18,inset 0 0 0 7px #52594a}
+#puck-menu .nav-puck.long{font-size:calc(var(--puck-size)*.175)}
+#puck-menu .puck-brand{font-size:calc(var(--puck-size)*.085);margin-bottom:5px}
+#puck-menu .nav-puck small{font-size:calc(var(--puck-size)*.06);letter-spacing:.8px;margin-top:6px}
+.cart-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.cart-button .goal-icon{width:25px;height:23px;flex-shrink:0}
+.cart-button #cart-count{margin-left:0}
+@media(max-width:700px){
+ .cart-button{font-size:11px;padding:9px 8px;gap:5px;min-height:44px}
+ .cart-button:before{display:none}
+ .cart-button .goal-icon{width:24px;height:22px}
+ .cart-button #cart-count{font-size:10px;padding:3px 5px}
+}
+@media(max-width:450px){header .brand-name{display:none}header{gap:9px}.menu-toggle{min-height:44px}}

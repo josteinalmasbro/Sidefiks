@@ -12,10 +12,18 @@
   function close(){cancel();menu.close();trigger.setAttribute('aria-expanded','false');unlock();}
   function animate(el,frames,options){const a=el.animate(frames,options);animations.push(a);return a;}
   trigger.addEventListener('click',()=>{
-    const origin=trigger.getBoundingClientRect();cancel();lock();menu.showModal();trigger.setAttribute('aria-expanded','true');
-    if(!reduced.matches)pucks.forEach((p,i)=>{const r=p.getBoundingClientRect();animate(p,[{transform:`translate(${origin.x+origin.width/2-r.x-r.width/2}px,${origin.y+origin.height/2-r.y-r.height/2}px) scale(.18) rotate(100deg)`,opacity:0},{transform:'translate(0,0) scale(1) rotate(-12deg)',opacity:1}],{duration:260,delay:i*28,easing:'cubic-bezier(.2,.75,.2,1)',fill:'backwards'})});
+    const origin=trigger.getBoundingClientRect();cancel();
+    const top=origin.y+origin.height+16,size=Math.min(92,Math.max(54,(innerHeight-top-24-48)/5));
+    menu.style.setProperty("--puck-size",`${size}px`);
+    menu.style.setProperty("--puck-x",`${Math.min(innerWidth-size/2-14,Math.max(size/2+14,origin.x+origin.width/2))}px`);
+    menu.style.setProperty("--puck-top",`${top}px`);
+    menu.style.setProperty("--close-x",`${origin.x}px`);menu.style.setProperty("--close-y",`${origin.y}px`);
+    menu.style.setProperty("--close-width",`${origin.width}px`);menu.style.setProperty("--close-height",`${origin.height}px`);
+    lock();menu.showModal();trigger.setAttribute('aria-expanded','true');
+    if(!reduced.matches)pucks.forEach((p,i)=>{const r=p.getBoundingClientRect();animate(p,[{transform:`translate(${origin.x+origin.width/2-r.x-r.width/2}px,${origin.y+origin.height/2-r.y-r.height/2}px) scale(.18) rotate(100deg)`,opacity:0},{transform:'translate(0,0) scale(1) rotate(-12deg)',opacity:1}],{duration:330,delay:i*45,easing:'cubic-bezier(.2,.75,.2,1)',fill:'backwards'})});
   });
   menu.querySelector('.menu-close').onclick=close;
+  menu.addEventListener('click',e=>{if(e.target===menu)close()});
   menu.addEventListener('cancel',e=>{e.preventDefault();close()});
   menu.addEventListener('close',()=>{if(locked){cancel();trigger.setAttribute('aria-expanded','false');unlock()}});
   pucks.forEach(p=>p.addEventListener('click',async e=>{
