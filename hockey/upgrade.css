@@ -99,3 +99,29 @@ html{overflow-x:clip;scrollbar-gutter:stable;overscroll-behavior-x:none}body{ove
  .section:has(>.product-layout)+.section .product-card h3{font-size:12px;margin:4px 0}
  .section:has(>.product-layout)+.section .price{font-size:12px}
 }
+
+/* Keep the content pane inside its grid row; never paint over the footer. */
+@media(min-width:1000px) and (min-height:700px){
+ body>main{height:100%;max-height:100%;min-width:0;min-height:0;margin:0 auto;align-self:stretch;overflow:auto;contain:paint}
+ body>footer{position:relative;z-index:1}
+ .catalog-top{padding:14px 5% 16px}
+ .catalog-top>.breadcrumb{margin-bottom:14px;font-size:10px;line-height:14px}
+ .catalog-top>h1{font-size:40px;line-height:1;margin:8px 0}
+ .catalog-top>p:not(.result-count){font-size:11px;line-height:1.5;margin:8px 0 12px}
+ .catalog-top .filters{gap:8px;margin:14px 0 10px}
+ .catalog-top .chip{padding:10px 13px;font-size:11px;line-height:16px}
+ .catalog-top .search,.catalog-top .filters select{font-size:11px;padding:10px 12px;height:38px}
+ .catalog-top .result-count{font-size:10px;line-height:14px;margin:8px 0 12px}
+ .catalog-top>.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 20px}
+ .catalog-top .product-art{height:clamp(85px,calc((100dvh - 520px)/2),170px)}
+ .catalog-top .product-card{min-width:0}
+ .catalog-top .product-card .meta{font-size:8px;line-height:12px;margin-top:7px}
+ .catalog-top .product-card h3{font-size:12px;line-height:16px;margin:4px 0 6px}
+ .catalog-top .price{font-size:12px;line-height:16px}
+ .catalog-top .price small{font-size:9px}
+}
+@media(max-width:999px){
+ .catalog-top>.breadcrumb{margin-bottom:18px}
+ .catalog-top>h1{font-size:42px;margin:10px 0}
+ .catalog-top .filters{margin:18px 0}
+}
