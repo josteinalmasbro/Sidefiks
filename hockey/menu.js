@@ -24,10 +24,17 @@
     if(reduced.matches){finish();return}
     pucks.forEach(x=>{x.style.pointerEvents='none';x.setAttribute('aria-disabled','true')});
     const r=p.getBoundingClientRect(),px=r.left-145,py=r.top+r.height/2-126;player.style.left=`${px}px`;player.style.top=`${py}px`;player.style.opacity='1';
-    animate(player,[{transform:`translateX(${-px-190}px)`,opacity:0},{transform:'translateX(0)',opacity:1}],{duration:230,easing:'cubic-bezier(.15,.65,.25,1)',fill:'forwards'});
-    animate(stick,[{transform:'rotate(-32deg)'},{transform:'rotate(16deg)'}],{duration:130,delay:170,easing:'ease-in',fill:'forwards'});
-    const shot=animate(p,[{transform:'translateX(0) rotate(-12deg)',opacity:1},{transform:`translateX(${innerWidth+130}px) translateY(-25px) rotate(440deg)`,opacity:0}],{duration:190,delay:260,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
-    try{await shot.finished;finish()}catch{/* Closing or resizing cancels the shot safely. */}
+    animate(player,[{transform:`translateX(${-px-190}px)`,opacity:0},{transform:'translateX(0)',opacity:1}],{duration:360,easing:'cubic-bezier(.15,.65,.25,1)',fill:'forwards'});
+    animate(stick,[{transform:'rotate(-32deg)'},{transform:'rotate(16deg)'}],{duration:200,delay:280,easing:'ease-in',fill:'forwards'});
+    const shot=animate(p,[{transform:'translateX(0) rotate(-12deg)',opacity:1},{transform:`translateX(${innerWidth+130}px) translateY(-25px) rotate(440deg)`,opacity:0}],{duration:240,delay:430,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+    try{
+      await shot.finished;
+      if(token!==generation)return;
+      animate(player,[{opacity:1,transform:'translateX(0)'},{opacity:0,transform:'translateX(18px)'}],{duration:220,easing:'ease-out',fill:'forwards'});
+      const fade=animate(menu,[{opacity:1},{opacity:0}],{duration:260,delay:80,easing:'ease-in-out',fill:'forwards'});
+      await fade.finished;
+      finish();
+    }catch{/* Closing or resizing cancels the shot and fade safely. */}
   }));
   window.addEventListener('hashchange',()=>{if(menu.open)close()});
   window.addEventListener('resize',()=>{if(menu.open)close()});
