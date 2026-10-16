@@ -15,6 +15,14 @@
     {
       "source": "/miljo/",
       "destination": "/miljo/index.html"
+    },
+    {
+      "source": "/hockey",
+      "destination": "/hockey/index.html"
+    },
+    {
+      "source": "/hockey/",
+      "destination": "/hockey/index.html"
     }
   ]
 }
