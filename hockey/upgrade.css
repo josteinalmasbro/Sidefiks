@@ -10,3 +10,31 @@ html{overflow-x:clip;scrollbar-gutter:stable;overscroll-behavior-x:none}body{ove
 .editorial-hero .hero-photo{left:auto;right:0;width:67%;object-position:48% 57%}
 @media(max-width:700px){.editorial-hero .hero-photo{width:100%;object-position:58% center}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Compact product pages: bring recommendations into the desktop viewport. */
+.section:has(>.product-layout){padding-top:18px;padding-bottom:12px}
+.section:has(>.product-layout)>.breadcrumb{margin-bottom:18px}
+.section:has(>.product-layout)+.section{padding-top:8px;padding-bottom:24px}
+.product-layout{gap:36px;align-items:start}
+.product-big{height:360px}
+.product-info h1{font-size:38px;margin:12px 0}
+.product-info>p{font-size:12px;line-height:1.5;margin:10px 0}
+.product-info .price{font-size:24px;margin:10px 0}
+.product-info .notice{padding:9px 12px;font-size:10px;line-height:1.5}
+.product-info .option-label{font-size:12px;margin:12px 0 7px}
+.product-info select{padding:10px 12px;min-height:40px}
+.product-info .button{padding:12px 18px;min-height:42px;margin:10px 0}
+.product-info .details{padding:8px 0;font-size:11px}
+.section:has(>.product-layout)+.section h2{font-size:30px;margin:5px 0 12px}
+.section:has(>.product-layout)+.section .product-art{height:140px}
+.section:has(>.product-layout)+.section .product-card .meta{margin-top:9px}
+.section:has(>.product-layout)+.section .product-card h3{margin:5px 0 7px}
+@media(max-width:700px){
+ .section:has(>.product-layout){padding-top:14px}
+ .section:has(>.product-layout)>.breadcrumb{margin-bottom:14px;font-size:10px}
+ .product-layout{gap:18px}
+ .product-big{height:210px}
+ .product-info h1{font-size:34px}
+ .section:has(>.product-layout)+.section{padding-top:10px}
+ .section:has(>.product-layout)+.section .product-art{height:125px}
+}
